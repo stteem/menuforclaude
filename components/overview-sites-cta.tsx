@@ -3,7 +3,7 @@ import CreateSiteButton from "./create-site-button";
 import CreateSiteModal from "./modal/create-site";
 import Link from "next/link";
 import db from "@/lib/db";
-import { sites } from "@/lib/schema";
+import { restaurants } from "@/lib/schema";
 import { count, eq } from "drizzle-orm";
 
 export default async function OverviewSitesCTA() {
@@ -13,8 +13,8 @@ export default async function OverviewSitesCTA() {
   }
   const [sitesResult] = await db
     .select({ count: count() })
-    .from(sites)
-    .where(eq(sites.userId, session.user.id));
+    .from(restaurants)
+    .where(eq(restaurants.userId, session.user.id));
 
   return sitesResult.count > 0 ? (
     <Link

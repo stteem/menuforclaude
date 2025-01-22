@@ -1,5 +1,5 @@
 import Form from "@/components/form";
-import { updateSite } from "@/lib/actions";
+import { updateRestaurantMetadata } from "@/lib/actions";
 import DeleteSiteForm from "@/components/form/delete-site-form";
 import db from "@/lib/db";
 
@@ -8,8 +8,8 @@ export default async function SiteSettingsIndex({
 }: {
   params: { id: string };
 }) {
-  const data = await db.query.sites.findFirst({
-    where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
+  const data = await db.query.restaurants.findFirst({
+    where: (restaurants, { eq }) => eq(restaurants.id, decodeURIComponent(params.id)),
   });
 
   return (
@@ -25,7 +25,7 @@ export default async function SiteSettingsIndex({
           placeholder: "My Awesome Site",
           maxLength: 32,
         }}
-        handleSubmit={updateSite}
+        handleSubmit={updateRestaurantMetadata}
       />
 
       <Form
@@ -38,7 +38,7 @@ export default async function SiteSettingsIndex({
           defaultValue: data?.description!,
           placeholder: "A blog about really interesting things.",
         }}
-        handleSubmit={updateSite}
+        handleSubmit={updateRestaurantMetadata}
       />
 
       <DeleteSiteForm siteName={data?.name!} />

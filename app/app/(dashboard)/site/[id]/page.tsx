@@ -13,8 +13,8 @@ export default async function SitePosts({
   if (!session) {
     redirect("/login");
   }
-  const data = await db.query.sites.findFirst({
-    where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
+  const data = await db.query.restaurants.findFirst({
+    where: (restaurants, { eq }) => eq(restaurants.id, decodeURIComponent(params.id)),
   });
 
   if (!data || data.userId !== session.user.id) {
@@ -45,7 +45,7 @@ export default async function SitePosts({
         </div>
         <CreatePostButton />
       </div>
-      <Posts siteId={decodeURIComponent(params.id)} />
+      <Posts restaurantId={decodeURIComponent(params.id)} />
     </>
   );
 }

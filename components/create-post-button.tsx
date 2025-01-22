@@ -1,13 +1,13 @@
 "use client";
 
 import { useTransition } from "react";
-import { createPost } from "@/lib/actions";
+import { createMenu } from "@/lib/actions";
 import { cn } from "@/lib/utils";
 import { useParams, useRouter } from "next/navigation";
 import LoadingDots from "@/components/icons/loading-dots";
 import va from "@vercel/analytics";
 
-export default function CreatePostButton() {
+export default function CreateMenuButton() {
   const router = useRouter();
   const { id } = useParams() as { id: string };
   const [isPending, startTransition] = useTransition();
@@ -16,10 +16,19 @@ export default function CreatePostButton() {
     <button
       onClick={() =>
         startTransition(async () => {
-          const post = await createPost(null, id, null);
-          va.track("Created Post");
+          // const formData = new FormData();
+          // formData.append("title", "New Menu Title"); // Replace with actual title input
+          // formData.append("description", "New Menu Description"); // Replace with actual description input
+          // formData.append("slug", "new-menu-slug"); // Replace with actual slug input
+
+          const menu = await createMenu(null, id , null); // Pass the restaurant object
+          if (menu.error) {
+            console.error(menu.error);
+            return;
+          }
+          va.track("Created Menu");
           router.refresh();
-          router.push(`/post/${post.id}`);
+          router.push(`/menu/${menu.slug}`);
         })
       }
       className={cn(

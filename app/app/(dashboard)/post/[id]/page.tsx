@@ -3,25 +3,27 @@ import { notFound, redirect } from "next/navigation";
 import Editor from "@/components/editor";
 import db from "@/lib/db";
 
-export default async function PostPage({ params }: { params: { id: string } }) {
+export default async function MenuPage({ params }: { params: { id: string } }) {
   const session = await getSession();
   if (!session) {
     redirect("/login");
   }
 
-  const data = await db.query.posts.findFirst({
-    where: (posts, { eq }) => eq(posts.id, decodeURIComponent(params.id)),
+  const menu = await db.query.menus.findFirst({
+    where: (menus, { eq }) => eq(menus.id, decodeURIComponent(params.id)),
     with: {
-      site: {
+      restaurant: {
         columns: {
           subdomain: true,
+          userId: true,
         },
       },
     },
   });
-  if (!data || data.userId !== session.user.id) {
+
+  if (!menu || menu.restaurant.userId !== session.user.id) {
     notFound();
   }
 
-  return <Editor post={data} />;
+  return <Editor menu={menu} />;
 }

@@ -5,10 +5,10 @@ import { redirect } from "next/navigation";
 import PostCard from "./post-card";
 
 export default async function Posts({
-  siteId,
+  restaurantId,
   limit,
 }: {
-  siteId?: string;
+  restaurantId?: string;
   limit?: number;
 }) {
   const session = await getSession();
@@ -16,23 +16,23 @@ export default async function Posts({
     redirect("/login");
   }
 
-  const posts = await db.query.posts.findMany({
-    where: (posts, { and, eq }) =>
+  const menus = await db.query.menus.findMany({
+    where: (menus, { and, eq }) =>
       and(
-        eq(posts.userId, session.user.id),
-        siteId ? eq(posts.siteId, siteId) : undefined,
+        eq(menus.userId, session.user.id),
+        restaurantId ? eq(menus.restaurantId, restaurantId) : undefined,
       ),
     with: {
-      site: true,
+      restaurant: true,
     },
-    orderBy: (posts, { desc }) => desc(posts.updatedAt),
+    orderBy: (menus, { desc }) => desc(menus.updatedAt),
     ...(limit ? { limit } : {}),
   });
 
-  return posts.length > 0 ? (
+  return menus.length > 0 ? (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {posts.map((post) => (
-        <PostCard key={post.id} data={post} />
+      {menus.map((menu) => (
+        <PostCard key={menu.id} data={menu} />
       ))}
     </div>
   ) : (

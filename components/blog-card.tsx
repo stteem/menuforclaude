@@ -1,16 +1,16 @@
 import Link from "next/link";
 import BlurImage from "./blur-image";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
-import type { SelectPost } from "@/lib/schema";
+import type { SelectMenu } from "@/lib/schema";
 
-interface BlogCardProps {
+interface MenuCardProps {
   data: Pick<
-    SelectPost,
+  SelectMenu,
     "slug" | "image" | "imageBlurhash" | "title" | "description" | "createdAt"
   >;
 }
 
-export default function BlogCard({ data }: BlogCardProps) {
+export default function MenuCard({ data }: MenuCardProps) {
   return (
     <Link href={`/${data.slug}`}>
       <div className="ease overflow-hidden rounded-2xl border-2 border-stone-100 bg-white shadow-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl dark:border-stone-800">

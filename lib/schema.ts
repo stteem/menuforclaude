@@ -4,6 +4,7 @@ import {
   boolean,
   index,
   integer,
+  numeric,
   pgTable,
   primaryKey,
   serial,
@@ -90,8 +91,9 @@ export const accounts = pgTable(
   },
 );
 
-export const sites = pgTable(
-  "sites",
+// Restaurants table
+export const restaurants = pgTable(
+  "restaurants",
   {
     id: text("id")
       .primaryKey()
@@ -117,27 +119,32 @@ export const sites = pgTable(
     updatedAt: timestamp("updatedAt", { mode: "date" })
       .notNull()
       .$onUpdate(() => new Date()),
-    userId: text("userId").references(() => users.id, {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
     }),
   },
   (table) => {
     return {
-      userIdIdx: index().on(table.userId),
+      subdomainIdx: uniqueIndex().on(table.subdomain),
+      customDomainIdx: uniqueIndex().on(table.customDomain),
     };
   },
 );
 
-export const posts = pgTable(
-  "posts",
+
+// Menus table
+export const menus = pgTable(
+  "menus",
   {
     id: text("id")
       .primaryKey()
       .$defaultFn(() => createId()),
     title: text("title"),
     description: text("description"),
-    content: text("content"),
+    // content: text("content"),
     slug: text("slug")
       .notNull()
       .$defaultFn(() => createId()),
@@ -152,10 +159,9 @@ export const posts = pgTable(
       .notNull()
       .$onUpdate(() => new Date()),
     published: boolean("published").default(false).notNull(),
-    siteId: text("siteId").references(() => sites.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    }),
+    restaurantId: text("restaurantId")
+      .notNull()
+      .references(() => restaurants.id, { onDelete: "cascade", onUpdate: "cascade" }),
     userId: text("userId").references(() => users.id, {
       onDelete: "cascade",
       onUpdate: "cascade",
@@ -163,21 +169,67 @@ export const posts = pgTable(
   },
   (table) => {
     return {
-      siteIdIdx: index().on(table.siteId),
+      restaurantIdIdx: index().on(table.restaurantId),
       userIdIdx: index().on(table.userId),
-      slugSiteIdKey: uniqueIndex().on(table.slug, table.siteId),
+      slugRestaurantIdKey: uniqueIndex().on(table.slug, table.restaurantId),
     };
   },
 );
 
-export const postsRelations = relations(posts, ({ one }) => ({
-  site: one(sites, { references: [sites.id], fields: [posts.siteId] }),
-  user: one(users, { references: [users.id], fields: [posts.userId] }),
+
+// MenuItems table with description and imageUrl columns
+export const menuItems = pgTable(
+  "menuItems",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    menuId: text("menuId")
+      .notNull()
+      .references(() => menus.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    name: text("name").notNull(),
+    description: text("description"),
+    restaurantId: text("restaurantId")
+    .notNull()
+    .references(() => restaurants.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    imageUrl: text("imageUrl"),
+    price: numeric("price").notNull(),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt", { mode: "date" })
+      .notNull()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => {
+    return {
+      menuIdIdx: index().on(table.menuId),
+      restaurantIdIdx: index().on(table.restaurantId),
+    };
+  },
+);
+
+export const examples = pgTable("examples", {
+  id: serial("id").primaryKey(),
+  name: text("name"),
+  description: text("description"),
+  domainCount: integer("domainCount"),
+  url: text("url"),
+  image: text("image"),
+  imageBlurhash: text("imageBlurhash"),
+});
+
+// Relations
+export const restaurantsRelations = relations(restaurants, ({ one, many }) => ({
+  user: one(users, { references: [users.id], fields: [restaurants.userId] }),
+  menus: many(menus),
 }));
 
-export const sitesRelations = relations(sites, ({ one, many }) => ({
-  posts: many(posts),
-  user: one(users, { references: [users.id], fields: [sites.userId] }),
+export const menusRelations = relations(menus, ({ one, many }) => ({
+  restaurant: one(restaurants, { references: [restaurants.id], fields: [menus.restaurantId] }),
+  items: many(menuItems),
+}));
+
+export const menuItemsRelations = relations(menuItems, ({ one }) => ({
+  menu: one(menus, { references: [menus.id], fields: [menuItems.menuId] }),
 }));
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -191,10 +243,12 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
 export const userRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
-  sites: many(sites),
-  posts: many(posts),
+  restaurants: many(restaurants),
 }));
 
-export type SelectSite = typeof sites.$inferSelect;
-export type SelectPost = typeof posts.$inferSelect;
+export type SelectSession = typeof sessions.$inferSelect;
+export type SelectRestaurant = typeof restaurants.$inferSelect;
+export type SelectMenu = typeof menus.$inferSelect;
+export type SelectmenuItems = typeof menuItems.$inferSelect;
+export type SelectUser = typeof users.$inferSelect;
 export type SelectExample = typeof examples.$inferSelect;

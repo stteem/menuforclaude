@@ -94,17 +94,17 @@ export function withSiteAuth(action: any) {
       };
     }
 
-    const site = await db.query.sites.findFirst({
-      where: (sites, { eq }) => eq(sites.id, siteId),
+    const restaurant = await db.query.restaurants.findFirst({
+      where: (restaurants, { eq }) => eq(restaurants.id, siteId),
     });
 
-    if (!site || site.userId !== session.user.id) {
+    if (!restaurant || restaurant.userId !== session.user.id) {
       return {
         error: "Not authorized",
       };
     }
 
-    return action(formData, site, key);
+    return action(formData, restaurant, key);
   };
 }
 
@@ -121,19 +121,19 @@ export function withPostAuth(action: any) {
       };
     }
 
-    const post = await db.query.posts.findFirst({
-      where: (posts, { eq }) => eq(posts.id, postId),
+    const menu = await db.query.menus.findFirst({
+      where: (menus, { eq }) => eq(menus.id, postId),
       with: {
-        site: true,
+        items: true,
       },
     });
 
-    if (!post || post.userId !== session.user.id) {
+    if (!menu || menu.userId !== session.user.id) {
       return {
         error: "Post not found",
       };
     }
 
-    return action(formData, post, key);
+    return action(formData, menu, key);
   };
 }

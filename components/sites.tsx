@@ -10,7 +10,7 @@ export default async function Sites({ limit }: { limit?: number }) {
     redirect("/login");
   }
 
-  const sites = await db.query.sites.findMany({
+  const sites = await db.query.restaurants.findMany({
     where: (sites, { eq }) => eq(sites.userId, session.user.id),
     orderBy: (sites, { asc }) => asc(sites.createdAt),
     ...(limit ? { limit } : {}),

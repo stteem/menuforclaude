@@ -12,8 +12,8 @@ export default async function SiteAnalytics({
   if (!session) {
     redirect("/login");
   }
-  const data = await db.query.sites.findFirst({
-    where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
+  const data = await db.query.restaurants.findFirst({
+    where: (restaurants, { eq }) => eq(restaurants.id, decodeURIComponent(params.id)),
   });
 
   if (!data || data.userId !== session.user.id) {

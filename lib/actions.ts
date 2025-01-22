@@ -13,7 +13,7 @@ import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
 import { withPostAuth, withSiteAuth } from "./auth";
 import db from "./db";
-import { SelectPost, SelectSite, posts, sites, users } from "./schema";
+import { SelectRestaurant, SelectMenu, SelectmenuItems, menus, menuItems, users, restaurants } from "./schema";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -33,7 +33,7 @@ export const createSite = async (formData: FormData) => {
 
   try {
     const [response] = await db
-      .insert(sites)
+      .insert(restaurants)
       .values({
         name,
         description,
@@ -59,8 +59,15 @@ export const createSite = async (formData: FormData) => {
   }
 };
 
-export const updateSite = withSiteAuth(
-  async (formData: FormData, site: SelectSite, key: string) => {
+export const updateRestaurantMetadata = withSiteAuth(
+  async (formData: FormData, restaurant: SelectRestaurant, key: string) => {
+    const session = await getSession();
+    if (!session?.user.id) {
+      return {
+        error: "Not authenticated",
+      };
+    }
+
     const value = formData.get(key) as string;
 
     try {
@@ -75,11 +82,11 @@ export const updateSite = withSiteAuth(
           // if the custom domain is valid, we need to add it to Vercel
         } else if (validDomainRegex.test(value)) {
           response = await db
-            .update(sites)
+            .update(restaurants)
             .set({
               customDomain: value,
             })
-            .where(eq(sites.id, site.id))
+            .where(eq(restaurants.id, restaurant.id))
             .returning()
             .then((res) => res[0]);
 
@@ -92,18 +99,18 @@ export const updateSite = withSiteAuth(
           // empty value means the user wants to remove the custom domain
         } else if (value === "") {
           response = await db
-            .update(sites)
+            .update(restaurants)
             .set({
               customDomain: null,
             })
-            .where(eq(sites.id, site.id))
+            .where(eq(restaurants.id, restaurant.id))
             .returning()
             .then((res) => res[0]);
         }
 
         // if the site had a different customDomain before, we need to remove it from Vercel
-        if (site.customDomain && site.customDomain !== value) {
-          response = await removeDomainFromVercelProject(site.customDomain);
+        if (restaurant.customDomain && restaurant.customDomain !== value) {
+          response = await removeDomainFromVercelProject(restaurant.customDomain);
 
           /* Optional: remove domain from Vercel team 
 
@@ -144,34 +151,34 @@ export const updateSite = withSiteAuth(
         const blurhash = key === "image" ? await getBlurDataURL(url) : null;
 
         response = await db
-          .update(sites)
+          .update(restaurants)
           .set({
             [key]: url,
             ...(blurhash && { imageBlurhash: blurhash }),
           })
-          .where(eq(sites.id, site.id))
+          .where(eq(restaurants.id, restaurant.id))
           .returning()
           .then((res) => res[0]);
       } else {
         response = await db
-          .update(sites)
+          .update(restaurants)
           .set({
             [key]: value,
           })
-          .where(eq(sites.id, site.id))
+          .where(eq(restaurants.id, restaurant.id))
           .returning()
           .then((res) => res[0]);
       }
 
       console.log(
         "Updated site data! Revalidating tags: ",
-        `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
-        `${site.customDomain}-metadata`,
+        `${restaurant.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
+        `${restaurant.customDomain}-metadata`,
       );
       revalidateTag(
-        `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
+        `${restaurant.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
       );
-      site.customDomain && revalidateTag(`${site.customDomain}-metadata`);
+      restaurant.customDomain && revalidateTag(`${restaurant.customDomain}-metadata`);
 
       return response;
     } catch (error: any) {
@@ -189,17 +196,17 @@ export const updateSite = withSiteAuth(
 );
 
 export const deleteSite = withSiteAuth(
-  async (_: FormData, site: SelectSite) => {
+  async (_: FormData, restaurant: SelectRestaurant) => {
     try {
       const [response] = await db
-        .delete(sites)
-        .where(eq(sites.id, site.id))
+        .delete(restaurants)
+        .where(eq(restaurants.id, restaurant.id))
         .returning();
 
       revalidateTag(
-        `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
+        `${restaurant.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
       );
-      response.customDomain && revalidateTag(`${site.customDomain}-metadata`);
+      response.customDomain && revalidateTag(`${restaurant.customDomain}-metadata`);
       return response;
     } catch (error: any) {
       return {
@@ -209,19 +216,19 @@ export const deleteSite = withSiteAuth(
   },
 );
 
-export const getSiteFromPostId = async (postId: string) => {
-  const post = await db.query.posts.findFirst({
-    where: eq(posts.id, postId),
+export const getSiteFromMenuId = async (menuId: string) => {
+  const menu = await db.query.menus.findFirst({
+    where: eq(menus.id, menuId),
     columns: {
-      siteId: true,
+      restaurantId: true,
     },
   });
 
-  return post?.siteId;
+  return menu?.restaurantId;
 };
 
-export const createPost = withSiteAuth(
-  async (_: FormData, site: SelectSite) => {
+export const createMenuItems = withSiteAuth(
+  async (formData: FormData, menu: SelectMenu) => {
     const session = await getSession();
     if (!session?.user.id) {
       return {
@@ -229,25 +236,149 @@ export const createPost = withSiteAuth(
       };
     }
 
-    const [response] = await db
-      .insert(posts)
-      .values({
-        siteId: site.id,
-        userId: session.user.id,
-      })
-      .returning();
+    const name = formData.get("name") as string;
+    const description = formData.get("description") as string;
+    const imageUrl = formData.get("imageUrl") as string;
+    const price = parseFloat(formData.get("price") as string);
 
-    revalidateTag(
-      `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-posts`,
-    );
-    site.customDomain && revalidateTag(`${site.customDomain}-posts`);
+    // Fetch restaurant details using restaurantId
+    const restaurant = await db.query.restaurants.findFirst({
+      where: (restaurants, { eq }) => eq(restaurants.id, menu.restaurantId),
+    });
 
-    return response;
+    if (!restaurant) {
+      return {
+        error: "Restaurant not found",
+      };
+    }
+
+    try {
+      const [response] = await db
+        .insert(menuItems)
+        .values({
+          menuId: menu.id,
+          restaurantId: menu.restaurantId,
+          name,
+          description,
+          imageUrl,
+          price: price.toString(),
+        })
+        .returning();
+
+      revalidateTag(
+        `${restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-menuItems`,
+      );
+      restaurant?.customDomain && revalidateTag(`${restaurant?.customDomain}-menuItems`);
+
+      return response;
+    } catch (error: any) {
+      return {
+        error: error.message,
+      };
+    }
+  },
+);
+
+export const updateMenuItems = withSiteAuth(
+  async (formData: FormData, menuItem: SelectmenuItems) => {
+    const session = await getSession();
+    if (!session?.user.id) {
+      return {
+        error: "Not authenticated",
+      };
+    }
+
+    const name = formData.get("name") as string;
+    const description = formData.get("description") as string;
+    const imageUrl = formData.get("imageUrl") as string;
+    const price = parseFloat(formData.get("price") as string);
+
+    // Fetch restaurant details using restaurantId from the menuItem
+    const restaurant = await db.query.restaurants.findFirst({
+      where: (restaurants, { eq }) => eq(restaurants.id, menuItem.restaurantId),
+    });
+
+    if (!restaurant) {
+      return {
+        error: "Restaurant not found",
+      };
+    }
+
+    try {
+      const [response] = await db
+        .update(menuItems)
+        .set({
+          name,
+          description,
+          imageUrl,
+          price: price.toString(),
+        })
+        .where(eq(menuItems.id, menuItem.id))
+        .returning();
+
+      revalidateTag(
+        `${restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-menuItems`,
+      );
+      restaurant?.customDomain && revalidateTag(`${restaurant?.customDomain}-menuItems`);
+
+      return response;
+    } catch (error: any) {
+      return {
+        error: error.message,
+      };
+    }
+  },
+);
+
+//Create menu
+// lib/actions.ts
+export const createMenu = withSiteAuth(
+  async (formData: FormData, restaurant: SelectRestaurant) => {
+    const session = await getSession();
+    if (!session?.user.id) {
+      return {
+        error: "Not authenticated",
+      };
+    }
+
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const slug = formData.get("slug") as string; // Assuming slug is provided in the form data
+
+    try {
+      const [response] = await db
+        .insert(menus)
+        .values({
+          title,
+          description,
+          slug,
+          restaurantId: restaurant.id,
+          userId: session.user.id,
+        })
+        .returning();
+
+      revalidateTag(
+        `${restaurant.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-menus`,
+      );
+      restaurant.customDomain && revalidateTag(`${restaurant.customDomain}-menus`);
+
+      return response;
+    } catch (error: any) {
+      if (error.code === "P2002") {
+        return {
+          error: `This slug is already taken`,
+        };
+      } else {
+        return {
+          error: error.message,
+        };
+      }
+    }
   },
 );
 
 // creating a separate function for this because we're not using FormData
-export const updatePost = async (data: SelectPost) => {
+export const updateMenu = async (data: SelectMenu) => {
   const session = await getSession();
   if (!session?.user.id) {
     return {
@@ -255,40 +386,40 @@ export const updatePost = async (data: SelectPost) => {
     };
   }
 
-  const post = await db.query.posts.findFirst({
-    where: eq(posts.id, data.id),
+  const menu = await db.query.menus.findFirst({
+    where: eq(menus.id, data.id),
     with: {
-      site: true,
+      restaurant: true,
     },
   });
 
-  if (!post || post.userId !== session.user.id) {
+  if (!menu || menu.userId !== session.user.id) {
     return {
-      error: "Post not found",
+      error: "Menu not found",
     };
   }
 
   try {
     const [response] = await db
-      .update(posts)
+      .update(menus)
       .set({
         title: data.title,
         description: data.description,
       })
-      .where(eq(posts.id, data.id))
+      .where(eq(menus.id, data.id))
       .returning();
 
     revalidateTag(
-      `${post.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-posts`,
+      `${menu.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-menus`,
     );
     revalidateTag(
-      `${post.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-${post.slug}`,
+      `${menu.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-${menu.id}`,
     );
 
-    // if the site has a custom domain, we need to revalidate those tags too
-    post.site?.customDomain &&
-      (revalidateTag(`${post.site?.customDomain}-posts`),
-      revalidateTag(`${post.site?.customDomain}-${post.slug}`));
+    // if the restaurant has a custom domain, we need to revalidate those tags too
+    menu.restaurant?.customDomain &&
+      (revalidateTag(`${menu.restaurant?.customDomain}-menus`),
+      revalidateTag(`${menu.restaurant?.customDomain}-${menu.id}`));
 
     return response;
   } catch (error: any) {
@@ -298,11 +429,11 @@ export const updatePost = async (data: SelectPost) => {
   }
 };
 
-export const updatePostMetadata = withPostAuth(
+export const updateMenuMetadata = withSiteAuth(
   async (
     formData: FormData,
-    post: SelectPost & {
-      site: SelectSite;
+    menu: SelectMenu & {
+      restaurant: SelectRestaurant;
     },
     key: string,
   ) => {
@@ -320,42 +451,42 @@ export const updatePostMetadata = withPostAuth(
 
         const blurhash = await getBlurDataURL(url);
         response = await db
-          .update(posts)
+          .update(menus)
           .set({
             image: url,
             imageBlurhash: blurhash,
           })
-          .where(eq(posts.id, post.id))
+          .where(eq(menus.id, menu.id))
           .returning()
           .then((res) => res[0]);
       } else {
         response = await db
-          .update(posts)
+          .update(menus)
           .set({
             [key]: key === "published" ? value === "true" : value,
           })
-          .where(eq(posts.id, post.id))
+          .where(eq(menus.id, menu.id))
           .returning()
           .then((res) => res[0]);
       }
 
       revalidateTag(
-        `${post.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-posts`,
+        `${menu.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-menus`,
       );
       revalidateTag(
-        `${post.site?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-${post.slug}`,
+        `${menu.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-${menu.id}`,
       );
 
-      // if the site has a custom domain, we need to revalidate those tags too
-      post.site?.customDomain &&
-        (revalidateTag(`${post.site?.customDomain}-posts`),
-        revalidateTag(`${post.site?.customDomain}-${post.slug}`));
+      // if the restaurant has a custom domain, we need to revalidate those tags too
+      menu.restaurant?.customDomain &&
+        (revalidateTag(`${menu.restaurant?.customDomain}-menus`),
+        revalidateTag(`${menu.restaurant?.customDomain}-${menu.id}`));
 
       return response;
     } catch (error: any) {
       if (error.code === "P2002") {
         return {
-          error: `This slug is already in use`,
+          error: `This ${key} is already in use`,
         };
       } else {
         return {
@@ -366,16 +497,20 @@ export const updatePostMetadata = withPostAuth(
   },
 );
 
-export const deletePost = withPostAuth(
-  async (_: FormData, post: SelectPost) => {
+export const deleteRestaurant = withSiteAuth(
+  async (_: FormData, restaurant: SelectRestaurant) => {
     try {
       const [response] = await db
-        .delete(posts)
-        .where(eq(posts.id, post.id))
+        .delete(restaurants)
+        .where(eq(restaurants.id, restaurant.id))
         .returning({
-          siteId: posts.siteId,
+          userId: restaurants.userId,
         });
 
+      revalidateTag(
+        `${restaurant.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
+      );
+      restaurant.customDomain && revalidateTag(`${restaurant.customDomain}-metadata`);
       return response;
     } catch (error: any) {
       return {

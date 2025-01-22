@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
-import { getPostData, getSiteData } from "@/lib/fetchers";
+import { getMenuData, getRestaurantData } from "@/lib/fetchers";
 import BlogCard from "@/components/blog-card";
 import BlurImage from "@/components/blur-image";
-import MDX from "@/components/mdx";
+// import MDX from "@/components/mdx";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
 import db from "@/lib/db";
-import { posts, sites } from "@/lib/schema";
+import { menus, restaurants } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 
 export async function generateMetadata({
@@ -17,8 +17,8 @@ export async function generateMetadata({
   const slug = decodeURIComponent(params.slug);
 
   const [data, siteData] = await Promise.all([
-    getPostData(domain, slug),
-    getSiteData(domain),
+    getMenuData(domain, slug),
+    getRestaurantData(domain),
   ]);
   if (!data || !siteData) {
     return null;
@@ -49,26 +49,26 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const allPosts = await db
+  const allMenus = await db
     .select({
-      slug: posts.slug,
-      site: {
-        subdomain: sites.subdomain,
-        customDomain: sites.customDomain,
+      slug: menus.slug,
+      restaurant: {
+        subdomain: restaurants.subdomain,
+        customDomain: restaurants.customDomain,
       },
     })
-    .from(posts)
-    .leftJoin(sites, eq(posts.siteId, sites.id))
-    .where(eq(sites.subdomain, "demo")); // feel free to remove this filter if you want to generate paths for all posts
+    .from(menus)
+    .leftJoin(restaurants, eq(menus.restaurantId, restaurants.id))
+    // .where(eq(restaurants.subdomain, "demo")); // feel free to remove this filter if you want to generate paths for all menus
 
-  const allPaths = allPosts
-    .flatMap(({ site, slug }) => [
-      site?.subdomain && {
-        domain: `${site.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
+  const allPaths = allMenus
+    .flatMap(({ restaurant, slug }) => [
+      restaurant?.subdomain && {
+        domain: `${restaurant.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
         slug,
       },
-      site?.customDomain && {
-        domain: site.customDomain,
+      restaurant?.customDomain && {
+        domain: restaurant.customDomain,
         slug,
       },
     ])
@@ -77,14 +77,14 @@ export async function generateStaticParams() {
   return allPaths;
 }
 
-export default async function SitePostPage({
+export default async function SiteMenuPage({
   params,
 }: {
   params: { domain: string; slug: string };
 }) {
   const domain = decodeURIComponent(params.domain);
   const slug = decodeURIComponent(params.slug);
-  const data = await getPostData(domain, slug);
+  const data = await getMenuData(domain, slug);
 
   if (!data) {
     notFound();
@@ -106,21 +106,17 @@ export default async function SitePostPage({
         </div>
         <a
           // if you are using Github OAuth, you can get rid of the Twitter option
-          href={
-            data.site?.user?.username
-              ? `https://twitter.com/${data.site.user.username}`
-              : `https://github.com/${data.site?.user?.gh_username}`
-          }
+          href={`https://github.com/${data.restaurant?.user?.gh_username}`}
           rel="noreferrer"
           target="_blank"
         >
           <div className="my-8">
             <div className="relative inline-block h-8 w-8 overflow-hidden rounded-full align-middle md:h-12 md:w-12">
-              {data.site?.user?.image ? (
+              {data.restaurant?.user?.image ? (
                 <BlurImage
-                  alt={data.site?.user?.name ?? "User Avatar"}
+                  alt={data.restaurant?.user?.name ?? "User Avatar"}
                   height={80}
-                  src={data.site.user.image}
+                  src={data.restaurant.user.image}
                   width={80}
                 />
               ) : (
@@ -130,14 +126,14 @@ export default async function SitePostPage({
               )}
             </div>
             <div className="text-md ml-3 inline-block align-middle md:text-lg dark:text-white">
-              by <span className="font-semibold">{data.site?.user?.name}</span>
+              by <span className="font-semibold">{data.restaurant?.user?.name}</span>
             </div>
           </div>
         </a>
       </div>
       <div className="relative m-auto mb-10 h-80 w-full max-w-screen-lg overflow-hidden md:mb-20 md:h-150 md:w-5/6 md:rounded-2xl lg:w-2/3">
         <BlurImage
-          alt={data.title ?? "Post image"}
+          alt={data.title ?? "Menu image"}
           width={1200}
           height={630}
           className="h-full w-full object-cover"
@@ -147,9 +143,9 @@ export default async function SitePostPage({
         />
       </div>
 
-      <MDX source={data.mdxSource} />
+      {/* <MDX source={data.mdxSource} /> */}
 
-      {data.adjacentPosts.length > 0 && (
+      {data.adjacentMenus.length > 0 && (
         <div className="relative mb-20 mt-10 sm:mt-20">
           <div
             className="absolute inset-0 flex items-center"
@@ -164,9 +160,9 @@ export default async function SitePostPage({
           </div>
         </div>
       )}
-      {data.adjacentPosts && (
+      {data.adjacentMenus && (
         <div className="mx-5 mb-20 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:mx-auto xl:grid-cols-3">
-          {data.adjacentPosts.map((data: any, index: number) => (
+          {data.adjacentMenus.map((data: any, index: number) => (
             <BlogCard key={index} data={data} />
           ))}
         </div>

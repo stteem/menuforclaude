@@ -1,5 +1,5 @@
 import Form from "@/components/form";
-import { updateSite } from "@/lib/actions";
+import { updateRestaurantMetadata } from "@/lib/actions";
 import db from "@/lib/db";
 
 export default async function SiteSettingsDomains({
@@ -7,8 +7,8 @@ export default async function SiteSettingsDomains({
 }: {
   params: { id: string };
 }) {
-  const data = await db.query.sites.findFirst({
-    where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
+  const data = await db.query.restaurants.findFirst({
+    where: (restaurants, { eq }) => eq(restaurants.id, decodeURIComponent(params.id)),
   });
 
   return (
@@ -24,7 +24,7 @@ export default async function SiteSettingsDomains({
           placeholder: "subdomain",
           maxLength: 32,
         }}
-        handleSubmit={updateSite}
+        handleSubmit={updateRestaurantMetadata}
       />
       <Form
         title="Custom Domain"
@@ -38,7 +38,7 @@ export default async function SiteSettingsDomains({
           maxLength: 64,
           pattern: "^[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}$",
         }}
-        handleSubmit={updateSite}
+        handleSubmit={updateRestaurantMetadata}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 import Form from "@/components/form";
-import { updateSite } from "@/lib/actions";
+import { updateRestaurantMetadata } from "@/lib/actions";
 import db from "@/lib/db";
 
 export default async function SiteSettingsAppearance({
@@ -7,8 +7,8 @@ export default async function SiteSettingsAppearance({
 }: {
   params: { id: string };
 }) {
-  const data = await db.query.sites.findFirst({
-    where: (sites, { eq }) => eq(sites.id, decodeURIComponent(params.id)),
+  const data = await db.query.restaurants.findFirst({
+    where: (restaurants, { eq }) => eq(restaurants.id, decodeURIComponent(params.id)),
   });
 
   return (
@@ -22,7 +22,7 @@ export default async function SiteSettingsAppearance({
           type: "file",
           defaultValue: data?.image!,
         }}
-        handleSubmit={updateSite}
+        handleSubmit={updateRestaurantMetadata}
       />
       <Form
         title="Logo"
@@ -33,7 +33,7 @@ export default async function SiteSettingsAppearance({
           type: "file",
           defaultValue: data?.logo!,
         }}
-        handleSubmit={updateSite}
+        handleSubmit={updateRestaurantMetadata}
       />
       <Form
         title="Font"
@@ -44,7 +44,7 @@ export default async function SiteSettingsAppearance({
           type: "select",
           defaultValue: data?.font!,
         }}
-        handleSubmit={updateSite}
+        handleSubmit={updateRestaurantMetadata}
       />
       <Form
         title="404 Page Message"
@@ -57,7 +57,7 @@ export default async function SiteSettingsAppearance({
           placeholder: "Blimey! You've found a page that doesn't exist.",
           maxLength: 240,
         }}
-        handleSubmit={updateSite}
+        handleSubmit={updateRestaurantMetadata}
       />
     </div>
   );
