@@ -59,15 +59,6 @@ export const verificationTokens = pgTable(
   },
 );
 
-export const examples = pgTable("examples", {
-  id: serial("id").primaryKey(),
-  name: text("name"),
-  description: text("description"),
-  domainCount: integer("domainCount"),
-  url: text("url"),
-  image: text("image"),
-  imageBlurhash: text("imageBlurhash"),
-});
 
 export const accounts = pgTable(
   "accounts",

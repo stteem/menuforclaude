@@ -274,7 +274,6 @@ export const updatePost = async (data: SelectPost) => {
       .set({
         title: data.title,
         description: data.description,
-        content: data.content,
       })
       .where(eq(posts.id, data.id))
       .returning();
