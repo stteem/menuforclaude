@@ -7,6 +7,7 @@ import { notFound, redirect } from "next/navigation";
 import { getRestaurantData } from "@/lib/fetchers";
 import { fontMapper } from "@/styles/fonts";
 import { Metadata } from "next";
+import { getSession } from "@/lib/auth"
 
 export async function generateMetadata({
   params,
@@ -64,9 +65,14 @@ export default async function SiteLayout({
   params: { domain: string };
   children: ReactNode;
 }) {
+  // const session = await getSession();
+  // if (!session?.user) {
+  //   redirect("/login");
+  // }
+
   const domain = decodeURIComponent(params.domain);
   const data = await getRestaurantData(domain);
-
+  console.log({data})
   if (!data) {
     notFound();
   }

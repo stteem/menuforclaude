@@ -43,12 +43,14 @@ export default async function middleware(req: NextRequest) {
     if (!session && path !== "/login") {
       return NextResponse.redirect(new URL("/login", req.url));
     } else if (session && path == "/login") {
+      console.log(`Session: ${session}`);
       return NextResponse.redirect(new URL("/", req.url));
     }
     return NextResponse.rewrite(
       new URL(`/app${path === "/" ? "" : path}`, req.url),
     );
   }
+  
 
   // special case for `vercel.pub` domain
   if (hostname === "vercel.pub") {
@@ -62,11 +64,12 @@ export default async function middleware(req: NextRequest) {
     hostname === "localhost:3000" ||
     hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
   ) {
+    console.log(`Hostname: ${hostname}, Path: ${path}, URL: ${req.url}`);
     return NextResponse.rewrite(
       new URL(`/home${path === "/" ? "" : path}`, req.url),
     );
   }
-
+  console.log('are we here?')
   // rewrite everything else to `/[domain]/[slug] dynamic route
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 }
