@@ -131,7 +131,6 @@ export const updateRestaurantMetadata = withSiteAuth(
             );
           }
           
-          */
         }
       } else if (key === "image" || key === "logo") {
         if (!process.env.BLOB_READ_WRITE_TOKEN) {
@@ -340,10 +339,6 @@ export const createMenu = withSiteAuth(
         error: "Not authenticated",
       };
     }
-
-    const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
-    const slug = formData.get("slug") as string; // Assuming slug is provided in the form data
 
     try {
       const [response] = await db
