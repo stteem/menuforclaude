@@ -6,10 +6,11 @@ import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 
 const title =
-  "Platforms Starter Kit – The all-in-one starter kit for building multi-tenant applications.";
-const description =
-  "The Platforms Starter Kit is a full-stack Next.js app with multi-tenancy and custom domain support. Built with Next.js App Router, Vercel Postgres and the Vercel Domains API.";
-const image = "https://vercel.pub/thumbnail.png";
+  "MenuWise – The all-in-one app for creating and managing restaurants and food menus.";
+const description = `Discover MenuWise, the ultimate restaurant menu management application designed to streamline your dining experience. With our all-in-one platform, effortlessly create, customize, and manage your restaurant's menus in real-time. MenuWise offers multi-tenancy support, allowing multiple locations to operate seamlessly under one account. Enhance your online presence with custom domain support and optimize your menu for search engines to attract more customers.
+                  Join the future of restaurant management with MenuWise and elevate your culinary offerings today!`;
+
+ const image = "https://vercel.pub/thumbnail.png";
 
 export const metadata: Metadata = {
   title,

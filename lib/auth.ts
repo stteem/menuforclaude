@@ -108,7 +108,7 @@ export function withSiteAuth(action: any) {
   };
 }
 
-export function withPostAuth(action: any) {
+export function withMenuAuth(action: any) {
   return async (
     formData: FormData | null,
     postId: string,
@@ -130,7 +130,7 @@ export function withPostAuth(action: any) {
 
     if (!menu || menu.userId !== session.user.id) {
       return {
-        error: "Post not found",
+        error: "Menu not found",
       };
     }
 

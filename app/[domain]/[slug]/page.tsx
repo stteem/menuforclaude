@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getMenuData, getRestaurantData } from "@/lib/fetchers";
-import BlogCard from "@/components/blog-card";
+import MenuCard from "@/components/menu-card";
 import BlurImage from "@/components/blur-image";
 // import MDX from "@/components/mdx";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
@@ -163,7 +163,7 @@ export default async function SiteMenuPage({
       {data.adjacentMenus && (
         <div className="mx-5 mb-20 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:mx-auto xl:grid-cols-3">
           {data.adjacentMenus.map((data: any, index: number) => (
-            <BlogCard key={index} data={data} />
+            <MenuCard key={index} data={data} />
           ))}
         </div>
       )}

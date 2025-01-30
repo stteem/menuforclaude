@@ -1,7 +1,7 @@
 import { getSession } from "@/lib/auth";
 import { notFound, redirect } from "next/navigation";
-import Posts from "@/components/posts";
-import CreatePostButton from "@/components/create-post-button";
+import Menus from "@/components/menus";
+import CreateMenuButton from "@/components/create-menu-button";
 import db from "@/lib/db";
 
 export default async function SitePosts({
@@ -43,9 +43,9 @@ export default async function SitePosts({
             {url} ↗
           </a>
         </div>
-        <CreatePostButton />
+        <CreateMenuButton />
       </div>
-      <Posts restaurantId={decodeURIComponent(params.id)} />
+      <Menus restaurantId={decodeURIComponent(params.id)} />
     </>
   );
 }

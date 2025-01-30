@@ -16,19 +16,15 @@ export default function CreateMenuButton() {
     <button
       onClick={() =>
         startTransition(async () => {
-          // const formData = new FormData();
-          // formData.append("title", "New Menu Title"); // Replace with actual title input
-          // formData.append("description", "New Menu Description"); // Replace with actual description input
-          // formData.append("slug", "new-menu-slug"); // Replace with actual slug input
-
-          const menu = await createMenu(null, id , null); // Pass the restaurant object
+          
+          const menu = await createMenu(null, id , null);
           if (menu.error) {
             console.error(menu.error);
             return;
           }
           va.track("Created Menu");
           router.refresh();
-          router.push(`/menu/${menu.slug}`);
+          router.push(`/menu/${menu.id}`);
         })
       }
       className={cn(
@@ -39,7 +35,7 @@ export default function CreateMenuButton() {
       )}
       disabled={isPending}
     >
-      {isPending ? <LoadingDots color="#808080" /> : <p>Create New Post</p>}
+      {isPending ? <LoadingDots color="#808080" /> : <p>Create new menu</p>}
     </button>
   );
 }

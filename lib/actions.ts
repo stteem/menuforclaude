@@ -11,7 +11,7 @@ import { put } from "@vercel/blob";
 import { eq } from "drizzle-orm";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
-import { withPostAuth, withSiteAuth } from "./auth";
+import { withMenuAuth, withSiteAuth } from "./auth";
 import db from "./db";
 import { SelectRestaurant, SelectMenu, SelectmenuItems, menus, menuItems, users, restaurants } from "./schema";
 
@@ -74,9 +74,9 @@ export const updateRestaurantMetadata = withSiteAuth(
       let response;
 
       if (key === "customDomain") {
-        if (value.includes("vercel.pub")) {
+        if (value.includes("kpaly.com")) {
           return {
-            error: "Cannot use vercel.pub subdomain as your custom domain",
+            error: "Cannot use kpaly.com subdomain as your custom domain",
           };
 
           // if the custom domain is valid, we need to add it to Vercel
@@ -112,24 +112,25 @@ export const updateRestaurantMetadata = withSiteAuth(
         if (restaurant.customDomain && restaurant.customDomain !== value) {
           response = await removeDomainFromVercelProject(restaurant.customDomain);
 
-          /* Optional: remove domain from Vercel team 
+          // //Optional: remove domain from Vercel team 
 
-          // first, we need to check if the apex domain is being used by other sites
-          const apexDomain = getApexDomain(`https://${site.customDomain}`);
-          const domainCount = await db.select({ count: count() }).from(sites).where(or(eq(sites.customDomain, apexDomain), ilike(sites.customDomain, `%.${apexDomain}`))).then((res) => res[0].count);
+          // // first, we need to check if the apex domain is being used by other sites
+          // const apexDomain = getApexDomain(`https://${restaurant.customDomain}`);
+          // const domainCount = await db.select({ count: count() }).from(restaurants).where(or(eq(sites.customDomain, apexDomain), ilike(sites.customDomain, `%.${apexDomain}`))).then((res) => res[0].count);
 
 
-          // if the apex domain is being used by other sites
-          // we should only remove it from our Vercel project
-          if (domainCount >= 1) {
-            await removeDomainFromVercelProject(site.customDomain);
-          } else {
-            // this is the only site using this apex domain
-            // so we can remove it entirely from our Vercel team
-            await removeDomainFromVercelTeam(
-              site.customDomain
-            );
-          }
+          // // if the apex domain is being used by other sites
+          // // we should only remove it from our Vercel project
+          // if (domainCount >= 1) {
+          //   await removeDomainFromVercelProject(restaurant.customDomain);
+          // } else {
+          //   // this is the only site using this apex domain
+          //   // so we can remove it entirely from our Vercel team
+          //   await removeDomainFromVercelTeam(
+          //     restaurant.customDomain
+          //   );
+          // }
+          
           
         }
       } else if (key === "image" || key === "logo") {
@@ -332,7 +333,7 @@ export const updateMenuItems = withSiteAuth(
 //Create menu
 // lib/actions.ts
 export const createMenu = withSiteAuth(
-  async (formData: FormData, restaurant: SelectRestaurant) => {
+  async (_: FormData, restaurant: SelectRestaurant) => {
     const session = await getSession();
     if (!session?.user.id) {
       return {
@@ -344,9 +345,9 @@ export const createMenu = withSiteAuth(
       const [response] = await db
         .insert(menus)
         .values({
-          title,
-          description,
-          slug,
+          // title,
+          // description,
+          // slug,
           restaurantId: restaurant.id,
           userId: session.user.id,
         })
@@ -380,7 +381,7 @@ export const updateMenu = async (data: SelectMenu) => {
       error: "Not authenticated",
     };
   }
-
+  // console.log({data})
   const menu = await db.query.menus.findFirst({
     where: eq(menus.id, data.id),
     with: {
@@ -424,7 +425,75 @@ export const updateMenu = async (data: SelectMenu) => {
   }
 };
 
-export const updateMenuMetadata = withSiteAuth(
+export const updateMenuMetadata = withMenuAuth(
+  async (
+    formData: FormData,
+    menu: SelectMenu & {
+      restaurant: SelectRestaurant;
+    },
+    key: string,
+  ) => {
+    const value = formData.get(key) as string;
+    console.log({formData, value, menu});
+    try {
+      let response;
+      if (key === "image") {
+        const file = formData.get("image") as File;
+        const filename = `${nanoid()}.${file.type.split("/")[1]}`;
+        // console.log({ filename, file });
+        const { url } = await put(filename, file, {
+          access: "public",
+        });
+
+        const blurhash = await getBlurDataURL(url);
+        response = await db
+          .update(menus)
+          .set({
+            image: url,
+            imageBlurhash: blurhash,
+          })
+          .where(eq(menus.id, menu.id))
+          .returning()
+          .then((res) => res[0]);
+      } else {
+        response = await db
+          .update(menus)
+          .set({
+            [key]: key === "published" ? value === "true" : value,
+          })
+          .where(eq(menus.id, menu.id))
+          .returning()
+          .then((res) => res[0]);
+      }
+
+      revalidateTag(
+        `${menu.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-menus`,
+      );
+      revalidateTag(
+        `${menu.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-${menu.id}`,
+      );
+
+      // if the restaurant has a custom domain, we need to revalidate those tags too
+      menu.restaurant?.customDomain &&
+        (revalidateTag(`${menu.restaurant?.customDomain}-menus`),
+        revalidateTag(`${menu.restaurant?.customDomain}-${menu.id}`));
+
+      return response;
+    } catch (error: any) {
+      if (error.code === "P2002") {
+        return {
+          error: `This ${key} is already in use`,
+        };
+      } else {
+        return {
+          error: error.message,
+        };
+      }
+    }
+  },
+);
+
+export const updateMenuItemMetadata = withSiteAuth(
   async (
     formData: FormData,
     menu: SelectMenu & {

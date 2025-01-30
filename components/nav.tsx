@@ -24,43 +24,43 @@ import { ReactNode, useEffect, useMemo, useState } from "react";
 import { getSiteFromMenuId } from "@/lib/actions";
 import Image from "next/image";
 
-const externalLinks = [
-  {
-    name: "Read announcement",
-    href: "https://vercel.com/blog/platforms-starter-kit",
-    icon: <Megaphone width={18} />,
-  },
-  {
-    name: "Star on GitHub",
-    href: "https://github.com/vercel/platforms",
-    icon: <Github width={18} />,
-  },
-  {
-    name: "Read the guide",
-    href: "https://vercel.com/guides/nextjs-multi-tenant-application",
-    icon: <FileCode width={18} />,
-  },
-  {
-    name: "View demo site",
-    href: "https://demo.vercel.pub",
-    icon: <Layout width={18} />,
-  },
-  {
-    name: "Deploy your own",
-    href: "https://vercel.com/templates/next.js/platforms-starter-kit",
-    icon: (
-      <svg
-        width={18}
-        viewBox="0 0 76 76"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="py-1 text-black dark:text-white"
-      >
-        <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" fill="currentColor" />
-      </svg>
-    ),
-  },
-];
+// const externalLinks = [
+//   {
+//     name: "Read announcement",
+//     href: "https://vercel.com/blog/platforms-starter-kit",
+//     icon: <Megaphone width={18} />,
+//   },
+//   {
+//     name: "Star on GitHub",
+//     href: "https://github.com/vercel/platforms",
+//     icon: <Github width={18} />,
+//   },
+//   {
+//     name: "Read the guide",
+//     href: "https://vercel.com/guides/nextjs-multi-tenant-application",
+//     icon: <FileCode width={18} />,
+//   },
+//   {
+//     name: "View demo site",
+//     href: "https://demo.vercel.pub",
+//     icon: <Layout width={18} />,
+//   },
+//   {
+//     name: "Deploy your own",
+//     href: "https://vercel.com/templates/next.js/platforms-starter-kit",
+//     icon: (
+//       <svg
+//         width={18}
+//         viewBox="0 0 76 76"
+//         fill="none"
+//         xmlns="http://www.w3.org/2000/svg"
+//         className="py-1 text-black dark:text-white"
+//       >
+//         <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" fill="currentColor" />
+//       </svg>
+//     ),
+//   },
+// ];
 
 export default function Nav({ children }: { children: ReactNode }) {
   const segments = useSelectedLayoutSegments();
@@ -69,8 +69,9 @@ export default function Nav({ children }: { children: ReactNode }) {
   const [siteId, setSiteId] = useState<string | null>();
 
   useEffect(() => {
-    if (segments[0] === "post" && id) {
+    if (segments[0] === "menu" && id) {
       getSiteFromMenuId(id).then((id) => {
+        // console.log('Hit this ', id);
         setSiteId(id);
       });
     }
@@ -80,12 +81,12 @@ export default function Nav({ children }: { children: ReactNode }) {
     if (segments[0] === "site" && id) {
       return [
         {
-          name: "Back to All Sites",
+          name: "Back to All Restaurants",
           href: "/sites",
           icon: <ArrowLeft width={18} />,
         },
         {
-          name: "Posts",
+          name: "Menus",
           href: `/site/${id}`,
           isActive: segments.length === 2,
           icon: <Newspaper width={18} />,
@@ -103,22 +104,28 @@ export default function Nav({ children }: { children: ReactNode }) {
           icon: <Settings width={18} />,
         },
       ];
-    } else if (segments[0] === "post" && id) {
+    } else if (segments[0] === "menu" && id) {
       return [
         {
-          name: "Back to All Posts",
+          name: "Back to All Menus",
           href: siteId ? `/site/${siteId}` : "/sites",
           icon: <ArrowLeft width={18} />,
         },
         {
-          name: "Editor",
-          href: `/post/${id}`,
+          name: "Edit Menu",
+          href: `/menu/${id}`,
           isActive: segments.length === 2,
           icon: <Edit3 width={18} />,
         },
         {
+          name: "Add Menu Items",
+          href: `/menu/${id}/items`,
+          isActive: segments.includes("items"),
+          icon: <Menu width={18} />,
+        },
+        {
           name: "Settings",
-          href: `/post/${id}/settings`,
+          href: `/menu/${id}/settings`,
           isActive: segments.includes("settings"),
           icon: <Settings width={18} />,
         },
@@ -132,7 +139,7 @@ export default function Nav({ children }: { children: ReactNode }) {
         icon: <LayoutDashboard width={18} />,
       },
       {
-        name: "Sites",
+        name: "Restaurants",
         href: "/sites",
         isActive: segments[0] === "sites",
         icon: <Globe width={18} />,
@@ -160,7 +167,7 @@ export default function Nav({ children }: { children: ReactNode }) {
       <button
         className={`fixed z-20 ${
           // left align for Editor, right align for other pages
-          segments[0] === "post" && segments.length === 2 && !showSidebar
+          segments[0] === "menu" && segments.length === 2 && !showSidebar
             ? "left-5 top-5"
             : "right-5 top-7"
         } sm:hidden`}
@@ -223,7 +230,7 @@ export default function Nav({ children }: { children: ReactNode }) {
             ))}
           </div>
         </div>
-        <div>
+        {/* <div>
           <div className="grid gap-1">
             {externalLinks.map(({ name, href, icon }) => (
               <a
@@ -243,7 +250,7 @@ export default function Nav({ children }: { children: ReactNode }) {
           </div>
           <div className="my-2 border-t border-stone-200 dark:border-stone-700" />
           {children}
-        </div>
+        </div> */}
       </div>
     </>
   );

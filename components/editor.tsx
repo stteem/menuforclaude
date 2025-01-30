@@ -9,6 +9,8 @@ import LoadingDots from "./icons/loading-dots";
 import { ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import type { SelectMenu } from "@/lib/schema";
+import Form from "./form";
+import FormButton from "./form/form-button";
 
 type MenuWithRestaurant = SelectMenu & { restaurant: { subdomain: string | null } | null };
 
@@ -56,6 +58,10 @@ export default function MenuEditor({ menu }: { menu: MenuWithRestaurant }) {
         </div>
         <button
           onClick={() => {
+            if(!data.title?.length){
+              toast.error("Menu name is required.");
+              return;
+            }
             const formData = new FormData();
             formData.append("published", String(!data.published));
             startTransitionPublishing(async () => {
@@ -87,20 +93,51 @@ export default function MenuEditor({ menu }: { menu: MenuWithRestaurant }) {
         </button>
       </div>
       <div className="mb-5 flex flex-col space-y-3 border-b border-stone-200 pb-5 dark:border-stone-700">
-        <input
-          type="text"
-          placeholder="Menu Name"
-          defaultValue={menu?.title || ""}
-          autoFocus
-          onChange={(e) => setData({ ...data, title: e.target.value })}
-          className="dark:placeholder-text-600 border-none px-0 font-cal text-3xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+        <form action={() => {
+          startTransitionSaving(async () => {
+            if(!data.title?.length) {
+              toast.error("Menu name is required.");
+              return;
+            }
+            if(data.title === menu.title && data.description === menu.description) {
+              toast.error("No changes detected.");
+              return;
+            }
+            await updateMenu(data);
+            toast.success("Menu updated successfully.");
+          });
+        }}>
+          <input
+            type="text"
+            placeholder="Menu Name (Required)"
+            defaultValue={menu?.title || ""}
+            autoFocus
+            onChange={(e) => setData({ ...data, title: e.target.value })}
+            className="dark:placeholder-text-600 border-none px-0 font-cal text-3xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+          />
+          <TextareaAutosize
+            placeholder="Description (Optional)"
+            defaultValue={menu?.description || ""}
+            onChange={(e) => setData({ ...data, description: e.target.value })}
+            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+          />
+          <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10 dark:border-stone-700 dark:bg-stone-800">
+            <p className="text-sm text-stone-500 dark:text-stone-400">Add menu name and description!</p>
+            <FormButton />
+          </div>
+        </form>
+        <Form
+          title="Banner image"
+          description="The thumbnail image for your site. Accepted formats: .png, .jpg, .jpeg"
+          helpText="Max file size 50MB. Recommended size 1200x630."
+          inputAttrs={{
+            name: "image",
+            type: "file",
+            defaultValue: data?.image!,
+          }}
+          handleSubmit={updateMenuMetadata}
         />
-        <TextareaAutosize
-          placeholder="Description"
-          defaultValue={menu?.description || ""}
-          onChange={(e) => setData({ ...data, description: e.target.value })}
-          className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
-        />
+
       </div>
     </div>
   );

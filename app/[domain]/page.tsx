@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import BlurImage from "@/components/blur-image";
 import { placeholderBlurhash, toDateString } from "@/lib/utils";
-import BlogCard from "@/components/blog-card";
+import MenuCard from "@/components/menu-card";
 import { getRestaurantData } from "@/lib/fetchers";
 import db from "@/lib/db";
 

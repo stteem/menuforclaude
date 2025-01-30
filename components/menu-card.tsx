@@ -4,7 +4,7 @@ import { placeholderBlurhash, random } from "@/lib/utils";
 import { BarChart, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
-export default function PostCard({
+export default function MenuCard({
   data,
 }: {
   data: SelectMenu & { restaurant: SelectRestaurant | null };
@@ -14,7 +14,7 @@ export default function PostCard({
   return (
     <div className="relative rounded-lg border border-stone-200 pb-10 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
       <Link
-        href={`/post/${data.id}`}
+        href={`/menu/${data.id}`}
         className="flex flex-col overflow-hidden rounded-lg"
       >
         <div className="relative h-44 overflow-hidden">
