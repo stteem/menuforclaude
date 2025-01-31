@@ -8,9 +8,9 @@ export default async function MenuPage({ params }: { params: { id: string } }) {
   if (!session) {
     redirect("/login");
   }
-
+  const { id } = await params;
   const menu = await db.query.menus.findFirst({
-    where: (menus, { eq }) => eq(menus.id, decodeURIComponent(params.id)),
+    where: (menus, { eq }) => eq(menus.id, decodeURIComponent(id)),
     with: {
       restaurant: {
         columns: {

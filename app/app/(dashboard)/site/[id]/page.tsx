@@ -13,8 +13,10 @@ export default async function SitePosts({
   if (!session) {
     redirect("/login");
   }
+
+  const { id } = await params;
   const data = await db.query.restaurants.findFirst({
-    where: (restaurants, { eq }) => eq(restaurants.id, decodeURIComponent(params.id)),
+    where: (restaurants, { eq }) => eq(restaurants.id, decodeURIComponent(id)),
   });
 
   if (!data || data.userId !== session.user.id) {
