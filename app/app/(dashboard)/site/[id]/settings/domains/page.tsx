@@ -2,11 +2,12 @@ import Form from "@/components/form";
 import { updateRestaurantMetadata } from "@/lib/actions";
 import db from "@/lib/db";
 
-export default async function SiteSettingsDomains({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function SiteSettingsDomains(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
   const data = await db.query.restaurants.findFirst({
     where: (restaurants, { eq }) => eq(restaurants.id, decodeURIComponent(params.id)),
   });

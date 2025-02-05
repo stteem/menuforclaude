@@ -11,21 +11,28 @@ import va from "@vercel/analytics";
 export default function DeleteRestaurantForm({ restaurantName }: { restaurantName: string }) {
   const { id } = useParams() as { id: string };
   const router = useRouter();
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    if (window.confirm("Are you sure you want to delete your restaurant?")) {
+      deleteRestaurant(formData, id, "delete").then(async(res: { error?: string }) => {
+        if (res.error) {
+          toast.error(res.error);
+        } else {
+          va.track("Deleted Restaurant");
+          router.refresh();
+          router.push(`/dashboard`);
+          toast.success(`Successfully deleted restaurant!`);
+        }
+      });
+    }
+  };
+
   return (
     <form
-      action={async (data: FormData) =>
-        window.confirm("Are you sure you want to delete your restaurant?") &&
-        deleteRestaurant(data, id, "delete").then((res: { error?: string }) => {
-          if (res.error) {
-            toast.error(res.error);
-          } else {
-            va.track("Deleted Restaurant");
-            router.refresh();
-            router.push(`/dashboard`);
-            toast.success(`Successfully deleted restaurant!`);
-          }
-        })
-      }
+      onSubmit={handleFormSubmit}
       className="rounded-lg border border-red-600 bg-white dark:bg-black"
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">

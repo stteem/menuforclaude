@@ -4,6 +4,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { Providers } from "./providers";
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
+import SessionProviderWrapper from "./SessionProviderWrapper"; // Import the new wrapper
+
 
 const title =
   "MenuWise – The all-in-one app for creating and managing restaurants and food menus.";
@@ -37,6 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <SessionProviderWrapper>
     <html lang="en" suppressHydrationWarning>
       <body className={cn(cal.variable, inter.variable)}>
         <Providers>
@@ -45,5 +48,6 @@ export default function RootLayout({
         </Providers>
       </body>
     </html>
+    </SessionProviderWrapper>
   );
 }

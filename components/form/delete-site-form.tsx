@@ -11,23 +11,43 @@ import va from "@vercel/analytics";
 export default function DeleteSiteForm({ siteName }: { siteName: string }) {
   const { id } = useParams() as { id: string };
   const router = useRouter();
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    if (window.confirm("Are you sure you want to delete your restaurant?")) {
+      deleteSite(formData, id, "delete").then((res: { error?: string }) => {
+        if (res.error) {
+          toast.error(res.error);
+        } else {
+          va.track("Deleted Site");
+          router.refresh();
+          router.push(`/sites`);
+          toast.success(`Successfully deleted site!`);
+        }
+      });
+    }
+  };
+  
   return (
     <form
-      action={async (data: FormData) =>
-        window.confirm("Are you sure you want to delete your site?") &&
-        deleteSite(data, id, "delete")
-          .then(async (res) => {
-            if (res.error) {
-              toast.error(res.error);
-            } else {
-              va.track("Deleted Site");
-              router.refresh();
-              router.push("/sites");
-              toast.success(`Successfully deleted site!`);
-            }
-          })
-          .catch((err: Error) => toast.error(err.message))
-      }
+      onSubmit={handleFormSubmit}
+      // action={async (data: FormData) =>
+      //   window.confirm("Are you sure you want to delete your site?") &&
+      //   deleteSite(data, id, "delete")
+      //     .then(async (res) => {
+      //       if (res.error) {
+      //         toast.error(res.error);
+      //       } else {
+      //         va.track("Deleted Site");
+      //         router.refresh();
+      //         router.push("/sites");
+      //         toast.success(`Successfully deleted site!`);
+      //       }
+      //     })
+      //     .catch((err: Error) => toast.error(err.message))
+      // }
       className="rounded-lg border border-red-600 bg-white dark:bg-black"
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">

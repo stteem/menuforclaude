@@ -27,37 +27,45 @@ export default function Form({
     maxLength?: number;
     pattern?: string;
   };
-  handleSubmit: any;
+  handleSubmit?: any;
 }) {
   const { id } = useParams() as { id?: string };
   const router = useRouter();
+
   const { update } = useSession();
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    if (
+      inputAttrs.name === "customDomain" &&
+      inputAttrs.defaultValue &&
+      formData.get("customDomain") !== inputAttrs.defaultValue &&
+      !confirm("Are you sure you want to change your custom domain?")
+    ) {
+      return;
+    }
+
+    handleSubmit(formData, id, inputAttrs.name).then(async (res: any) => {
+      if (res.error) {
+        toast.error(res.error);
+      } else {
+        va.track(`Updated ${inputAttrs.name}`, id ? { id } : {});
+        if (id) {
+          router.refresh();
+        } else {
+          await update();
+          router.refresh();
+        }
+        toast.success(`Successfully updated ${inputAttrs.name}!`);
+      }
+    });
+  };
+
   return (
     <form
-      action={async (data: FormData) => {
-        if (
-          inputAttrs.name === "customDomain" &&
-          inputAttrs.defaultValue &&
-          data.get("customDomain") !== inputAttrs.defaultValue &&
-          !confirm("Are you sure you want to change your custom domain?")
-        ) {
-          return;
-        }
-        handleSubmit(data, id, inputAttrs.name).then(async (res: any) => {
-          if (res.error) {
-            toast.error(res.error);
-          } else {
-            va.track(`Updated ${inputAttrs.name}`, id ? { id } : {});
-            if (id) {
-              router.refresh();
-            } else {
-              await update();
-              router.refresh();
-            }
-            toast.success(`Successfully updated ${inputAttrs.name}!`);
-          }
-        });
-      }}
+      onSubmit={handleFormSubmit}
       className="rounded-lg border border-stone-200 bg-white dark:border-stone-700 dark:bg-black"
     >
       <div className="relative flex flex-col space-y-4 p-5 sm:p-10">

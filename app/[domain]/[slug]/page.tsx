@@ -8,11 +8,12 @@ import db from "@/lib/db";
 import { menus, restaurants } from "@/lib/schema";
 import { eq } from "drizzle-orm";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { domain: string; slug: string };
-}) {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ domain: string; slug: string }>;
+  }
+) {
+  const params = await props.params;
   const domain = decodeURIComponent(params.domain);
   const slug = decodeURIComponent(params.slug);
 
@@ -77,11 +78,12 @@ export async function generateStaticParams() {
   return allPaths;
 }
 
-export default async function SiteMenuPage({
-  params,
-}: {
-  params: { domain: string; slug: string };
-}) {
+export default async function SiteMenuPage(
+  props: {
+    params: Promise<{ domain: string; slug: string }>;
+  }
+) {
+  const params = await props.params;
   const domain = decodeURIComponent(params.domain);
   const slug = decodeURIComponent(params.slug);
   const data = await getMenuData(domain, slug);

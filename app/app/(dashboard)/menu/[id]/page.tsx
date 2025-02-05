@@ -3,14 +3,14 @@ import { notFound, redirect } from "next/navigation";
 import Editor from "@/components/editor";
 import db from "@/lib/db";
 
-export default async function MenuPage({ params }: { params: { id: string } }) {
+export default async function MenuPage(props: { params: Promise<{ id: string }> }) {
   const session = await getSession();
   if (!session) {
     redirect("/login");
   }
-  const { id } = await params;
+  const param = await props.params;
   const menu = await db.query.menus.findFirst({
-    where: (menus, { eq }) => eq(menus.id, decodeURIComponent(id)),
+    where: (menus, { eq }) => eq(menus.id, decodeURIComponent(param.id)),
     with: {
       restaurant: {
         columns: {
@@ -21,7 +21,7 @@ export default async function MenuPage({ params }: { params: { id: string } }) {
     },
   });
 
-  if (!menu || menu.restaurant.userId !== session.user.id) {
+  if (!menu || menu.restaurant.userId !== session?.user.id) {
     notFound();
   }
 

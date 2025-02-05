@@ -7,21 +7,19 @@ import { accounts, sessions, users, verificationTokens } from "./schema";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
-  providers: [
-    GitHubProvider({
-      clientId: process.env.AUTH_GITHUB_ID as string,
+  providers: [ GitHubProvider({
+    clientId: process.env.AUTH_GITHUB_ID as string,
       clientSecret: process.env.AUTH_GITHUB_SECRET as string,
-      profile(profile) {
-        return {
-          id: profile.id.toString(),
-          name: profile.name || profile.login,
-          gh_username: profile.login,
-          email: profile.email,
-          image: profile.avatar_url,
-        };
-      },
-    }),
-  ],
+    profile(profile) {
+      return {
+        id: profile.id.toString(),
+        name: profile.name || profile.login,
+        gh_username: profile.login,
+        email: profile.email,
+        image: profile.avatar_url,
+      };
+    },
+  }) ],
   pages: {
     signIn: `/login`,
     verifyRequest: `/login`,
@@ -69,24 +67,17 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-type user = {
-   id: string;
-      name: string;
-      username: string;
-      email: string;
-      image: string;
+type User = {
+    id: string;
+    name: string;
+    username: string;
+    email: string;
+    image: string;
 }
 
 export async function getSession() {
-  return await getServerSession(authOptions) as {
-    user: {
-      id: string;
-      name: string;
-      username: string;
-      email: string;
-      image: string;
-    };
-  } | null;
+  const session = await getServerSession(authOptions);
+  return session as { user: User } | null;
 }
 
 export function withSiteAuth(action: any) {
@@ -119,7 +110,7 @@ export function withSiteAuth(action: any) {
 export function withMenuAuth(action: any) {
   return async (
     formData: FormData | null,
-    postId: string,
+    menuId: string,
     key: string | null,
   ) => {
     const session = await getSession();
@@ -130,9 +121,9 @@ export function withMenuAuth(action: any) {
     }
 
     const menu = await db.query.menus.findFirst({
-      where: (menus, { eq }) => eq(menus.id, postId),
+      where: (menus, { eq }) => eq(menus.id, menuId),
       with: {
-        items: true,
+        restaurant: true,
       },
     });
 
@@ -143,5 +134,36 @@ export function withMenuAuth(action: any) {
     }
 
     return action(formData, menu, key);
+  };
+}
+
+
+export function withMenuItemAuth(action: any) {
+  return async (
+    formData: FormData | null,
+    menuItemId: string,
+    key: string | null,
+  ) => {
+    const session = await getSession();
+    if (!session?.user.id) {
+      return {
+        error: "Not authenticated",
+      };
+    }
+
+    const menuItem = await db.query.menuItems.findFirst({
+      where: (menuItems, { eq }) => eq(menuItems.id, menuItemId),
+      with: {
+        restaurant: true,
+      },
+    });
+
+    if (!menuItem || menuItem.restaurant.userId !== session.user.id) {
+      return {
+        error: "Menu item not found",
+      };
+    }
+
+    return action(formData, menuItem, key);
   };
 }

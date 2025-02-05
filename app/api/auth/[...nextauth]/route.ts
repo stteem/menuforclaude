@@ -1,3 +1,7 @@
+// import { handlers } from "@/auth";
+// export const { GET, POST } = handlers;
+
+
 import { authOptions } from "@/lib/auth";
 import NextAuth from "next-auth";
 

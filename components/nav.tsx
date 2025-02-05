@@ -23,6 +23,8 @@ import {
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import { getSiteFromMenuId } from "@/lib/actions";
 import Image from "next/image";
+import { useRouter } from "next/navigation"; // Import useRouter
+
 
 // const externalLinks = [
 //   {
@@ -67,7 +69,8 @@ export default function Nav({ children }: { children: ReactNode }) {
   const { id } = useParams() as { id?: string };
 
   const [siteId, setSiteId] = useState<string | null>();
-
+  const router = useRouter();
+  
   useEffect(() => {
     if (segments[0] === "menu" && id) {
       getSiteFromMenuId(id).then((id) => {
@@ -104,7 +107,17 @@ export default function Nav({ children }: { children: ReactNode }) {
           icon: <Settings width={18} />,
         },
       ];
-    } else if (segments[0] === "menu" && id) {
+    } 
+    if(segments[0] === "menuitem" && id) {
+      return [
+        {
+          name: "Back to menu items",
+          href: "",
+          icon: <ArrowLeft width={18} />,
+        },
+      ]
+    }
+    else if (segments[0] === "menu" && id) {
       return [
         {
           name: "Back to All Menus",
@@ -123,12 +136,12 @@ export default function Nav({ children }: { children: ReactNode }) {
           isActive: segments.includes("items"),
           icon: <Menu width={18} />,
         },
-        {
-          name: "Settings",
-          href: `/menu/${id}/settings`,
-          isActive: segments.includes("settings"),
-          icon: <Settings width={18} />,
-        },
+        // {
+        //   name: "Settings",
+        //   href: `/menu/${id}/settings`,
+        //   isActive: segments.includes("settings"),
+        //   icon: <Settings width={18} />,
+        // },
       ];
     }
     return [
@@ -216,9 +229,22 @@ export default function Nav({ children }: { children: ReactNode }) {
             </Link>
           </div>
           <div className="grid gap-1">
-            {tabs.map(({ name, href, isActive, icon }) => (
+            {tabs.map(({ name, href, isActive, icon }, index) => (
+              segments[0] === "menuitem" && id ? 
+              <button
+                key={index}
+                onClick={() => router.back()}
+                className={`flex items-center space-x-3 ${
+                  isActive ? "bg-stone-200 text-black dark:bg-stone-700" : ""
+                  } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-stone-700 dark:active:bg-stone-800`
+                }
+              >
+                {icon}
+                <span className="text-sm font-medium">{name}</span>
+              </button>
+              :
               <Link
-                key={name}
+                key={index}
                 href={href}
                 className={`flex items-center space-x-3 ${
                   isActive ? "bg-stone-200 text-black dark:bg-stone-700" : ""

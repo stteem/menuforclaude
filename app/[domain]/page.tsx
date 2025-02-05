@@ -30,11 +30,12 @@ export async function generateStaticParams() {
   return allPaths;
 }
 
-export default async function RestaurantHomePage({
-  params,
-}: {
-  params: { domain: string };
-}) {
+export default async function RestaurantHomePage(
+  props: {
+    params: Promise<{ domain: string }>;
+  }
+) {
+  const params = await props.params;
   const domain = decodeURIComponent(params.domain);
   const restaurant = await getRestaurantData(domain);
 
@@ -59,7 +60,7 @@ export default async function RestaurantHomePage({
                   {item.imageUrl ? (
                     <BlurImage
                       src={item.imageUrl}
-                      alt={item.name}
+                      alt={item.name || "Restaurant name"}
                       width={200}
                       height={200}
                       placeholder="blur"

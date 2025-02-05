@@ -187,8 +187,12 @@ export const menuItems = pgTable(
     menuId: text("menuId")
       .notNull()
       .references(() => menus.id, { onDelete: "cascade", onUpdate: "cascade" }),
-    name: text("name").notNull(),
+    name: text("name"),
     description: text("description"),
+    slug: text("slug")
+      .notNull()
+      .$defaultFn(() => createId()),
+    published: boolean("published").default(false).notNull(),
     restaurantId: text("restaurantId")
     .notNull()
     .references(() => restaurants.id, { onDelete: "cascade", onUpdate: "cascade" }),
@@ -196,7 +200,11 @@ export const menuItems = pgTable(
     imageBlurhash: text("imageBlurhash").default(
       "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAhCAYAAACbffiEAAAACXBIWXMAABYlAAAWJQFJUiTwAAABfUlEQVR4nN3XyZLDIAwE0Pz/v3q3r55JDlSBplsIEI49h76k4opexCK/juP4eXjOT149f2Tf9ySPgcjCc7kdpBTgDPKByKK2bTPFEdMO0RDrusJ0wLRBGCIuelmWJAjkgPGDSIQEMBDCfA2CEPM80+Qwl0JkNxBimiaYGOTUlXYI60YoehzHJDEm7kxjV3whOQTD3AaCuhGKHoYhyb+CBMwjIAFz647kTqyapdV4enGINuDJMSScPmijSwjCaHeLcT77C7EC0C1ugaCTi2HYfAZANgj6Z9A8xY5eiYghDMNQBJNCWhASot0jGsSCUiHWZcSGQjaWWCDaGMOWnsCcn2QhVkRuxqqNxMSdUSElCDbp1hbNOsa6Ugxh7xXauF4DyM1m5BLtCylBXgaxvPXVwEoOBjeIFVODtW74oj1yBQah3E8tyz3SkpolKS9Geo9YMD1QJR1Go4oJkgO1pgbNZq0AOUPChyjvh7vlXaQa+X1UXwKxgHokB2XPxbX+AnijwIU4ahazAAAAAElFTkSuQmCC",
     ),
-    price: numeric("price").notNull(),
+    price: text("price"),
+    userId: text("userId").references(() => users.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
     createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
     updatedAt: timestamp("updatedAt", { mode: "date" })
       .notNull()
@@ -232,6 +240,7 @@ export const menusRelations = relations(menus, ({ one, many }) => ({
 }));
 
 export const menuItemsRelations = relations(menuItems, ({ one }) => ({
+  restaurant: one(restaurants, { references: [restaurants.id], fields: [menuItems.restaurantId] }),
   menu: one(menus, { references: [menus.id], fields: [menuItems.menuId] }),
 }));
 
@@ -252,6 +261,6 @@ export const userRelations = relations(users, ({ many }) => ({
 export type SelectSession = typeof sessions.$inferSelect;
 export type SelectRestaurant = typeof restaurants.$inferSelect;
 export type SelectMenu = typeof menus.$inferSelect;
-export type SelectmenuItems = typeof menuItems.$inferSelect;
+export type SelectMenuItem = typeof menuItems.$inferSelect;
 export type SelectUser = typeof users.$inferSelect;
 export type SelectExample = typeof examples.$inferSelect;

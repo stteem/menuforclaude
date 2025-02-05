@@ -5,11 +5,12 @@ import { updateRestaurantMetadata } from "@/lib/actions";
 import DeleteRestaurantForm from "@/components/form/delete-post-form";
 import db from "@/lib/db";
 
-export default async function RestaurantSettings({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function RestaurantSettings(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
   const session = await getSession();
   if (!session) {
     redirect("/login");
