@@ -252,7 +252,6 @@ export const createMenuItems = withSiteAuth(
       };
     }
 
-    try {
       const [response] = await db
         .insert(menuItems)
         .values({
@@ -285,22 +284,6 @@ export const updateMenuItems = withSiteAuth(
     if (!session?.user.id) {
       return {
         error: "Not authenticated",
-      };
-    }
-
-    const name = formData.get("name") as string;
-    const description = formData.get("description") as string;
-    const imageUrl = formData.get("imageUrl") as string;
-    const price = parseFloat(formData.get("price") as string);
-
-    // Fetch restaurant details using restaurantId from the menuItem
-    const restaurant = await db.query.restaurants.findFirst({
-      where: (restaurants, { eq }) => eq(restaurants.id, menuItem.restaurantId),
-    });
-
-    if (!restaurant) {
-      return {
-        error: "Restaurant not found",
       };
     }
 

@@ -77,7 +77,6 @@ type user = {
       image: string;
 }
 
-
 export async function getSession() {
   return await getServerSession(authOptions) as {
     user: {
