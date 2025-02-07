@@ -5,6 +5,7 @@ module.exports = {
   experimental: {
     serverActions: {
       allowedOrigins: ["app.localhost:3000"],
+      bodySizeLimit: '5mb',
     },
   },
   images: {

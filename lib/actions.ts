@@ -14,6 +14,7 @@ import { revalidateTag } from "next/cache";
 import { withMenuAuth, withSiteAuth, withMenuItemAuth } from "./auth";
 import db from "./db";
 import { SelectRestaurant, SelectMenu, SelectMenuItem, menus, menuItems, users, restaurants } from "./schema";
+import { NextResponse } from "next/server";
 
 const nanoid = customAlphabet(
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
@@ -290,10 +291,9 @@ export const updateMenuItem = async (data: SelectMenuItem) => {
           price: data.price,
         })
         .where(eq(menuItems.id, data.id)) 
-        .returning({
-          restaurantId: menuItems.restaurantId, // Include restaurantId in the response
-        });
-
+        .returning();
+        
+        // console.log({response})
          // Fetch restaurant details using restaurantId from the menuItem
         const restaurant = await db.query.restaurants.findFirst({
           where: (restaurants, { eq }) => eq(restaurants.id, response.restaurantId),
@@ -473,7 +473,13 @@ export const updateMenuMetadata = withMenuAuth(
         return {
           error: `This ${key} is already in use`,
         };
-      } else {
+      } 
+      if (error instanceof Error && error.message.includes('Vercel Blob: Missing [x]-content-length header.')) {
+        return { 
+          error: 'No changes detected. Please upload an image and try again.' 
+        };
+      }
+      else {
         return {
           error: error.message,
         };
@@ -546,7 +552,13 @@ export const updateMenuItemMetadata = withMenuItemAuth(
         return {
           error: `This ${key} is already in use`,
         };
-      } else {
+      } 
+      if (error instanceof Error && error.message.includes('Vercel Blob: Missing [x]-content-length header.')) {
+        return { 
+          error: 'No changes detected. Please upload an image and try again.' 
+        };
+      }
+      else {
         return {
           error: error.message,
         };

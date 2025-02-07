@@ -1,10 +1,12 @@
-import { clsx, type ClassValue } from "clsx";
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 import { PgSelect } from "drizzle-orm/pg-core";
-import { twMerge } from "tailwind-merge";
+
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
+
 export async function fetcher<JSON = any>(
   input: RequestInfo,
   init?: RequestInit,
@@ -72,3 +74,4 @@ export function stripUndefined<T>(obj: T): Pick<T, NonNullableProps<T>> {
   for (const key in obj) if (obj[key] !== undefined) result[key] = obj[key];
   return result;
 }
+

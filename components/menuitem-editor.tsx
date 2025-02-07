@@ -2,47 +2,109 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { updateMenuItem, updateMenuItemMetadata } from "@/lib/actions";
-// import { Editor as NovelEditor } from "novel";
 import TextareaAutosize from "react-textarea-autosize";
 import { cn } from "@/lib/utils";
 import LoadingDots from "./icons/loading-dots";
-import { ExternalLink } from "lucide-react";
-import { toast } from "sonner";
-import type { SelectMenu, SelectMenuItem } from "@/lib/schema";
+// import { toast } from "sonner";
+import type { SelectMenuItem } from "@/lib/schema";
 import Form from "./form";
 import FormButton from "./form/form-button";
+// import { useToast } from "@/hooks/use-toast"
+import { useToast } from '@/lib/hooks/use-toast';
 
-// type MenuItemWithMenu = SelectMenuItem & { menu: { restaurantId: string | null } | null };
+
 
 export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem }) {
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
   const [data, setData] = useState<SelectMenuItem>(menuitem);
+  // const { toast } = useToast()
+  const { showToast } = useToast();
+
+
 
   useEffect(() => {
     setData(menuitem);
   }, [menuitem]);
-//   const [hydrated, setHydrated] = useState(false);
 
-//   const url = process.env.NEXT_PUBLIC_VERCEL_ENV
-//     ? `https://${data.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${data.id}`
-//     : `http://${data.restaurant?.subdomain}.localhost:3000/${data.id}`;
+  const handleSave = () => {
+    startTransitionSaving(async () => {
+      if(!data.name?.length) {
+        // toast.error("Item name is required.");
+        // toast({
+        //   description: "Item name is required.",
+        // })
+        showToast("Item name is required.", "error");
+        return;
+      }
+      if(data.name === menuitem.name && 
+          data.description === menuitem.description &&
+          data.price === menuitem.price) {
+            // console.log('No changes detected.')
+            // toast({
+            //   description: "No changes detected.",
+            // })
+            showToast("No changes detected.", "error");
+        return;
+      }
+      const response = await updateMenuItem(data);
 
-  // listen to CMD + S and override the default behavior
-//   useEffect(() => {
-//     const onKeyDown = (e: KeyboardEvent) => {
-//       if (e.metaKey && e.key === "s") {
-//         e.preventDefault();
-//         startTransitionSaving(async () => {
-//           await updateMenuItems(data);
-//         });
-//       }
-//     };
-//     document.addEventListener("keydown", onKeyDown);
-//     return () => {
-//       document.removeEventListener("keydown", onKeyDown);
-//     };
-//   }, [data, startTransitionSaving]);
+      if ('error' in response) {
+        // setToastErrorMessage("Failed to update menu item.");
+        // toast({
+        //   description: "Failed to update menu item.",
+        // })
+        showToast("Failed to update menu item.", "error");
+        return;
+      }
+      // console.log({response})
+      setData(response)
+      console.log('updated menu item')
+      // toast({
+      //   description: "Menu item updated successfully.",
+      // })
+      showToast("Menu item updated successfully.", "success");
+    });
+  }
+
+  const handlePublish = () => {
+    if(!data.name?.length){
+      
+      // toast({
+      //   description: "Item name is required.",
+      // })
+      showToast("Item name is required.", "error");
+      return;
+    }
+    if(!data.price){
+      // toast({
+      //   description: "Item price is required.",
+      // })
+      showToast("Item price is required.", "error");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("published", String(!data.published));
+    startTransitionPublishing(async () => {
+      await updateMenuItemMetadata(formData, menuitem.id, "published").then(
+        () => {
+          // toast({
+          //   description: `Successfully ${
+          //     data.published ? "unpublished" : "published"
+          //   } your menu.`,
+          // });
+          showToast(`Successfully ${
+              data.published ? "unpublished" : "published"
+            } your menu.`, "success");
+          setData((prev) => ({ ...prev, published: !prev.published }));
+        },
+      )
+      .catch((error) => {
+        // toast({ description: `Failed to ${data.published ? "unpublish" : "publish"} menu item: ${error.message}`});
+        showToast(`Failed to ${data.published ? "unpublish" : "publish"} menu item: ${error.message}`, "error");
+      });
+    });
+  }
 
   return (
     <div className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg dark:border-stone-700">
@@ -61,30 +123,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
           {isPendingSaving ? "Saving..." : "Saved"}
         </div>
         <button
-          onClick={() => {
-            if(!data.name?.length){
-              toast.error("Item name is required.");
-              return;
-            }
-            if(!data.price){
-              toast.error("Item price is required.");
-              return;
-            }
-            const formData = new FormData();
-            formData.append("published", String(!data.published));
-            startTransitionPublishing(async () => {
-              await updateMenuItemMetadata(formData, menuitem.id, "published").then(
-                () => {
-                  toast.success(
-                    `Successfully ${
-                      data.published ? "unpublished" : "published"
-                    } your menu.`,
-                  );
-                  setData((prev) => ({ ...prev, published: !prev.published }));
-                },
-              );
-            });
-          }}
+          onClick={handlePublish}
           className={cn(
             "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none",
             isPendingPublishing
@@ -101,28 +140,17 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
         </button>
       </div>
       <div className="mb-5 flex flex-col space-y-3 border-b border-stone-200 pb-5 dark:border-stone-700">
-        <form action={() => {
-          startTransitionSaving(async () => {
-            if(!data.name?.length) {
-              toast.error("Item name is required.");
-              return;
-            }
-            if(data.name === menuitem.name && 
-                data.description === menuitem.description &&
-                data.price === menuitem.price) {
-              toast.error("No changes detected.");
-              return;
-            }
-            await updateMenuItem(data);
-            toast.success("Menu item updated successfully.");
-          });
-        }}
-        className="flex flex-col gap-5"
+        <form 
+          onSubmit={(e) => {
+            e.preventDefault()
+            handleSave()
+          }}
+          className="flex flex-col gap-5"
         >
           <input
             type="text"
             placeholder="Name (required)"
-            defaultValue={menuitem?.name || ""}
+            defaultValue={menuitem.name || ""}
             autoFocus
             required
             onChange={(e) => setData({ ...data, name: e.target.value })}
@@ -131,7 +159,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
           <input
             type="text"
             placeholder="$0"
-            defaultValue={menuitem?.price || ""}
+            defaultValue={menuitem.price || ""}
             autoFocus
             required
             onChange={(e) => setData({ ...data, price: e.target.value })}
@@ -139,7 +167,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
           />
           <TextareaAutosize
             placeholder="Description (optional)"
-            defaultValue={menuitem?.description || ""}
+            defaultValue={menuitem.description || ""}
             onChange={(e) => setData({ ...data, description: e.target.value })}
             className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
           />
@@ -151,7 +179,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
         <Form
           title="Banner image (optional)"
           description="The thumbnail image for your site. Accepted formats: .png, .jpg, .jpeg"
-          helpText="Max file size 50MB. Recommended size 1200x630."
+          helpText="Max file size 5MB. Recommended size 1200x630."
           inputAttrs={{
             name: "image",
             type: "file",
@@ -159,7 +187,6 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
           }}
           handleSubmit={updateMenuItemMetadata}
         />
-
       </div>
     </div>
   );

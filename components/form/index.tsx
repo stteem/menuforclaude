@@ -47,6 +47,24 @@ export default function Form({
       return;
     }
 
+    if(inputAttrs.name === "image") {
+      const formDataEntries = Array.from(formData.entries());
+      const blobParts = formDataEntries.map(([key, value]) => {
+          if (value instanceof Blob) {
+              return value; // If it's already a Blob, return it
+          }
+          return new Blob([value.toString()]); // Convert other types to Blob
+      });
+
+      const sizeInBytes = new Blob(blobParts).size; // Calculate the size of the FormData
+      const sizeInMB = sizeInBytes / (1024 * 1024); // Convert to MB
+    
+      if(sizeInMB > 5) {
+        toast.error("File size exceeds 1MB.");
+        return;
+      }
+    }
+
     handleSubmit(formData, id, inputAttrs.name).then(async (res: any) => {
       if (res.error) {
         toast.error(res.error);

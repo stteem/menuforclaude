@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Providers } from "./providers";
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
-import SessionProviderWrapper from "./SessionProviderWrapper"; // Import the new wrapper
+import { Toaster } from "@/components/ui/toaster"
 
 
 const title =
@@ -39,15 +39,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SessionProviderWrapper>
     <html lang="en" suppressHydrationWarning>
       <body className={cn(cal.variable, inter.variable)}>
         <Providers>
           {children}
           <Analytics />
+          <Toaster />
         </Providers>
       </body>
     </html>
-    </SessionProviderWrapper>
   );
 }
