@@ -20,18 +20,18 @@ export default function MenuItemCard({data,}: {data: SelectMenuItem}) {
     >
       <Link
         href={`/menuitem/${data.id}`}
-        className="flex flex-col md:flex-row justify-between w-full overflow-hidden rounded-lg"
+        className="flex flex-row justify-between w-full overflow-hidden rounded-lg"
       >
         
-        <div className="border-stone-200 p-4 dark:border-stone-700">
+        <div className="border-stone-200 w-[60%] md:w-[70%] p-4 dark:border-stone-700">
           <h3 className="my-0 truncate font-cal text-xl font-bold tracking-wide dark:text-white">
             {data.name ?? "Name"}
           </h3>
           <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
             {data.price ?? "$0"}
           </p>
-          <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
-            {data.description ?? " Description here (optional) lorem ipsum imer ipsum lore lora lakaka ratel."}
+          <p className="mt-2 line-clamp-2 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
+            {data.description ?? " Description is optional. It does help if you have something nice to add."}
           </p>
           {isHovered && ( // Conditionally render the hover text
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
@@ -39,12 +39,12 @@ export default function MenuItemCard({data,}: {data: SelectMenuItem}) {
             </div>
           )}
         </div>
-        <div className="relative h-44 overflow-hidden">
+        <div className="relative w-[40%] md:w-[30%] h-44 overflow-hidden">
           <BlurImage
             alt={data.name ?? "Item card thumbnail"}
             width={500}
             height={400}
-            className="w-full md:ml-5 h-full object-cover rounded-md"
+            className="w-full h-full object-contain md:object-cover rounded-md"
             src={data.imageUrl ?? "/placeholder.png"}
             placeholder="blur"
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
