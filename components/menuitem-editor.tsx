@@ -9,7 +9,6 @@ import LoadingDots from "./icons/loading-dots";
 import type { SelectMenuItem } from "@/lib/schema";
 import Form from "./form";
 import FormButton from "./form/form-button";
-// import { useToast } from "@/hooks/use-toast"
 import { useToast } from '@/lib/hooks/use-toast';
 
 
@@ -18,7 +17,6 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
   const [data, setData] = useState<SelectMenuItem>(menuitem);
-  // const { toast } = useToast()
   const { showToast } = useToast();
 
 
@@ -30,56 +28,34 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
   const handleSave = () => {
     startTransitionSaving(async () => {
       if(!data.name?.length) {
-        // toast.error("Item name is required.");
-        // toast({
-        //   description: "Item name is required.",
-        // })
         showToast("Item name is required.", "error");
         return;
       }
       if(data.name === menuitem.name && 
           data.description === menuitem.description &&
           data.price === menuitem.price) {
-            // console.log('No changes detected.')
-            // toast({
-            //   description: "No changes detected.",
-            // })
             showToast("No changes detected.", "error");
         return;
       }
       const response = await updateMenuItem(data);
 
       if ('error' in response) {
-        // setToastErrorMessage("Failed to update menu item.");
-        // toast({
-        //   description: "Failed to update menu item.",
-        // })
         showToast("Failed to update menu item.", "error");
         return;
       }
       // console.log({response})
       setData(response)
       console.log('updated menu item')
-      // toast({
-      //   description: "Menu item updated successfully.",
-      // })
       showToast("Menu item updated successfully.", "success");
     });
   }
 
   const handlePublish = () => {
     if(!data.name?.length){
-      
-      // toast({
-      //   description: "Item name is required.",
-      // })
       showToast("Item name is required.", "error");
       return;
     }
     if(!data.price){
-      // toast({
-      //   description: "Item price is required.",
-      // })
       showToast("Item price is required.", "error");
       return;
     }
@@ -88,11 +64,6 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
     startTransitionPublishing(async () => {
       await updateMenuItemMetadata(formData, menuitem.id, "published").then(
         () => {
-          // toast({
-          //   description: `Successfully ${
-          //     data.published ? "unpublished" : "published"
-          //   } your menu.`,
-          // });
           showToast(`Successfully ${
               data.published ? "unpublished" : "published"
             } your menu.`, "success");
@@ -100,7 +71,6 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
         },
       )
       .catch((error) => {
-        // toast({ description: `Failed to ${data.published ? "unpublish" : "publish"} menu item: ${error.message}`});
         showToast(`Failed to ${data.published ? "unpublish" : "publish"} menu item: ${error.message}`, "error");
       });
     });

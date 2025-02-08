@@ -4,8 +4,6 @@ import { Analytics } from "@vercel/analytics/react";
 import { Providers } from "./providers";
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
-import { Toaster } from "@/components/ui/toaster"
-
 
 const title =
   "MenuWise – The all-in-one app for creating and managing restaurants and food menus.";
@@ -44,7 +42,6 @@ export default function RootLayout({
         <Providers>
           {children}
           <Analytics />
-          <Toaster />
         </Providers>
       </body>
     </html>
