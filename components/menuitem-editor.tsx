@@ -10,16 +10,31 @@ import type { SelectMenuItem } from "@/lib/schema";
 import Form from "./form";
 import FormButton from "./form/form-button";
 import { useToast } from '@/lib/hooks/use-toast';
-
-
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem }) {
   let [isPendingSaving, startTransitionSaving] = useTransition();
   let [isPendingPublishing, startTransitionPublishing] = useTransition();
   const [data, setData] = useState<SelectMenuItem>(menuitem);
   const { showToast } = useToast();
+  const [checkSwitch, setCheckSwitch] = useState(false);
 
+  useEffect(() => {
+    if(data.promo === null) {
+      setCheckSwitch(false);
+    }
+    else {
+      setCheckSwitch(true);
+    }
+  }, [data]);
 
+  useEffect(() => {
+    // console.log({checkSwitch})
+    if(!checkSwitch) {
+      setData((prev) => ({ ...prev, promo: null }))
+    }
+  },[checkSwitch])
 
   useEffect(() => {
     setData(menuitem);
@@ -31,12 +46,15 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
         showToast("Item name is required.", "error");
         return;
       }
+
       if(data.name === menuitem.name && 
           data.description === menuitem.description &&
-          data.price === menuitem.price) {
+          data.price === menuitem.price && 
+          data.promo === menuitem.promo) {
             showToast("No changes detected.", "error");
         return;
       }
+
       const response = await updateMenuItem(data);
 
       if ('error' in response) {
@@ -135,6 +153,27 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
             onChange={(e) => setData({ ...data, price: e.target.value })}
             className="dark:placeholder-text-600 border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
           />
+          <div className="flex items-center text-white gap-3">
+            <Label htmlFor="promo" className="text-base">Add promo</Label>
+            <Switch 
+                id="promo" 
+                style={{ backgroundColor: checkSwitch ? 'gray' : 'transparent' }}
+                checked={checkSwitch} 
+                onCheckedChange={setCheckSwitch} 
+            />
+            {checkSwitch  &&
+              <input
+                type="text"
+                placeholder="$0"
+                defaultValue={menuitem.promo || ""}
+                autoFocus
+                required
+                onChange={(e) => setData({ ...data, promo: e.target.value })}
+                className="dark:placeholder-text-600 border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+              />
+            }
+        </div>
+          
           <TextareaAutosize
             placeholder="Description (optional)"
             defaultValue={menuitem.description || ""}
@@ -147,7 +186,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
           </div>
         </form>
         <Form
-          title="Banner image (optional)"
+          title="Item image (optional)"
           description="The thumbnail image for your site. Accepted formats: .png, .jpg, .jpeg"
           helpText="Max file size 5MB. Recommended size 1200x630."
           inputAttrs={{

@@ -287,6 +287,7 @@ export const updateMenuItem = async (data: SelectMenuItem) => {
         .set({
           name: data.name,
           description: data.description,
+          promo: data.promo,
           imageUrl: data.imageUrl,
           price: data.price,
         })

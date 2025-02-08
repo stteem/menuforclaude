@@ -27,9 +27,20 @@ export default function MenuItemCard({data,}: {data: SelectMenuItem}) {
           <h3 className="my-0 truncate font-cal text-xl font-bold tracking-wide dark:text-white">
             {data.name ?? "Name"}
           </h3>
-          <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
-            {data.price ?? "$0"}
-          </p>
+          <div className="flex gap-3">
+            <p 
+              style={{
+                textDecoration: data.promo ? 'line-through' : 'none',
+              }} 
+              className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
+              {data.price ?? "$0"}
+            </p>
+            {data.promo && 
+              <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
+                {data.promo ?? "$0"}
+              </p>
+            }
+          </div>
           <p className="mt-2 line-clamp-2 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
             {data.description ?? " Description is optional. It does help if you have something nice to add."}
           </p>
@@ -40,6 +51,11 @@ export default function MenuItemCard({data,}: {data: SelectMenuItem}) {
           )}
         </div>
         <div className="relative w-[40%] md:w-[30%] h-44 overflow-hidden">
+          {data.promo && (
+            <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
+              Promo
+            </span>
+          )}
           <BlurImage
             alt={data.name ?? "Item card thumbnail"}
             width={500}
