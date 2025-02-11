@@ -8,7 +8,6 @@ import { count, eq } from "drizzle-orm";
 
 export default async function OverviewSitesCTA() {
   const session = await getSession();
-  console.log({session})
   if (!session) {
     return 0;
   }
@@ -20,7 +19,6 @@ export default async function OverviewSitesCTA() {
       .from(restaurants)
       .where(eq(restaurants.userId, session.user.id));
 
-      console.log({sitesResult})
       if (!sitesResult) {
         throw new Error("Server problem, try again");
       }
@@ -40,8 +38,6 @@ export default async function OverviewSitesCTA() {
   }
   catch(error) {
     console.error({error})
-    console.log({error})
-    // return <div>There is a problem, try again</div>
   }
 
 }

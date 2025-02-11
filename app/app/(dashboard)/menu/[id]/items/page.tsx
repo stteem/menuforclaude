@@ -63,33 +63,7 @@ export default async function MenuItems(
                 {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1"></div> */}
                 <div className="grid grid-cols-1 gap-4">
                     {data.map((item, index) => (
-                        <MenuItemCard key={index} data={item}/>
-                        // <div key={item.id} className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-4">
-                        //     <h2 className="font-cal text-xl font-bold dark:text-white">{item.name}</h2>
-                        //     <p className="text-gray-500 dark:text-gray-400">{item.description}</p>
-                        //     <p className="font-bold dark:text-white">${item.price}</p>
-                        //     {/* <Image 
-                        //         src={item.imageUrl ? item.imageUrl : "/placeholder.png"} 
-                        //         alt={item.name ? item.name : ""} 
-                        //         className="w-full h-48 object-cover rounded-md" 
-                        //         width={500}
-                        //         height={200}
-                        //     /> */}
-                        //     <BlurImage
-                        //         alt={item.name ?? "Item thumbnail"}
-                        //         width={500}
-                        //         height={200}
-                        //         className="w-full h-48 object-cover rounded-md"
-                        //         src={item.imageUrl ?? "/placeholder.png"}
-                        //         placeholder="blur"
-                        //         blurDataURL={item.imageBlurhash ?? placeholderBlurhash}
-                        //     />
-                        //     <div className="flex justify-between items-center">
-                        //         <Link className="dark:text-gray-400" href={`/menuitem/${item.id}`}><Edit3 width={18} /></Link>
-                        //         {/* <button>Edit</button> */}
-                        //         <button>Delete</button>
-                        //     </div>
-                        // </div>
+                        <MenuItemCard key={index} data={item} source="admin" />
                     ))}
                 </div>
             </div>

@@ -61,9 +61,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
         showToast("Failed to update menu item.", "error");
         return;
       }
-      // console.log({response})
       setData(response)
-      console.log('updated menu item')
       showToast("Menu item updated successfully.", "success");
     });
   }
@@ -154,7 +152,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
             className="dark:placeholder-text-600 border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
           />
           <div className="flex items-center text-white gap-3">
-            <Label htmlFor="promo" className="text-base">Add promo</Label>
+            <Label htmlFor="promo" className="text-base">{checkSwitch ? "Added promo" : "Add promo"}</Label>
             <Switch 
                 id="promo" 
                 style={{ backgroundColor: checkSwitch ? 'gray' : 'transparent' }}

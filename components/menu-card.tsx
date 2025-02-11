@@ -5,16 +5,18 @@ import { BarChart, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 export default function MenuCard({
-  data,
+  data, source
 }: {
-  data: SelectMenu & { restaurant: SelectRestaurant | null };
+  data: SelectMenu & { restaurant?: SelectRestaurant | null; subdomain: string | null };
+  source: string; // The source of the data (e.g., "admin", "user") | undefined;
 }) {
-  const url = `${data.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${data.slug}`;
-
+  const url = `${data.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${data.slug}`;
+  // console.log({ url, data });
   return (
     <div className="relative rounded-lg border border-stone-200 pb-10 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white">
       <Link
-        href={`/menu/${data.id}`}
+        // href={`/menu/${data.id}`}
+        href={source === "user" ? `/${data.slug}` : `/menu/${data.id}`}
         className="flex flex-col overflow-hidden rounded-lg"
       >
         <div className="relative h-44 overflow-hidden">
@@ -22,12 +24,12 @@ export default function MenuCard({
             alt={data.title ?? "Card thumbnail"}
             width={500}
             height={400}
-            className="h-full object-cover"
+            className="h-full w-full object-cover"
             src={data.image ?? "/placeholder.png"}
             placeholder="blur"
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
           />
-          {!data.published && (
+          {!data.published && source === "admin" && (
             <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
               Draft
             </span>
@@ -42,20 +44,22 @@ export default function MenuCard({
           </p>
         </div>
       </Link>
-      <div className="absolute bottom-4 flex w-full px-4">
-        <a
-          href={
-            process.env.NEXT_PUBLIC_VERCEL_ENV
-              ? `https://${url}`
-              : `http://${data.restaurant?.subdomain}.localhost:3000/${data.slug}`
-          }
-          target="_blank"
-          rel="noreferrer"
-          className="truncate rounded-md bg-stone-100 px-2 py-1 text-sm font-medium text-stone-600 transition-colors hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-400 dark:hover:bg-stone-700"
-        >
-          {url} ↗
-        </a>
-      </div>
+      {
+        source === "admin" && <div className="absolute bottom-4 flex w-full px-4">
+          <a
+            href={
+              process.env.NEXT_PUBLIC_VERCEL_ENV
+                ? `https://${url}`
+                : `http://${data.restaurant?.subdomain}.localhost:3000/${data.slug}`
+            }
+            target="_blank"
+            rel="noreferrer"
+            className="truncate rounded-md bg-stone-100 px-2 py-1 text-sm font-medium text-stone-600 transition-colors hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-400 dark:hover:bg-stone-700"
+          >
+            {url} ↗
+          </a>
+        </div>
+      }
     </div>
   );
 }

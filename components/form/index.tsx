@@ -60,7 +60,7 @@ export default function Form({
       const sizeInMB = sizeInBytes / (1024 * 1024); // Convert to MB
     
       if(sizeInMB > 5) {
-        toast.error("File size exceeds 1MB.");
+        toast.error("File size exceeds 5MB.");
         return;
       }
     }

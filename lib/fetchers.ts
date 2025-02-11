@@ -16,13 +16,12 @@ export async function getRestaurantData(domain: string) {
         where: subdomain
           ? eq(restaurants.subdomain, subdomain)
           : eq(restaurants.customDomain, domain),
+
         with: {
           menus: {
-            with: {
-              items: true,
-            },
+            where: (menus, { eq }) => eq(menus.published, true), // Filter items by published status
           },
-          user: true,
+          // user: true,
         },
       });
 
@@ -48,36 +47,16 @@ export async function getMenuData(domain: string, slug: string) {
 
   return await unstable_cache(
     async () => {
-      const data = await db
-        .select({
-          menu: menus,
-          restaurant: restaurants,
-          user: users,
-        })
-        .from(menus)
-        .leftJoin(restaurants, eq(restaurants.id, menus.restaurantId))
-        .leftJoin(users, eq(users.id, restaurants.userId))
-        .where(
-          and(
-            eq(menus.slug, slug),
-            subdomain
-              ? eq(restaurants.subdomain, subdomain)
-              : eq(restaurants.customDomain, domain),
-          ),
-        )
-        .then((res) =>
-          res.length > 0
-            ? {
-                ...res[0].menu,
-                restaurant: res[0].restaurant
-                  ? {
-                      ...res[0].restaurant,
-                      user: res[0].user,
-                    }
-                  : null,
-              }
-            : null,
-        );
+
+      const data = await db.query.menus.findFirst({
+        where: (menus, { eq }) => eq(menus.slug, slug),
+        with: {
+          items: {
+            where: (items, { eq }) => eq(items.published, true),
+            orderBy: (items, { asc }) => [asc(items.promo)],
+          },
+        },
+      });
 
       if (!data) return null;
 
@@ -89,6 +68,8 @@ export async function getMenuData(domain: string, slug: string) {
           description: menus.description,
           image: menus.image,
           imageBlurhash: menus.imageBlurhash,
+          published: menus.published,
+          subdomain: restaurants.subdomain,
         })
         .from(menus)
         .leftJoin(restaurants, eq(restaurants.id, menus.restaurantId))
@@ -98,6 +79,7 @@ export async function getMenuData(domain: string, slug: string) {
             subdomain
               ? eq(restaurants.subdomain, subdomain)
               : eq(restaurants.customDomain, domain),
+              eq(menus.published, true)
           ),
         );
 

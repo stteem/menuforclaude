@@ -5,6 +5,8 @@ import { placeholderBlurhash, toDateString } from "@/lib/utils";
 import MenuCard from "@/components/menu-card";
 import { getRestaurantData } from "@/lib/fetchers";
 import db from "@/lib/db";
+import MenuItemCard from "@/components/menuitem-card";
+import Image from "next/image";
 
 export async function generateStaticParams() {
   const allRestaurants = await db.query.restaurants.findMany({
@@ -44,45 +46,24 @@ export default async function RestaurantHomePage(
     notFound();
   }
 
-  return (
-    <>
-      <h1>{restaurant.name}</h1>
-      <h2>Menus</h2>
-      <ul>
-        {restaurant.menus.map((menu) => (
-          <li key={menu.id}>
-            <h3>{menu.title}</h3>
-            <ul>
-              {menu.items.map((item) => (
-                <li key={item.id}>
-                  <h4>{item.name}</h4>
-                  <p>{item.description}</p>
-                  {item.imageUrl ? (
-                    <BlurImage
-                      src={item.imageUrl}
-                      alt={item.name || "Restaurant name"}
-                      width={200}
-                      height={200}
-                      placeholder="blur"
-                      blurDataURL={placeholderBlurhash}
-                    />
-                    ) : (
-                    <BlurImage
-                      src={placeholderBlurhash}
-                      alt="Placeholder"
-                      width={200}
-                      height={200}
-                      placeholder="blur"
-                      blurDataURL={placeholderBlurhash}
-                    />
-                  )}
-                  <p>${item.price}</p>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>       
-    </>
-  );
+  return restaurant.menus.length > 0 ? (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 px-5 md:px-20">
+      {restaurant.menus.map((menu) => (
+        <MenuCard key={menu.id} data={{...menu, subdomain: restaurant.subdomain}} source="user"/>
+      ))}
+    </div>
+  ) : (
+    <div className="flex flex-col items-center space-x-4">
+      <h1 className="font-cal text-4xl">No Menus Yet</h1>
+      <Image
+        alt="missing post"
+        src="https://illustrations.popsy.co/gray/graphic-design.svg"
+        width={400}
+        height={400}
+      />
+      <p className="text-lg text-stone-500">
+        You do not have any menus yet. Create one to get started.
+      </p>
+    </div>
+  ); 
 }

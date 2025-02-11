@@ -6,7 +6,7 @@ import Link from "next/link";
 import { InfoIcon, Info, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-export default function MenuItemCard({data,}: {data: SelectMenuItem}) {
+export default function MenuItemCard({data, source}: {data: SelectMenuItem, source: string}) {
   // const url = `${data.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/${data.slug}`;
 
   const [isHovered, setIsHovered] = useState(false); // State to track hover
@@ -15,8 +15,8 @@ export default function MenuItemCard({data,}: {data: SelectMenuItem}) {
   return (
     <div 
       className="relative w-full rounded-lg border border-stone-200 p-2 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white"
-      onMouseEnter={() => setIsHovered(true)} // Set hover state to true
-      onMouseLeave={() => setIsHovered(false)}   
+      onMouseEnter={() => source === "admin" ? setIsHovered(true) : null} // Set hover state to true
+      onMouseLeave={() => source === "admin" ? setIsHovered(false) : null}   
     >
       <Link
         href={`/menuitem/${data.id}`}
@@ -33,11 +33,11 @@ export default function MenuItemCard({data,}: {data: SelectMenuItem}) {
                 textDecoration: data.promo ? 'line-through' : 'none',
               }} 
               className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
-              {data.price ?? "$0"}
+              {data.price ?? "0"}
             </p>
             {data.promo && 
               <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
-                {data.promo ?? "$0"}
+                {data.promo ?? "0"}
               </p>
             }
           </div>
@@ -60,7 +60,7 @@ export default function MenuItemCard({data,}: {data: SelectMenuItem}) {
             alt={data.name ?? "Item card thumbnail"}
             width={500}
             height={400}
-            className="w-full h-full object-contain md:object-cover rounded-md"
+            className="w-full h-full object-contain md:object-cover rounded-lg md:rounded-md"
             src={data.imageUrl ?? "/placeholder.png"}
             placeholder="blur"
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}

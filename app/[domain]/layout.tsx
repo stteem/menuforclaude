@@ -78,7 +78,7 @@ export default async function SiteLayout(
 
   const domain = decodeURIComponent(params.domain);
   const data = await getRestaurantData(domain);
-  console.log({data})
+  // console.log({data})
   if (!data) {
     notFound();
   }
@@ -94,15 +94,16 @@ export default async function SiteLayout(
 
   return (
     <div className={fontMapper[data.font]}>
-      <div className="ease left-0 right-0 top-0 z-30 flex h-16 bg-white transition-all duration-150 dark:bg-black dark:text-white">
+      <div className="ease left-0 right-0 top-0 z-30 flex h-40 bg-white transition-all duration-150 dark:bg-black dark:text-white">
         <div className="mx-auto flex h-full max-w-screen-xl items-center justify-center space-x-5 px-10 sm:px-20">
           <Link href="/" className="flex items-center justify-center">
-            <div className="inline-block h-8 w-8 overflow-hidden rounded-full align-middle">
+            <div className="inline-block h-28 w-28 overflow-hidden rounded-full align-middle">
               <Image
                 alt={data.name || ""}
-                height={40}
+                height={80}
                 src={data.logo || ""}
-                width={40}
+                width={80}
+                className="h-full w-full object-cover rounded-full"
               />
             </div>
             <span className="ml-3 inline-block truncate font-title font-medium">
