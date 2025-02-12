@@ -140,6 +140,7 @@ export function withMenuAuth(action: any) {
 
 export function withMenuItemAuth(action: any) {
   return async (
+    formData: FormData | null,
     menuItemId: string,
     key: string | null,
   ) => {
@@ -149,20 +150,26 @@ export function withMenuItemAuth(action: any) {
         error: "Not authenticated",
       };
     }
-
-    const menuItem = await db.query.menuItems.findFirst({
-      where: (menuItems, { eq }) => eq(menuItems.id, menuItemId),
-      with: {
-        restaurant: true,
-      },
-    });
-
-    if (!menuItem || menuItem.restaurant.userId !== session.user.id) {
+    try {
+      const menuItem = await db.query.menuItems.findFirst({
+        where: (menuItems, { eq }) => eq(menuItems.id, menuItemId),
+        with: {
+          restaurant: true,
+        },
+      });
+      if (!menuItem || menuItem.restaurant.userId !== session.user.id) {
+        return {
+          error: "Menu item not found",
+        };
+      }
+  
+      return action(formData, menuItem, key);
+    }
+    catch (error) {
+      console.error(error);
       return {
-        error: "Menu item not found",
+        error: "Something is wrong, try again later",
       };
     }
-
-    return action(formData, menuItem, key);
   };
 }

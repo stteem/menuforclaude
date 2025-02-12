@@ -7,7 +7,7 @@ import {
   validDomainRegex,
 } from "@/lib/domains";
 import { getBlurDataURL } from "@/lib/utils";
-import { put } from "@vercel/blob";
+import { put, del } from "@vercel/blob";
 import { eq } from "drizzle-orm";
 import { customAlphabet } from "nanoid";
 import { revalidateTag } from "next/cache";
@@ -491,6 +491,7 @@ export const updateMenuMetadata = withMenuAuth(
 
 export const updateMenuItemMetadata = withMenuItemAuth(
   async (
+    formData: FormData, 
     menuitem: SelectMenuItem & {
       restaurant: SelectRestaurant;
     }, 
@@ -580,6 +581,48 @@ export const deleteRestaurant = withSiteAuth(
         `${restaurant.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
       );
       restaurant.customDomain && revalidateTag(`${restaurant.customDomain}-metadata`);
+      return response;
+    } catch (error: any) {
+      return {
+        error: error.message,
+      };
+    }
+  },
+);
+
+export const deleteMenuItem = withMenuItemAuth(
+  async ( 
+    formData: FormData, 
+    menuitem: SelectMenuItem  & {
+      restaurant: SelectRestaurant;
+    }, 
+    key: string
+  ) => {
+    try {
+
+      if (menuitem.imageUrl) { // Check if url is not null
+          await del(menuitem.imageUrl);
+      }
+
+      const [response] = await db
+        .delete(menuItems)
+        .where(eq(menuItems.id, menuitem.id))
+        .returning({
+          id: menuItems.id
+        });
+
+      revalidateTag(
+        `${menuitem.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-menuItems`,
+      );
+      revalidateTag(
+        `${menuitem.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-${menuitem.slug}`,
+      );
+
+      // if the restaurant has a custom domain, we need to revalidate those tags too
+      menuitem.restaurant?.customDomain &&
+        (revalidateTag(`${menuitem.restaurant?.customDomain}-menuItems`),
+        revalidateTag(`${menuitem.restaurant?.customDomain}-${menuitem.slug}`));
+
       return response;
     } catch (error: any) {
       return {

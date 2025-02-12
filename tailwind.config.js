@@ -409,9 +409,25 @@ module.exports = {
           "60%": { transform: "translateX(3px) rotate(2.4deg)" },
           "75%": { transform: "translateX(-2px) rotate(-1.2deg)" },
         },
+        dialogOverlayShow: {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        dialogContentShow: {
+          from: {
+            opacity: "0",
+            transform: "translate(-50%, -45%) scale(0.95)",
+          },
+          to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
+        }
       },
       animation: {
         wiggle: "wiggle 0.8s both",
+          // Dialog
+          dialogOverlayShow:
+          "dialogOverlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        dialogContentShow:
+          "dialogContentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
       },
     },
   },

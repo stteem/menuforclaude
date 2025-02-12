@@ -87,7 +87,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
         },
       )
       .catch((error) => {
-        showToast(`Failed to ${data.published ? "unpublish" : "publish"} menu item: ${error.message}`, "error");
+        showToast(`Failed to ${data.published ? "unpublish" : "publish"} menu item: Server error`, "error");
       });
     });
   }
