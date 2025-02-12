@@ -491,7 +491,6 @@ export const updateMenuMetadata = withMenuAuth(
 
 export const updateMenuItemMetadata = withMenuItemAuth(
   async (
-    formData: FormData, 
     menuitem: SelectMenuItem & {
       restaurant: SelectRestaurant;
     }, 

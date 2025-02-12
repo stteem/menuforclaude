@@ -140,7 +140,6 @@ export function withMenuAuth(action: any) {
 
 export function withMenuItemAuth(action: any) {
   return async (
-    formData: FormData | null,
     menuItemId: string,
     key: string | null,
   ) => {
