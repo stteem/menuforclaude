@@ -90,7 +90,7 @@ export default function MenuItemCard({data, source}: {
             width={500}
             height={400}
             className="w-[90%] h-[90%] object-contain rounded-lg md:rounded-md"
-            src={data.imageUrl ?? "/placeholder.png"}
+            src={data.imageUrl ?? "/empty-state.png"}
             placeholder="blur"
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
           />

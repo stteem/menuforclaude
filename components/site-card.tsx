@@ -17,7 +17,7 @@ export default function SiteCard({ data }: { data: SelectRestaurant }) {
           width={500}
           height={400}
           className="h-44 object-cover"
-          src={data.image ?? "/placeholder.png"}
+          src={data.image ?? "/empty-state.png"}
           placeholder="blur"
           blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
         />

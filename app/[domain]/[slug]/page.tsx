@@ -118,7 +118,7 @@ export default async function SiteMenuPage(
           className="h-full w-[95%] object-cover rounded-2xl"
           placeholder="blur"
           blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
-          src={data.image ?? "/placeholder.png"}
+          src={data.image ?? "/empty-state.png"}
         />
       </div>
       <div className="flex">

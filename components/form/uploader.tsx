@@ -111,7 +111,7 @@ export default function Uploader({
             Drag and drop or click to upload.
           </p>
           <p className="mt-2 text-center text-sm text-gray-500">
-            Max file size: 50MB
+            Max file size: 5MB
           </p>
           <span className="sr-only">Photo upload</span>
         </div>
