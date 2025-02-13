@@ -632,6 +632,47 @@ export const deleteMenuItem = withMenuItemAuth(
   },
 );
 
+export const deleteMenu = withMenuAuth(
+  async ( 
+    _: FormData, 
+    menu: SelectMenu & { restaurant : SelectRestaurant},
+    key: string
+  ) => {
+
+    try {
+      
+      if (menu.image) { // Check if url is not null
+          await del(menu.image);
+      }
+      
+      const [response] = await db
+        .delete(menus)
+        .where(eq(menus.id, menu.id))
+        .returning({
+          id: menus.id
+        });
+
+      revalidateTag(
+        `${menu.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-menus`,
+      );
+      revalidateTag(
+        `${menu.restaurant?.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-${menu.slug}`,
+      );
+
+      // if the restaurant has a custom domain, we need to revalidate those tags too
+      menu.restaurant?.customDomain &&
+        (revalidateTag(`${menu.restaurant?.customDomain}-menus`),
+        revalidateTag(`${menu.restaurant?.customDomain}-${menu.slug}`));
+
+      return response;
+    } catch (error: any) {
+      return {
+        error: error.message,
+      };
+    }
+  },
+);
+
 export const editUser = async (
   formData: FormData,
   _id: unknown,
