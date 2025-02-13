@@ -64,7 +64,7 @@ export default function MenuItemCard({data, source}: {
             }
           </div>
           <p className="mt-2 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
-            {data.description ?? " Description is optional. It does help if you have something nice to add."}
+            {data.description ?? ""}
           </p>
           { 
             source === "admin" && <span className="absolute left-2 bottom-3 text-white">
@@ -89,7 +89,7 @@ export default function MenuItemCard({data, source}: {
             alt={data.name ?? "Item card thumbnail"}
             width={500}
             height={400}
-            className="w-[80%] h-[80%] object-contain rounded-lg md:rounded-md"
+            className="w-[90%] h-[90%] object-contain rounded-lg md:rounded-md"
             src={data.imageUrl ?? "/placeholder.png"}
             placeholder="blur"
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
