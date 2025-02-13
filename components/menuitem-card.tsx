@@ -78,8 +78,8 @@ export default function MenuItemCard({data, source}: {
             </div>
           )} */}
         </div>
-        <div className="flex justify-center items-center relative w-[40%] md:w-[30%] h-auto md:h-44 overflow-hidden">
-          {/* <div className="flex justify-center items-center w-[95%] h-[95%] bg-red-800"> */}
+        <div className="flex justify-center items-center relative w-[30%] h-auto md:h-44 overflow-hidden">
+          <div className="flex justify-center items-center w-auto h-auto object-cover rounded-lg">
           {data.promo && (
             <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
               Promo
@@ -89,7 +89,7 @@ export default function MenuItemCard({data, source}: {
             alt={data.name ?? "Item card thumbnail"}
             width={500}
             height={400}
-            className="w-[90%] h-[90%] object-cover md:object-contain rounded-lg md:rounded-md"
+            className="w-[80%] h-[80%] object-contain rounded-lg md:rounded-md"
             src={data.imageUrl ?? "/placeholder.png"}
             placeholder="blur"
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
@@ -99,7 +99,7 @@ export default function MenuItemCard({data, source}: {
               Draft
             </span>
           )}
-          {/* </div> */}
+          </div>
         </div>
       
         <DeleteDialog 
