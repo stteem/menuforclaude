@@ -28,7 +28,6 @@ export default function MenuItemCard({data, source}: {
   source: string // The source of the data (e.g., "admin", "user") | undefined;
 }) {
 
-  // const [isHovered, setIsHovered] = useState(false); // State to track hover
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to manage dialog visibility
 
   return (
@@ -72,11 +71,6 @@ export default function MenuItemCard({data, source}: {
             </span>
           }
 
-          {/* {isHovered && ( // Conditionally render the hover text
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
-              <span className="text-white">Click to edit and publish</span>
-            </div>
-          )} */}
         </div>
         <div className="flex justify-center items-center relative w-[40%] md:w-[30%] h-auto md:h-44 overflow-hidden">
           <div className="flex justify-center items-center w-auto h-auto object-cover rounded-lg">
@@ -111,76 +105,3 @@ export default function MenuItemCard({data, source}: {
     </div>
   );
 }
-
-
-interface DeleteDialogProps {
-  isOpen: boolean;
-  onClose: () => void;
-  itemId: string; // The ID of the item to delete
-  // onConfirm: () => Promise<void>;
-}
-
-
-export const DeleteDialog: React.FC<DeleteDialogProps> = ({ isOpen, onClose, itemId }) => {
-
-  const { showToast } = useToast();
-  const [isPending, startTransition] = useTransition();
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      {/* <DialogTrigger asChild>
-        <button style={{ display: 'none' }}>Open Dialog</button>
-      </DialogTrigger> */}
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>Delete Menu Item</DialogTitle>
-          <DialogDescription className="mt-1 text-sm leading-6">
-            Are you sure you want to delete this item?
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter className="mt-6">
-          <DialogClose asChild>
-            <button 
-              className="flex h-8 w-full px-5 items-center justify-center sm:w-fit space-x-2 rounded-lg border text-sm transition-all focus:outline-none sm:h-9 
-               border-black bg-black text-white hover:bg-white hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-stone-800" 
-              // onClick={onClose}
-            >
-              Cancel
-            </button>
-          </DialogClose>
-          {/* <DialogClose asChild> */}
-            {/* <button className="w-full sm:w-fit text-white border px-2 rounded-md" onClick={onConfirm}>
-              Ok
-            </button> */}
-            <button
-              onClick={() =>
-                startTransition(async () => {
-                  await deleteMenuItem(null, itemId, null).then(() => {
-                    showToast("Item deleted successfully", "success");
-                    va.track("Deleted Menu item");
-                    onClose();
-                  })
-                  .catch ((error) => {
-                    console.error(error);
-                    showToast("Failed to delete item", "error");
-                    return
-                  })
-                 
-                })
-              }
-              className={cn(
-                "flex h-8 w-full px-5 items-center justify-center sm:w-fit space-x-2 rounded-lg border text-sm transition-all focus:outline-none sm:h-9",
-                isPending
-                  ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-                  : "border border-black bg-black text-white hover:bg-white hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-stone-800",
-              )}
-              disabled={isPending}
-            >
-              {isPending ? <LoadingDots color="#808080" /> : <p>Delete</p>}
-            </button>
-          {/* </DialogClose> */}
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-};
