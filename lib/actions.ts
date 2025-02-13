@@ -424,13 +424,11 @@ export const updateMenuMetadata = withMenuAuth(
     key: string,
   ) => {
     const value = formData.get(key) as string;
-    console.log({formData, value, menu});
     try {
       let response;
       if (key === "image") {
         const file = formData.get("image") as File;
         const filename = `${nanoid()}.${file.type.split("/")[1]}`;
-        // console.log({ filename, file });
         const { url } = await put(filename, file, {
           access: "public",
         });

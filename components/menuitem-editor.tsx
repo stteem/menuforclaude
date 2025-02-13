@@ -185,7 +185,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
         </form>
         <Form
           title="Item image (optional)"
-          description="The thumbnail image for your site. Accepted formats: .png, .jpg, .jpeg"
+          description="The thumbnail image for your menu item. Accepted formats: .png, .jpg, .jpeg"
           helpText="Max file size 5MB. Recommended size 1200x630."
           inputAttrs={{
             name: "image",

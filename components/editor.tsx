@@ -132,7 +132,7 @@ export default function MenuEditor({ menu }: { menu: MenuWithRestaurant }) {
         </form>
         <Form
           title="Banner image"
-          description="The thumbnail image for your site. Accepted formats: .png, .jpg, .jpeg"
+          description="The banner and thumbnail image for your menu. Accepted formats: .png, .jpg, .jpeg"
           helpText="Max file size 5MB. Recommended size 1200x630."
           inputAttrs={{
             name: "image",
