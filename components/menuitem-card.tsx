@@ -64,7 +64,7 @@ export default function MenuItemCard({data, source}: {
             }
           </div>
           <p className="mt-2 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
-            {data.description ?? " Description is optional. It does help if you have something nice to add."}
+            {data.description ?? ""}
           </p>
           { 
             source === "admin" && <span className="absolute left-2 bottom-3 text-white">
