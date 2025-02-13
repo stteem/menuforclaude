@@ -46,7 +46,7 @@ export default function MenuItemCard({data, source}: {
         </Link>
       }
         <div className="border-stone-200 w-[60%] md:w-[70%] p-4 dark:border-stone-700">
-          <h3 className="my-0 truncate font-cal text-xl font-bold tracking-wide dark:text-white">
+          <h3 className="my-0 font-cal text-lg md:text-xl font-bold tracking-wide dark:text-white">
             {data.name ?? "Name"}
           </h3>
           <div className="flex gap-3">
@@ -63,7 +63,7 @@ export default function MenuItemCard({data, source}: {
               </p>
             }
           </div>
-          <p className="mt-2 line-clamp-2 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
+          <p className="mt-2 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
             {data.description ?? " Description is optional. It does help if you have something nice to add."}
           </p>
           { 
@@ -78,7 +78,8 @@ export default function MenuItemCard({data, source}: {
             </div>
           )} */}
         </div>
-        <div className="relative w-[40%] md:w-[30%] h-44 overflow-hidden">
+        <div className="flex justify-center items-center relative w-[40%] md:w-[30%] h-auto md:h-44 overflow-hidden">
+          {/* <div className="flex justify-center items-center w-[95%] h-[95%] bg-red-800"> */}
           {data.promo && (
             <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
               Promo
@@ -88,7 +89,7 @@ export default function MenuItemCard({data, source}: {
             alt={data.name ?? "Item card thumbnail"}
             width={500}
             height={400}
-            className="w-full h-full object-contain md:object-cover rounded-lg md:rounded-md"
+            className="w-[90%] h-[90%] object-cover md:object-contain rounded-lg md:rounded-md"
             src={data.imageUrl ?? "/placeholder.png"}
             placeholder="blur"
             blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
@@ -98,6 +99,7 @@ export default function MenuItemCard({data, source}: {
               Draft
             </span>
           )}
+          {/* </div> */}
         </div>
       
         <DeleteDialog 
