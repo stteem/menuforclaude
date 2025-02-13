@@ -3,9 +3,10 @@ import BlurImage from "@/components/blur-image";
 import type { SelectMenuItem } from "@/lib/schema";
 import { placeholderBlurhash } from "@/lib/utils";
 import Link from "next/link";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, LucideInfo } from "lucide-react";
 import { useState } from "react";
 import { deleteMenuItem } from "@/lib/actions";
+import DeleteDialog from "./delete-dialog";
 import {
   Dialog,
   DialogClose,
@@ -22,6 +23,7 @@ import { useTransition } from "react";
 import LoadingDots from "@/components/icons/loading-dots";
 import va from "@vercel/analytics";
 import { useToast } from "@/lib/hooks/use-toast";
+import { Tooltip } from "./ui/tooltip";
 
 export default function MenuItemCard({data, source}: {
   data: SelectMenuItem, 
@@ -31,10 +33,7 @@ export default function MenuItemCard({data, source}: {
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to manage dialog visibility
 
   return (
-    <div 
-      className="flex flex-row justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-2 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white"
-      // onMouseEnter={() => source === "admin" ? setIsHovered(true) : null} // Set hover state to true
-      // onMouseLeave={() => source === "admin" ? setIsHovered(false) : null}   
+    <div className="flex flex-row justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-2 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white"  
     >
       { 
         source === "admin" && <Link
@@ -62,9 +61,16 @@ export default function MenuItemCard({data, source}: {
               </p>
             }
           </div>
-          <p className="mt-2 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
-            {data.description ?? ""}
-          </p>
+          <div>
+            <p className="mt-2 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
+              {data.description ?? ""}
+            </p>
+            {/* {data.description &&  <Tooltip side="top" showArrow={false} content={data.description}>
+                <span className="rounded-md bg-gray-100 p-2 text-sm font-medium text-gray-700 dark:border dark:border-gray-800 dark:bg-gray-950 dark:text-gray-300">
+                  <LucideInfo width={28} />
+                </span>
+              </Tooltip>} */}
+          </div>
           { 
             source === "admin" && <span className="absolute left-2 bottom-3 text-white">
               <button onClick={() => setIsDialogOpen(true)} className="flex w-5 h-5 rounded-full justify-center items-center"><Trash2 size={18}/></button>
@@ -100,6 +106,10 @@ export default function MenuItemCard({data, source}: {
           isOpen={isDialogOpen} 
           onClose={() => setIsDialogOpen(false)} 
           itemId={data.id}
+          deleteFn={deleteMenuItem}
+          title="Delete Menu Item"
+          description={"Are you sure you want to delete this menu item?"}
+          name="Menu Item"
           // onConfirm={handleDelete} 
         />
     </div>
