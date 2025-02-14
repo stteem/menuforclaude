@@ -25,9 +25,21 @@ export default function MenuCard({
       onMouseEnter={() => source === "admin" ? setIsHovered(true) : null} // Set hover state to true
       onMouseLeave={() => source === "admin" ? setIsHovered(false) : null} 
     >
+      <Link
+        // href={`/menu/${data.id}`}
+        href={source === "user" ? `/${data.slug}` : `/menu/${data.id}`}
+        className="flex flex-col overflow-hidden rounded-lg"
+      >
         <div className="relative h-44 overflow-hidden">
-        {source === "admin" && (
-            <button onClick={() => setIsDialogOpen(true)} className="absolute bottom-2 left-2 z-10 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
+          {source === "admin" && (
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent event from bubbling up
+                setIsDialogOpen(true);
+              }} 
+              className="absolute bottom-2 left-2 z-10 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md"
+            >
               <Trash2 width={18} />
             </button>
           )}
@@ -46,11 +58,7 @@ export default function MenuCard({
             </span>
           )}
         </div>
-      <Link
-        // href={`/menu/${data.id}`}
-        href={source === "user" ? `/${data.slug}` : `/menu/${data.id}`}
-        className="flex flex-col overflow-hidden rounded-lg"
-      >
+      
         <div className="relative border-t border-stone-200 p-4 dark:border-stone-700">
           <h3 className="my-0 truncate font-cal text-xl font-bold tracking-wide dark:text-white">
             {data.title}
