@@ -110,7 +110,6 @@ export default function MenuItemCard({data, source}: {
           title="Delete Menu Item"
           description={"Are you sure you want to delete this menu item?"}
           name="Menu Item"
-          // onConfirm={handleDelete} 
         />
     </div>
   );

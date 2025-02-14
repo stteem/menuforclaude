@@ -97,7 +97,6 @@ export default function MenuCard({
         title="Delete Menu"
         description={"Are you sure you want to delete this menu? This will delete the menu and the items in the menu."}
         name="Menu"
-        // onConfirm={handleDelete} 
       />
     </div>
   );
