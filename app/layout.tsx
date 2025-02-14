@@ -6,16 +6,16 @@ import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 
 const title =
-  "MenuWise – The all-in-one app for creating and managing restaurants and food menus.";
+  "Kpaly – The all-in-one app for creating and managing restaurants and food menus.";
 const description = `Discover MenuWise, the ultimate restaurant menu management application designed to streamline your dining experience. With our all-in-one platform, effortlessly create, customize, and manage your restaurant's menus in real-time. MenuWise offers multi-tenancy support, allowing multiple locations to operate seamlessly under one account. Enhance your online presence with custom domain support and optimize your menu for search engines to attract more customers.
-                  Join the future of restaurant management with MenuWise and elevate your culinary offerings today!`;
+                  Join the future of restaurant management with Kpaly and elevate your culinary offerings today!`;
 
- const image = "https://vercel.pub/thumbnail.png";
+ const image = "https://kpaly.com/thumbnail.png";
 
 export const metadata: Metadata = {
   title,
   description,
-  icons: ["https://vercel.pub/favicon.ico"],
+  icons: ["https://kpaly.com/favicon.ico"],
   openGraph: {
     title,
     description,
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     images: [image],
     creator: "@vercel",
   },
-  metadataBase: new URL("https://vercel.pub"),
+  metadataBase: new URL("https://kpaly.com"),
 };
 
 export default function RootLayout({

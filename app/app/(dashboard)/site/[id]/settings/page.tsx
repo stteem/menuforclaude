@@ -17,7 +17,7 @@ export default async function SiteSettingsIndex(
     <div className="flex flex-col space-y-6">
       <Form
         title="Name"
-        description="The name of your site. This will be used as the meta title on Google as well."
+        description="The name of your restaurant/site. This will be used as the meta title on Google as well."
         helpText="Please use 32 characters maximum."
         inputAttrs={{
           name: "name",

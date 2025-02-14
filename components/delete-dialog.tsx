@@ -24,7 +24,7 @@ interface DeleteDialogProps {
     title: string; // The title of the dialog
     description: string;
     name: string; // The component
-    // onConfirm: () => Promise<void>;
+   
 }
   
   
