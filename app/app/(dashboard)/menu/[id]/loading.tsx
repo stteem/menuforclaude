@@ -6,7 +6,6 @@ export default function Loading() {
       <div className="h-10 w-48 animate-pulse rounded-md bg-stone-100 dark:bg-stone-800" />
       <div className="h-48 w-full max-w-screen-md animate-pulse rounded-md bg-stone-100 dark:bg-stone-800" />
       <div className="h-60 w-full max-w-screen-md animate-pulse rounded-md bg-stone-100 dark:bg-stone-800" />
-
     </div>
   );
 }
