@@ -96,7 +96,7 @@ export default function MenuEditor({ menu }: { menu: MenuWithRestaurant }) {
           )}
         </button>
       </div>
-      <div className="mb-5 flex flex-col space-y-3 border-b border-stone-200 pb-5 dark:border-stone-700">
+      <div className="mb-5 mt-5 flex flex-col space-y-3 border-b border-stone-200 pb-5 dark:border-stone-700">
         <form action={() => {
           startTransitionSaving(async () => {
             if(!data.title?.length) {

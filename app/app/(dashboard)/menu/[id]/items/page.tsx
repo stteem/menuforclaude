@@ -6,12 +6,9 @@ import { redirect } from "next/navigation";
 import db from "@/lib/db";
 import Image from "next/image";
 import CreateMenuItemButton from "@/components/create-menuitem-button";
-import BlurImage from "@/components/blur-image";
 import { placeholderBlurhash } from "@/lib/utils";
-import { Edit3 } from "lucide-react";
 import Link from "next/link";
 import MenuItemCard from "@/components/menuitem-card";
-import { InfoIcon } from "lucide-react";
 
 
 
@@ -56,9 +53,6 @@ export default async function MenuItems(
             <div className="flex flex-col space-y-6">
                 <div className="flex flex-row items-center gap-2">
                     <h1 className="font-cal text-3xl font-bold dark:text-white">Menu Items</h1>
-                    <span className="bottom-4 text-white">
-                        <InfoIcon color="white" size={18}/>
-                    </span>
                 </div>
                 {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1"></div> */}
                 <div className="grid grid-cols-1 gap-4">
