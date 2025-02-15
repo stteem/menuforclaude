@@ -4,7 +4,7 @@ import type { SelectMenuItem } from "@/lib/schema";
 import { placeholderBlurhash } from "@/lib/utils";
 import Link from "next/link";
 import { Edit, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { deleteMenuItem } from "@/lib/actions";
 import DeleteDialog from "./delete-dialog";
 
@@ -15,19 +15,62 @@ export default function MenuItemCard({data, source}: {
 }) {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to manage dialog visibility
+  const [isMobile, setIsMobile] = useState(false); // State to manage mobile view
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Adjust the width as per your breakpoint
+    };
+
+    handleResize(); // Check on mount
+    window.addEventListener('resize', handleResize); // Add event listener
+
+    return () => {
+      window.removeEventListener('resize', handleResize); // Cleanup on unmount
+    };
+  }, []);
 
   return (
-    <div className="flex flex-row justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-2 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white"  
+    <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-2 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white`}  
     >
       { 
         source === "admin" && <Link
           href={`/menuitem/${data.id}`}
           className="dark:text-white text-black"
         >
-          <Edit size={18}/>
+          <Edit size={20}/>
         </Link>
       }
-        <div className="border-stone-200 w-[60%] md:w-[70%] p-4 dark:border-stone-700">
+
+        
+      {
+        isMobile && <div className="image-div flex justify-center items-center relative w-full h-auto md:h-44 overflow-hidden">
+          <div className="flex justify-center items-center w-auto h-auto object-cover rounded-lg">
+            {data.promo && (
+              <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
+                Promo
+              </span>
+            )}
+            { data.imageUrl &&
+              <BlurImage
+                alt={data.name ?? "Item card thumbnail"}
+                width={500}
+                height={400}
+                className="w-[90%] h-[90%] object-contain rounded-lg md:rounded-md"
+                src={data.imageUrl ?? "/empty-state.png"}
+                placeholder="blur"
+                blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
+              />
+            }
+            {!data.published && (
+              <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
+                Draft
+              </span>
+            )}
+          </div>
+        </div>
+      }
+        <div className={`txt-div border-stone-200 ${ isMobile ? 'w-full mb-5' : 'w-[70%]' } md:w-[70%] p-4 dark:border-stone-700`}>
           <h3 className="my-0 font-cal text-lg md:text-xl font-bold tracking-wide dark:text-white">
             {data.name ?? "Name"}
           </h3>
@@ -57,34 +100,36 @@ export default function MenuItemCard({data, source}: {
           </div>
           { 
             source === "admin" && <span className="absolute left-2 bottom-3 text-white">
-              <button onClick={() => setIsDialogOpen(true)} className="flex w-5 h-5 rounded-full justify-center items-center dark:text-white text-black"><Trash2 size={18}/></button>
+              <button onClick={() => setIsDialogOpen(true)} className="flex w-5 h-5 rounded-full justify-center items-center dark:text-white text-black"><Trash2 size={30}/></button>
             </span>
           }
 
         </div>
-        <div className="flex justify-center items-center relative w-[40%] md:w-[30%] h-auto md:h-44 overflow-hidden">
-          <div className="flex justify-center items-center w-auto h-auto object-cover rounded-lg">
-          {data.promo && (
-            <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
-              Promo
-            </span>
-          )}
-          <BlurImage
-            alt={data.name ?? "Item card thumbnail"}
-            width={500}
-            height={400}
-            className="w-[90%] h-[90%] object-contain rounded-lg md:rounded-md"
-            src={data.imageUrl ?? "/empty-state.png"}
-            placeholder="blur"
-            blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
-          />
-          {!data.published && (
-            <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
-              Draft
-            </span>
-          )}
+        {
+          !isMobile && <div className="image-div flex justify-center items-center relative w-[40%] md:w-[30%] h-auto md:h-44 overflow-hidden">
+            <div className="flex justify-center items-center w-auto h-auto object-cover rounded-lg">
+            {data.promo && (
+              <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
+                Promo
+              </span>
+            )}
+            { data.imageUrl && <BlurImage
+              alt={data.name ?? "Item card thumbnail"}
+              width={500}
+              height={400}
+              className="w-[90%] h-[90%] object-contain rounded-lg md:rounded-md"
+              src={data.imageUrl ?? "/empty-state.png"}
+              placeholder="blur"
+              blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
+            />}
+            {!data.published && (
+              <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
+                Draft
+              </span>
+            )}
+            </div>
           </div>
-        </div>
+        }
       
         <DeleteDialog 
           isOpen={isDialogOpen} 
