@@ -45,7 +45,7 @@ interface DeleteDialogProps {
               {description}
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="mt-6">
+          <DialogFooter className="flex flex-row mt-6 gap-3 md:gap-0">
             <DialogClose asChild>
               <button 
                 className="flex h-8 w-full px-5 items-center justify-center sm:w-fit space-x-2 rounded-lg border text-sm transition-all focus:outline-none sm:h-9 
