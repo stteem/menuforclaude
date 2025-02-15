@@ -33,7 +33,7 @@ export default function MenuItemCard({data, source}: {
   return (
     <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-2 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white`}  
     >
-      { 
+      { !isMobile &&
         source === "admin" && <Link
           href={`/menuitem/${data.id}`}
           className="dark:text-white text-black"
@@ -56,7 +56,7 @@ export default function MenuItemCard({data, source}: {
                 alt={data.name ?? "Item card thumbnail"}
                 width={500}
                 height={400}
-                className="w-[90%] h-[90%] object-contain rounded-lg md:rounded-md"
+                className="w-full h-full object-contain rounded-lg md:rounded-md"
                 src={data.imageUrl ?? "/empty-state.png"}
                 placeholder="blur"
                 blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
@@ -102,6 +102,14 @@ export default function MenuItemCard({data, source}: {
             source === "admin" && <span className="absolute left-2 bottom-3 text-white">
               <button onClick={() => setIsDialogOpen(true)} className="flex w-5 h-5 rounded-full justify-center items-center dark:text-white text-black"><Trash2 size={30}/></button>
             </span>
+          }
+          { isMobile &&
+            source === "admin" && <Link
+              href={`/menuitem/${data.id}`}
+              className="absolute dark:text-white text-black bottom-2 right-2"
+            >
+              <Edit size={20}/>
+            </Link>
           }
 
         </div>
