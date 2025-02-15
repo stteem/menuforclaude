@@ -7,23 +7,7 @@ import { Edit, Trash2, LucideInfo } from "lucide-react";
 import { useState } from "react";
 import { deleteMenuItem } from "@/lib/actions";
 import DeleteDialog from "./delete-dialog";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 
-import { cn } from "@/lib/utils";
-import { useTransition } from "react";
-import LoadingDots from "@/components/icons/loading-dots";
-import va from "@vercel/analytics";
-import { useToast } from "@/lib/hooks/use-toast";
-import { Tooltip } from "./ui/tooltip";
 
 export default function MenuItemCard({data, source}: {
   data: SelectMenuItem, 
