@@ -12,7 +12,6 @@ import {
   Menu,
   Newspaper,
   Settings,
-  FileCode,
   Home,
   Github,
 } from "lucide-react";
