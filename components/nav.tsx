@@ -178,9 +178,9 @@ export default function Nav({ children }: { children: ReactNode }) {
   return (
     <>
       <button
-        className={`fixed z-20 ${
+        className={`fixed z-20 text-white ${
           // left align for Editor, right align for other pages
-          segments[0] === "menu" && segments.length === 2 && !showSidebar
+          segments[0] === "menu" && segments.length >= 2 && !showSidebar
             ? "left-5 top-5"
             : "right-5 top-7"
         } sm:hidden`}
