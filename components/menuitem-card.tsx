@@ -3,27 +3,11 @@ import BlurImage from "@/components/blur-image";
 import type { SelectMenuItem } from "@/lib/schema";
 import { placeholderBlurhash } from "@/lib/utils";
 import Link from "next/link";
-import { Edit, Trash2, LucideInfo } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { deleteMenuItem } from "@/lib/actions";
 import DeleteDialog from "./delete-dialog";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 
-import { cn } from "@/lib/utils";
-import { useTransition } from "react";
-import LoadingDots from "@/components/icons/loading-dots";
-import va from "@vercel/analytics";
-import { useToast } from "@/lib/hooks/use-toast";
-import { Tooltip } from "./ui/tooltip";
 
 export default function MenuItemCard({data, source}: {
   data: SelectMenuItem, 
@@ -38,7 +22,7 @@ export default function MenuItemCard({data, source}: {
       { 
         source === "admin" && <Link
           href={`/menuitem/${data.id}`}
-          className="text-white"
+          className="dark:text-white text-black"
         >
           <Edit size={18}/>
         </Link>
@@ -73,7 +57,7 @@ export default function MenuItemCard({data, source}: {
           </div>
           { 
             source === "admin" && <span className="absolute left-2 bottom-3 text-white">
-              <button onClick={() => setIsDialogOpen(true)} className="flex w-5 h-5 rounded-full justify-center items-center"><Trash2 size={18}/></button>
+              <button onClick={() => setIsDialogOpen(true)} className="flex w-5 h-5 rounded-full justify-center items-center dark:text-white text-black"><Trash2 size={18}/></button>
             </span>
           }
 
