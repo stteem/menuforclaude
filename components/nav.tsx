@@ -209,7 +209,7 @@ export default function Nav({ children }: { children: ReactNode }) {
       </div>
       <div
         className={`transform ${
-          showSidebar ? "w-[60%] translate-x-0" : "-translate-x-full"
+          showSidebar ? "w-[70%] translate-x-0" : "-translate-x-full"
         } fixed z-10 flex h-full flex-col justify-between border-r border-stone-200 bg-stone-100 p-4 transition-all sm:w-60 sm:translate-x-0 dark:border-stone-700 dark:bg-stone-900`}
       >
         <div className="grid gap-2">
