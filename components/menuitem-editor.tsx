@@ -125,7 +125,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
           )}
         </button>
       </div>
-      <div className="mb-5 mt-5 flex flex-col space-y-3 border-b border-stone-200 pb-5 dark:border-stone-700">
+      <div className="mb-5 flex flex-col space-y-3 border-b border-stone-200 pb-5 dark:border-stone-700">
         <form 
           onSubmit={(e) => {
             e.preventDefault()

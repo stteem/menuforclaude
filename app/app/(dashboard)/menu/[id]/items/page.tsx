@@ -46,13 +46,14 @@ export default async function MenuItems(
     }
 
     return (
-        <div className="flex max-w-screen-xl flex-col space-y-12 p-6">
-            <div className="flex justify-end items-center w-full">
+        <div className="flex absolute top-16 md:relative md:top-0 max-w-screen-xl flex-col space-y-12 p-6">
+            {/* <div className="flex justify-end items-center w-full">
                 <CreateMenuItemButton />
-            </div>
+            </div> */}
             <div className="flex flex-col space-y-6">
-                <div className="flex flex-row items-center gap-2">
+                <div className="flex flex-row justify-between items-center gap-2">
                     <h1 className="font-cal text-3xl font-bold dark:text-white">Menu Items</h1>
+                    <CreateMenuItemButton />
                 </div>
                 {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1"></div> */}
                 <div className="grid grid-cols-1 gap-4">

@@ -8,12 +8,13 @@ import {
   Globe,
   Layout,
   LayoutDashboard,
-  Megaphone,
+  // Megaphone,
   Menu,
   Newspaper,
   Settings,
   Home,
-  Github,
+  XIcon,
+  MoveLeft,
 } from "lucide-react";
 import {
   useParams,
@@ -108,7 +109,7 @@ export default function Nav({ children }: { children: ReactNode }) {
         },
       ];
     } 
-    if(segments[0] === "menuitem" && id) {
+    else if(segments[0] === "menuitem" && id) {
       return [
         {
           name: "Back to menu items",
@@ -177,20 +178,38 @@ export default function Nav({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <button
-        className={`fixed z-20 dark:text-white text-black dark:bg-zinc-600 rounded-full w-8 h-8 justify-center items-center flex ${
-          // left align for Editor, right align for other pages
-          (segments[0] === "sites" && !showSidebar) || segments[0] === "menu" || segments[0] === "menuitem" && segments.length >= 2 && !showSidebar
-            ? "left-5 top-5"
-            : "right-5 top-7"
-        } sm:hidden`}
-        onClick={() => setShowSidebar(!showSidebar)}
-      >
-        <Menu width={20} />
-      </button>
+      <div className="flex flex-row justify-between">
+        {
+          segments[0] === "menuitem" && id ? 
+          <button
+            onClick={() => router.back()}
+            className="fixed z-10 top-7 left-2 dark:text-white text-black"
+          >
+            <MoveLeft width={50} />
+          </button>
+          :
+          segments.length >= 1 &&
+          <Link href={tabs[0].href} key={tabs[0].name}>
+            <span className="fixed z-10 top-7 left-2 dark:text-white text-black"> <MoveLeft width={50} /> </span>
+          </Link>
+        }
+        <button
+          className={`fixed z-20 dark:text-white text-black dark:bg-zinc-700 rounded-full w-8 h-8 justify-center items-center flex right-5 top-7 sm:hidden`
+            // ${
+            //   // left align for Editor, right align for other pages
+            //   (segments[0] === "sites" || segments[0] === "site" || segments[0] === "menu" || segments[0] === "menuitem" && !showSidebar) && segments.length >= 2 && !showSidebar
+            //     ? "left-5 top-5"
+            //     : "right-5 top-7"
+            //   }
+          }
+          onClick={() => setShowSidebar(!showSidebar)}
+        >
+        { showSidebar ? <XIcon width={20} /> : <Menu width={20} />}
+        </button>
+      </div>
       <div
         className={`transform ${
-          showSidebar ? "w-full translate-x-0" : "-translate-x-full"
+          showSidebar ? "w-[60%] translate-x-0" : "-translate-x-full"
         } fixed z-10 flex h-full flex-col justify-between border-r border-stone-200 bg-stone-100 p-4 transition-all sm:w-60 sm:translate-x-0 dark:border-stone-700 dark:bg-stone-900`}
       >
         <div className="grid gap-2">

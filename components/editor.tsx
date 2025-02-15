@@ -45,7 +45,7 @@ export default function MenuEditor({ menu }: { menu: MenuWithRestaurant }) {
   }, [data, startTransitionSaving]);
 
   return (
-    <div className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg dark:border-stone-700">
+    <div className="relative top-14 md:top-0 min-h-[500px] w-full max-w-screen-lg border-stone-200 p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg dark:border-stone-700">
       <div className="absolute right-5 top-5 mb-5 flex items-center space-x-3">
         {data.published && (
           <a
@@ -96,7 +96,7 @@ export default function MenuEditor({ menu }: { menu: MenuWithRestaurant }) {
           )}
         </button>
       </div>
-      <div className="mb-5 mt-5 flex flex-col space-y-3 border-b border-stone-200 pb-5 dark:border-stone-700">
+      <div className="mb-5 flex flex-col space-y-3 border-b border-stone-200 pb-5 dark:border-stone-700">
         <form action={() => {
           startTransitionSaving(async () => {
             if(!data.title?.length) {
