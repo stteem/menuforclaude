@@ -95,25 +95,27 @@ export default async function SiteLayout(
   return (
     <div className={fontMapper[data.font]}>
       <div className="ease left-0 right-0 top-0 z-30 flex h-40 bg-white transition-all duration-150 dark:bg-black dark:text-white">
-        <div className="mx-auto flex h-full max-w-screen-xl items-center justify-center space-x-5 px-10 sm:px-20">
-          <Link href="/" className="flex items-center justify-center">
-            <div className="inline-block h-28 w-28 overflow-hidden rounded-full align-middle">
+        <div className="mx-auto flex flex-col h-full max-w-screen-xl items-center justify-center space-x-5 px-10 sm:px-20">
+          <Link href="/" className="flex flex-col items-center justify-center gap-1">
+            {/* <div className="inline-block h-auto w-auto overflow-hidden rounded-full align-middle"> */}
+            { data.logo && 
               <Image
-                alt={data.name || ""}
+                alt={data.name || "restaurant logo"}
                 height={80}
-                src={data.logo || ""}
+                src={data?.logo}
                 width={80}
-                className="h-full w-full object-cover rounded-full"
+                className="h-full w-full object-contain rounded-lg"
               />
-            </div>
-            <span className="ml-3 inline-block truncate font-title font-medium">
+            }
+            {/* </div> */}
+            <span className="ml-3 inline-block font-title font-medium">
               {data.name}
             </span>
           </Link>
         </div>
       </div>
 
-      <div className="mt-20">{children}</div>
+      <div className="mt-5">{children}</div>
 
       {domain == `demo.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` ||
       domain == `platformize.co` ? (

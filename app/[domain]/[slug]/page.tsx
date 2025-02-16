@@ -98,10 +98,10 @@ export default async function SiteMenuPage(
   // console.log({ data });
   return (
     <div className="flex flex-col w-full">
-      <div className="flex flex-col items-center justify-center">
-        <div className="m-auto mb-10 w-full text-center md:w-7/12">
+      <div className="flex flex-col items-center justify-center mb-5">
+        <div className="m-auto w-full text-center md:w-7/12">
           
-          <h1 className="mb-10 font-title text-3xl font-bold text-stone-800 md:text-6xl dark:text-white">
+          <h1 className="mb-2 font-title text-3xl font-bold text-stone-800 md:text-6xl dark:text-white">
             {data.title}
           </h1>
           <p className="text-md m-auto w-10/12 text-stone-600 md:text-lg dark:text-stone-400">
@@ -110,12 +110,12 @@ export default async function SiteMenuPage(
         </div>
       
       </div>
-      <div className="flex flex-col justify-center items-center w-full h-80 mb-2 overflow-hidden rounded-2xl">
+      <div className="flex flex-col justify-center items-center w-full h-52 overflow-hidden rounded-2xl">
         <BlurImage
           alt={data.title ?? "Menu image"}
           width={1200}
           height={630}
-          className="h-full w-[95%] object-cover rounded-2xl"
+          className="h-full w-[98%] md:w-[85%] object-cover rounded-2xl"
           placeholder="blur"
           blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
           src={data.image ?? "/empty-state.png"}
@@ -142,7 +142,7 @@ export default async function SiteMenuPage(
         </div>
       )}
       {data.adjacentMenus && (
-        <div className="mx-10 mb-20 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:mx-auto xl:grid-cols-5">
+        <div className="mx-2 mb-20 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:mx-auto xl:grid-cols-5">
           {data.adjacentMenus.map((data: any, index: number) => (
             // console.log({data} ),
             <MenuCard key={index} data={data} source={"user"}/>
