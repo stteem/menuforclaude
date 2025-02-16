@@ -56,7 +56,7 @@ export default function MenuItemCard({data, source}: {
                 alt={data.name ?? "Item card thumbnail"}
                 width={500}
                 height={400}
-                className="w-full h-56 object-cover rounded-t-lg md:rounded-md"
+                className="w-full h-48 object-cover rounded-t-lg md:rounded-md"
                 src={data.imageUrl ?? "/empty-state.png"}
                 placeholder="blur"
                 blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
@@ -71,11 +71,11 @@ export default function MenuItemCard({data, source}: {
         </div>
       }
         <div className={`txt-div flex flex-col justify-center border-stone-200 ${ isMobile ? 'w-full' : 'w-[70%]' } md:w-[70%] p-4 dark:border-stone-700`}>
-          <div className={`flex ${isMobile ? 'flex-row justify-between items-center' : 'flex-col'}`}>
-            <h3 className="my-0 font-cal text-lg md:text-xl font-bold tracking-wide dark:text-white">
+          <div className={`flex ${isMobile ? 'flex-row' : 'flex-col'}`}>
+            <h3 className={`${isMobile && 'w-[60%]'} my-0 text-lg md:text-xl font-bold tracking-wide dark:text-white`}>
               {data.name ?? "Name"}
             </h3>
-            <div className="flex gap-3">
+            <div className={`flex gap-2 ${isMobile && 'w-[40%] justify-end'}`}>
               <p
                 style={{
                   textDecoration: data.promo ? 'line-through' : 'none',
@@ -91,7 +91,7 @@ export default function MenuItemCard({data, source}: {
             </div>
           </div>
           <div className={`${source === "admin" ? 'mb-6' : 'mb-0'}`}>
-            <p className="text-sm md:text-lg font-normal leading-snug text-stone-500 dark:text-stone-400">
+            <p className="text-sm md:text-lg font-normal text-stone-500 dark:text-stone-400">
               {data.description ?? ""}
             </p>
             {/* {data.description &&  <Tooltip side="top" showArrow={false} content={data.description}>
