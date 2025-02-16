@@ -46,7 +46,7 @@ export default async function MenuItems(
     }
 
     return (
-        <div className="flex absolute top-16 md:relative md:top-0 max-w-screen-xl flex-col space-y-12 p-6">
+        <div className="flex absolute top-16 md:relative md:top-0 max-w-screen-xl flex-col space-y-12 p-2">
             {/* <div className="flex justify-end items-center w-full">
                 <CreateMenuItemButton />
             </div> */}
