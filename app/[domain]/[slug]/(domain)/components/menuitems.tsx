@@ -37,7 +37,7 @@ const MenuItems: React.FC<MenuItemsProps> = async ({ items }) => {
     }
 
     return (
-        <div className="flex max-w-screen-xl flex-col space-y-12 p-6">
+        <div className="flex max-w-screen-xl flex-col space-y-12 p-2">
             <div className="flex justify-end items-center w-full">
             </div>
             <div className="flex flex-col justify-center items-center space-y-6">
