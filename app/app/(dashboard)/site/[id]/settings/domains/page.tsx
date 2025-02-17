@@ -27,9 +27,10 @@ export default async function SiteSettingsDomains(
         }}
         handleSubmit={updateRestaurantMetadata}
       />
+      <h1 className="text-xl font-bold dark:text-white text-black">Follow The Steps Below To Add a Custom Domain</h1>
       <Form
-        title="Custom Domain"
-        description="The custom domain for your site."
+        title="1. Custom Domain"
+        description="Add the custom domain for your site."
         helpText="Please enter a valid domain."
         inputAttrs={{
           name: "customDomain",
@@ -41,6 +42,40 @@ export default async function SiteSettingsDomains(
         }}
         handleSubmit={updateRestaurantMetadata}
       />
+      <div className="flex flex-col border gap-5 space-y-4 p-5 sm:p-10 rounded-lg bg-white dark:bg-black border-stone-200 dark:border-stone-700">
+        
+        <div className="flex flex-col gap-4">
+          <h2 className="text-xl font-bold dark:text-white text-black">2. A Record</h2>
+          <p className="text-sm dark:text-stone-400 text-black">
+            Add an A record for your custom domain to the settings of your DNS provider. It usually takes from 1 hour to 48 hours for newly added DNS records to propagate globally.
+          </p>
+          <div className="h-auto px-2 py-2 rounded-md w-full md:w-56 text-sm dark:bg-stone-800 dark:text-white text-black">
+            Host/name: @
+          </div>
+          <div className="h-auto px-2 py-2 rounded-md w-full md:w-56 text-sm dark:bg-stone-800 dark:text-white text-black">
+            Type: A
+          </div>
+          <div className="h-auto px-2 py-2 rounded-md w-full md:w-56 text-sm dark:bg-stone-800 dark:text-white text-black">
+            Value: 76.76.21.21
+          </div>
+        </div>
+        
+        {/* <div className="flex flex-col gap-4">
+          <h2 className="text-xl font-bold dark:text-white text-black">CNAME Record (Optional)</h2>
+          <p className="text-sm dark:text-stone-400 text-black">
+            Add a CNAME record for your custom domain to the settings of your DNS provider.
+          </p>
+          <div className="h-auto px-2 py-2 rounded-md w-full md:w-auto text-sm dark:bg-stone-800 dark:text-white text-black">
+            Host/name: Subdomain you want to connect to (e.g. "help", if you want to pick help.yourdomain.com)
+          </div>
+          <div className="h-auto px-2 py-2 rounded-md w-full md:w-56 text-sm dark:bg-stone-800 dark:text-white text-black">
+            Type: CNAME
+          </div>
+          <div className="h-auto px-2 py-2 rounded-md w-full md:w-56 text-sm dark:bg-stone-800 dark:text-white text-black">
+            Value: {data?.subdomain}.vercel-dns.com.
+          </div>
+        </div> */}
+      </div>
     </div>
   );
 }
