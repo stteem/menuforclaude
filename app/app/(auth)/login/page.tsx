@@ -16,7 +16,7 @@ export default function LoginPage() {
         Kpaly
       </h1>
       <p className="mt-2 text-center text-sm text-stone-600 dark:text-stone-400">
-        Create and own a site for your business. Optionally add your custom domain name to brand your business. E.g. <em>yourbusiness.com</em> <br />
+        Create and own a site for your business. <br/> E.g. <em>yourbusiness.kpaly.com</em> <br/> Optionally add your custom domain name to brand your business. <br /> E.g. <em>yourbusiness.com</em> <br />
         {/* <a
           className="font-medium text-black hover:text-stone-800 dark:text-stone-300 dark:hover:text-stone-100"
           href="https://vercel.com/blog/platforms-starter-kit"
