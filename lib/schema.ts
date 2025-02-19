@@ -104,6 +104,8 @@ export const restaurants = pgTable(
       "https://public.blob.vercel-storage.com/eEZHAoPTOBSYGBE3/JRajRyC-PhBHEinQkupt02jqfKacBVHLWJq7Iy.png",
     ),
     font: text("font").default("font-cal").notNull(),
+    reservation: boolean("reservation").default(false).notNull(),
+    reservation_deposite: text("reservation_deposite"),
     image: text("image").default(
       "https://ymwnnh4qtelzkdw3.public.blob.vercel-storage.com/U%20eats%20label-pA0uu3ZT0jSi0gxPVCYvggruM49rX1.png",
     ),
