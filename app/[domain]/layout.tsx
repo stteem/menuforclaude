@@ -2,12 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
 import CTA from "@/components/cta";
-import ReportAbuse from "@/components/report-abuse";
+// import ReportAbuse from "@/components/report-abuse";
 import { notFound, redirect } from "next/navigation";
 import { getRestaurantData } from "@/lib/fetchers";
 import { fontMapper } from "@/styles/fonts";
 import { Metadata } from "next";
-import { getSession } from "@/lib/auth"
+// import { getSession } from "@/lib/auth"
 
 export async function generateMetadata(
   props: {
@@ -120,9 +120,9 @@ export default async function SiteLayout(
       {domain == `demo.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` ||
       domain == `platformize.co` ? (
         <CTA />
-      ) : (
-        <ReportAbuse />
-      )}
+      ) : null
+      // (<ReportAbuse />)
+      }
     </div>
   );
 }

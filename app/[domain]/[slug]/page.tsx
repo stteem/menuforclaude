@@ -142,7 +142,7 @@ export default async function SiteMenuPage(
         </div>
       )}
       {data.adjacentMenus && (
-        <div className="mx-2 mb-20 grid max-w-screen-xl grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 xl:mx-auto xl:grid-cols-5">
+        <div className="flex w-full justify-center items-center px-10 mb-20">
           {data.adjacentMenus.map((data: any, index: number) => (
             // console.log({data} ),
             <MenuCard key={index} data={data} source={"user"}/>
