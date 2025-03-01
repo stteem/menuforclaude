@@ -21,7 +21,7 @@ export default function MenuCard({
 
   return (
     <div 
-      className="rounded-lg border border-stone-200 pb-2 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white"
+      className="w-full rounded-lg border border-stone-200 pb-2 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white"
       onMouseEnter={() => source === "admin" ? setIsHovered(true) : null} // Set hover state to true
       onMouseLeave={() => source === "admin" ? setIsHovered(false) : null} 
     >
