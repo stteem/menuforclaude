@@ -4,6 +4,9 @@ import db from "./db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { Adapter } from "next-auth/adapters";
 import { accounts, sessions, users, verificationTokens } from "./schema";
+import { redirect } from "next/navigation";
+import React from "react";
+
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
@@ -73,6 +76,7 @@ type User = {
     username: string;
     email: string;
     image: string;
+    role: string;
 }
 
 export async function getSession() {
@@ -173,3 +177,18 @@ export function withMenuItemAuth(action: any) {
     }
   };
 }
+
+export const withRole = (WrappedComponent: React.ComponentType<any>, requiredRole: string) => {
+  const WithRoleComponent = async (props: React.ComponentProps<typeof WrappedComponent>) => {
+    const session = await getSession();
+    if (!session?.user || session.user.role !== requiredRole) {
+      redirect("/unauthorized");
+      return null;
+    }
+    return React.createElement(WrappedComponent, props);
+  };
+
+  WithRoleComponent.displayName = `WithRole(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
+
+  return WithRoleComponent;
+};

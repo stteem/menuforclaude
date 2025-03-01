@@ -67,6 +67,18 @@ export default async function middleware(req: NextRequest) {
       new URL(`/home${path === "/" ? "" : path}`, req.url),
     );
   }
+
+  // Check authentication for dynamic tenant routes
+  // const session = await getToken({ req });
+  // if (!session && path !== "/login") {
+  //   return NextResponse.redirect(new URL("/login", req.url));
+  // }
+
+  // Check for role-based access
+  // if (session && session.user.role !== "admin" && path.startsWith("/admin")) {
+  //   return NextResponse.redirect(new URL("/unauthorized", req.url));
+  // }
+
   // rewrite everything else to `/[domain]/[slug] dynamic route
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 }

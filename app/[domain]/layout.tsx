@@ -1,12 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import CTA from "@/components/cta";
 // import ReportAbuse from "@/components/report-abuse";
 import { notFound, redirect } from "next/navigation";
 import { getRestaurantData } from "@/lib/fetchers";
 import { fontMapper } from "@/styles/fonts";
 import { Metadata } from "next";
+import Profile from "@/components/profile";
+// import UserNav from "./[slug]/(domain)/components/user-nav";
+import Nav from "@/components/nav";
 // import { getSession } from "@/lib/auth"
 
 export async function generateMetadata(
@@ -94,6 +97,11 @@ export default async function SiteLayout(
 
   return (
     <div className={fontMapper[data.font]}>
+      {/* <Nav>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Profile />
+        </Suspense>
+      </Nav> */}
       <div className="ease left-0 right-0 top-0 z-30 flex h-40 bg-white transition-all duration-150 dark:bg-black dark:text-white">
         <div className="mx-auto flex flex-col h-full max-w-screen-xl items-center justify-center space-x-5 px-10 sm:px-20">
           <Link href="/" className="flex flex-col items-center justify-center gap-1">
@@ -115,14 +123,15 @@ export default async function SiteLayout(
         </div>
       </div>
 
+      
       <div className="mt-5">{children}</div>
 
-      {domain == `demo.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` ||
+      {/* {domain == `demo.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` ||
       domain == `platformize.co` ? (
         <CTA />
       ) : null
       // (<ReportAbuse />)
-      }
+      } */}
     </div>
   );
 }

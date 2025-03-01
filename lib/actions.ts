@@ -706,3 +706,24 @@ export const editUser = async (
     }
   }
 };
+
+// export const getSiteFromUrl = async (url: string) => {
+//   const subdomain = url.split(".")[0];
+//   const restaurant = await db.query.restaurants.findFirst({
+//     where: (restaurants, { eq }) => eq(restaurants.subdomain, subdomain),
+//   });
+
+//   if (!restaurant) {
+//     return null;
+//   } 
+
+//   const siteUser = await db.query.siteUsers.findFirst({
+//     where: (siteUsers, { eq }) => eq(siteUsers.restaurantId, restaurant.id),
+//   });
+
+//   if (!siteUser) {
+//     return null;
+//   }
+
+//   return {siteUser, logo: restaurant.logo};
+// }

@@ -110,17 +110,19 @@ export default async function SiteMenuPage(
         </div>
       
       </div>
-      <div className="flex flex-col justify-center items-center w-full h-52 overflow-hidden rounded-2xl">
-        <BlurImage
-          alt={data.title ?? "Menu image"}
-          width={1200}
-          height={630}
-          className="h-full w-[98%] md:w-[85%] object-cover rounded-2xl"
-          placeholder="blur"
-          blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
-          src={data.image ?? "/empty-state.png"}
-        />
-      </div>
+      {
+        data.image && <div className="flex flex-col justify-center items-center w-full h-52 overflow-hidden rounded-2xl">
+          <BlurImage
+            alt={data.title ?? "Menu image"}
+            width={1200}
+            height={630}
+            className="h-full w-[98%] md:w-[85%] object-cover rounded-2xl"
+            placeholder="blur"
+            blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
+            src={data.image ?? "/empty-state.png"}
+          />
+        </div>
+      }
       <div className="flex">
         <MenuItems items={data.items} />
       </div>

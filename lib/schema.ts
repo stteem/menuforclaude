@@ -24,11 +24,18 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  role: text("role").default("user").notNull(), // Add role field
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
   updatedAt: timestamp("updatedAt", { mode: "date" })
     .notNull()
     .$onUpdate(() => new Date()),
-});
+},
+  (table) => {
+    return {
+      emailKey: uniqueIndex("User_email_key").on(table.email),
+    };
+  },
+);
 
 export const sessions = pgTable(
   "sessions",
@@ -218,6 +225,26 @@ export const menuItems = pgTable(
     };
   },
 );
+
+// export const siteUsers = pgTable("siteUsers", { 
+//   id: text("id")
+//       .primaryKey()
+//       .$defaultFn(() => createId()),
+//   restaurantId: text("restaurantId").references(() => restaurants.id, {
+//     onDelete: "cascade",
+//     onUpdate: "cascade",
+//   }),
+//   role: text("role").default("user"),
+//   email: text("email"),
+//   name: text("name"),
+//   phoneNumber: text("phoneNumber"),
+//   address: text("address"),
+//   avatarUrl: text("avatarUrl"),
+//   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+//   updatedAt: timestamp("updatedAt", { mode: "date" })
+//    .notNull()
+//    .$onUpdate(() => new Date()),
+// });
 
 export const examples = pgTable("examples", {
   id: serial("id").primaryKey(),
