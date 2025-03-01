@@ -63,7 +63,7 @@ export default async function RestaurantHomePage(
       }
       {  
         restaurant.menus.length > 0 ? 
-        <div className="w-full px-5 md:px10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center">
+        <div className="w-full px-5 md:px-10 xl:px-16 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {restaurant.menus.map((menu) => (
             <MenuCard key={menu.id} data={{...menu, subdomain: restaurant.subdomain}} source="user"/>
           ))}

@@ -123,7 +123,7 @@ export default async function SiteMenuPage(
           />
         </div>
       }
-      <div className="flex">
+      <div className="flex justify-center items-center mt-20 xl:mt-25">
         <MenuItems items={data.items} />
       </div>
       {/* <MDX source={data.mdxSource} /> */}
@@ -144,7 +144,7 @@ export default async function SiteMenuPage(
         </div>
       )}
       {data.adjacentMenus && (
-        <div className="w-full px-5 md:px10 mb-20 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="w-full px-5 md:px-10 xl:px-16 mb-20 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {data.adjacentMenus.map((data: any, index: number) => (
             // console.log({data} ),
             <MenuCard key={index} data={data} source={"user"}/>

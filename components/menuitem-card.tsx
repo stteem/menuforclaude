@@ -70,7 +70,7 @@ export default function MenuItemCard({data, source}: {
           {/* </div> */}
         </div>
       }
-        <div className={`txt-div flex flex-col justify-center border-stone-200 ${ isMobile ? 'w-full' : 'w-[70%]' } md:w-[70%] p-4 dark:border-stone-700`}>
+        <div className={`txt-div gap-2 flex flex-col justify-center border-stone-200 ${ isMobile ? 'w-full' : 'w-[70%]' } md:w-[70%] p-4 dark:border-stone-700`}>
           <div className={`flex ${isMobile ? 'flex-row' : 'flex-col'}`}>
             <h3 className={`${isMobile && 'w-[60%]'} my-0 text-lg md:text-xl font-bold tracking-wide dark:text-white`}>
               {data.name ?? "Name"}
@@ -91,7 +91,7 @@ export default function MenuItemCard({data, source}: {
             </div>
           </div>
           <div className={`${source === "admin" ? 'mb-6' : 'mb-0'}`}>
-            <p className="text-sm md:text-lg font-normal text-stone-500 dark:text-stone-400">
+            <p className="text-sm font-normal text-stone-500 dark:text-stone-400">
               {data.description ?? ""}
             </p>
             {/* {data.description &&  <Tooltip side="top" showArrow={false} content={data.description}>
