@@ -5,6 +5,8 @@ import Menus from "@/components/menus";
 import Link from "next/link";
 import PlaceholderCard from "@/components/placeholder-card";
 import OverviewSitesCTA from "@/components/overview-sites-cta";
+import LoadingDots from "@/components/icons/loading-dots";
+
 
 export default function Overview() {
   return (
@@ -27,11 +29,12 @@ export default function Overview() {
         </div>
         <Suspense
           fallback={
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <PlaceholderCard key={i} />
-              ))}
-            </div>
+            <LoadingDots />
+            // <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            //   {Array.from({ length: 3 }).map((_, i) => (
+            //     <PlaceholderCard key={i} />
+            //   ))}
+            // </div>
           }
         >
           <Sites limit={4} />
@@ -44,8 +47,8 @@ export default function Overview() {
         </h1>
         <Suspense
           fallback={
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {Array.from({ length: 8 }).map((_, i) => (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full">
+              {Array.from({ length: 3 }).map((_, i) => (
                 <PlaceholderCard key={i} />
               ))}
             </div>
