@@ -20,7 +20,7 @@ const MenuItems: React.FC<MenuItemsProps> = ({ items }) => {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      setIsMobile(width < 768); // Mobile view for widths less than 768px
+      setIsMobile(width < 550); // Mobile view for widths less than 768px
     };
 
     handleResize(); // Check on mount

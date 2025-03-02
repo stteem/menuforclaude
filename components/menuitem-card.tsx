@@ -21,7 +21,7 @@ export default function MenuItemCard({data, source}: {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      setIsMobile(width < 768); // Mobile view for widths less than 768px
+      setIsMobile(width < 550); // Mobile view for widths less than 768px
       setIsNotMobile(width >= 768); // Tablet view for widths between 768px and 1024px
     };
 
@@ -34,7 +34,7 @@ export default function MenuItemCard({data, source}: {
   }, []);
 
   return (
-    <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-0 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white`}  
+    <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-0 xl:mb-3 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white`}  
     >
       { !isMobile && source === "admin" && <Link
         href={`/menuitem/${data.id}`}
