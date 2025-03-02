@@ -1,5 +1,5 @@
-// 'use client'
-import React from 'react';
+'use client'
+import React, { useState, useEffect } from 'react';
 import { redirect } from "next/navigation";
 import db from "@/lib/db";
 import Image from "next/image";
@@ -13,12 +13,24 @@ interface MenuItemsProps {
     items: SelectMenuItem[];
 }
 
-const MenuItems: React.FC<MenuItemsProps> = async ({ items }) => {
-    // const data = await db.query.menuItems.findMany({
-    //     where: (menuItems, { eq }) => eq(menuItems.menuId, menuId) && eq(menuItems.published, true),
-    //     orderBy: (menuItems, { asc }) => [asc(menuItems.promo)],
-    // });
-    // console.log({data, id})
+const MenuItems: React.FC<MenuItemsProps> = ({ items }) => {
+
+  const [isMobile, setIsMobile] = useState(false); // State to manage mobile view
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 768); // Mobile view for widths less than 768px
+    };
+
+    handleResize(); // Check on mount
+    window.addEventListener('resize', handleResize); // Add event listener
+
+    return () => {
+      window.removeEventListener('resize', handleResize); // Cleanup on unmount
+    };
+  }, []);
+
     if (!items.length) {
         return(
             <div className="flex w-full max-w-screen-xl flex-col space-y-12 p-6">
@@ -40,11 +52,20 @@ const MenuItems: React.FC<MenuItemsProps> = async ({ items }) => {
         <div className="flex max-w-screen-xl flex-col gap-10 space-y-12 p-2">
             <div className="flex flex-col justify-center items-center space-y-6">
                 {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1"></div> */}
-                <div className="grid grid-cols-1 w-full md:w-[80%] gap-4">
-                    {items.map((item, index) => (
-                        <MenuItemCard key={index} data={item} source="domain"/>
-                    ))}
-                </div>
+                { 
+                    isMobile && <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-4">
+                        {items.map((item, index) => (
+                            <MenuItemCard key={index} data={item} source="domain"/>
+                        ))}
+                    </div>
+                }
+                { 
+                    !isMobile && <div className="grid grid-cols-1 w-full md:w-[80%] gap-4">
+                        {items.map((item, index) => (
+                            <MenuItemCard key={index} data={item} source="domain"/>
+                        ))}
+                    </div>
+                }
             </div>
         </div>
     )

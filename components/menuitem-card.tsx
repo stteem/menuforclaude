@@ -93,7 +93,7 @@ export default function MenuItemCard({data, source}: {
             </div>
           </div>
           <div className={`${source === "admin" ? 'mb-6' : 'mb-0'}`}>
-            <p className="text-sm font-normal text-stone-500 dark:text-stone-400">
+            <p className="text-sm font-normal line-clamp-2 md:line-clamp-3 text-stone-500 dark:text-stone-400">
               {data.description ?? ""}
             </p>
             {/* {data.description &&  <Tooltip side="top" showArrow={false} content={data.description}>
