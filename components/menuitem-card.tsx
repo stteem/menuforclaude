@@ -16,13 +16,11 @@ export default function MenuItemCard({data, source}: {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to manage dialog visibility
   const [isMobile, setIsMobile] = useState(false); // State to manage mobile view
-  const [isNotMobile, setIsNotMobile] = useState(false); // State to manage tablet view
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
       setIsMobile(width < 550); // Mobile view for widths less than 768px
-      setIsNotMobile(width >= 768); // Tablet view for widths between 768px and 1024px
     };
 
     handleResize(); // Check on mount
