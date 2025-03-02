@@ -16,10 +16,13 @@ export default function MenuItemCard({data, source}: {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to manage dialog visibility
   const [isMobile, setIsMobile] = useState(false); // State to manage mobile view
+  const [isTablet, setIsTablet] = useState(false); // State to manage tablet view
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Adjust the width as per your breakpoint
+      const width = window.innerWidth;
+      setIsMobile(width < 768); // Mobile view for widths less than 768px
+      setIsTablet(width >= 768 && width < 1024); // Tablet view for widths between 768px and 1024px
     };
 
     handleResize(); // Check on mount
@@ -31,20 +34,19 @@ export default function MenuItemCard({data, source}: {
   }, []);
 
   return (
-    <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-0 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white`}  
+    <div className={`flex ${isMobile && !isTablet ? 'flex-col' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-0 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white`}  
     >
-      { !isMobile &&
-        source === "admin" && <Link
-          href={`/menuitem/${data.id}`}
-          className="dark:text-white text-black"
-        >
-          <Edit size={20}/>
-        </Link>
+      { !isMobile && source === "admin" && <Link
+        href={`/menuitem/${data.id}`}
+        className="dark:text-white text-black mx-2 my-2"
+      >
+        <Edit size={20}/>
+      </Link>
       }
 
         
       {
-        isMobile && <div className="image-div flex justify-center items-center relative w-full h-auto md:h-44 overflow-hidden">
+        isMobile && !isTablet && <div className="image-div flex justify-center items-center relative w-full h-auto md:h-44 overflow-hidden">
           {/* <div className="flex justify-center items-center w-auto h-auto object-cover rounded-lg"> */}
             {data.promo && (
               <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
