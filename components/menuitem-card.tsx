@@ -32,7 +32,7 @@ export default function MenuItemCard({data, source}: {
   }, []);
 
   return (
-    <div className={`flex ${isMobile ? 'flex-row' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-0 xl:mb-3 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white`}  
+    <div className={`flex ${isMobile ? 'flex-row' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-none border-b border-stone-200 p-0 xl:mb-3 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white`}  
     >
       { !isMobile && source === "admin" && <Link
         href={`/menuitem/${data.id}`}
@@ -44,6 +44,8 @@ export default function MenuItemCard({data, source}: {
 
         
       {
+        // This block originally displays the image only on mobile view.
+
         // isMobile && <div className="image-div flex justify-center items-center relative w-full h-auto md:h-44 overflow-hidden">
         //   {/* <div className="flex justify-center items-center w-auto h-auto object-cover rounded-lg"> */}
         //     {data.promo && (
@@ -70,9 +72,9 @@ export default function MenuItemCard({data, source}: {
         //   {/* </div> */}
         // </div>
       }
-        <div className={`txt-div gap-2 flex flex-col justify-center border-stone-200 ${ isMobile ? 'w-full' : 'w-[70%]' } md:w-[70%] p-4 dark:border-stone-700`}>
+        <div className={`txt-div gap-2 flex flex-col justify-start border-stone-200 ${ isMobile ? 'w-full' : 'w-[70%]' } md:w-[70%] p-4 dark:border-stone-700`}>
           <div className={`flex ${isMobile ? 'flex-row' : 'flex-col'}`}>
-            <h3 className={`${isMobile && 'w-[60%]'} my-0 text-lg md:text-xl font-bold tracking-wide dark:text-white`}>
+            <h3 className={`${isMobile && 'w-[60%]'} my-0 text-sm md:text-lg font-bold dark:text-white`}>
               {data.name ?? "Name"}
             </h3>
             <div className={`flex gap-2 ${isMobile && 'w-[40%] justify-end'}`}>
@@ -108,7 +110,7 @@ export default function MenuItemCard({data, source}: {
           { isMobile &&
             source === "admin" && <Link
               href={`/menuitem/${data.id}`}
-              className="absolute dark:text-white text-black bottom-2 right-2"
+              className="absolute dark:text-white z-10 text-black bottom-2 right-2"
             >
               <Edit size={20}/>
             </Link>
@@ -116,6 +118,8 @@ export default function MenuItemCard({data, source}: {
 
         </div>
         {
+          // This block originally displays the image only from tablet view and above, but currently displays the image on all views
+          // since the mobile only view above has been commented out.
           <div className="image-div flex justify-center items-center relative w-[40%] md:w-[30%] h-auto md:h-44 overflow-hidden">
               {data.promo && (
                 <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
