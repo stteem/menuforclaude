@@ -32,7 +32,7 @@ export default function MenuItemCard({data, source}: {
   }, []);
 
   return (
-    <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-0 xl:mb-3 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white`}  
+    <div className={`flex ${isMobile ? 'flex-row' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-lg border border-stone-200 p-0 xl:mb-3 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white`}  
     >
       { !isMobile && source === "admin" && <Link
         href={`/menuitem/${data.id}`}
@@ -44,31 +44,31 @@ export default function MenuItemCard({data, source}: {
 
         
       {
-        isMobile && <div className="image-div flex justify-center items-center relative w-full h-auto md:h-44 overflow-hidden">
-          {/* <div className="flex justify-center items-center w-auto h-auto object-cover rounded-lg"> */}
-            {data.promo && (
-              <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
-                Promo
-              </span>
-            )}
-            { data.imageUrl &&
-              <BlurImage
-                alt={data.name ?? "Item card thumbnail"}
-                width={500}
-                height={400}
-                className="w-full h-48 object-cover rounded-t-lg md:rounded-md"
-                src={data.imageUrl ?? "/empty-state.png"}
-                placeholder="blur"
-                blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
-              />
-            }
-            {!data.published && (
-              <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
-                Draft
-              </span>
-            )}
-          {/* </div> */}
-        </div>
+        // isMobile && <div className="image-div flex justify-center items-center relative w-full h-auto md:h-44 overflow-hidden">
+        //   {/* <div className="flex justify-center items-center w-auto h-auto object-cover rounded-lg"> */}
+        //     {data.promo && (
+        //       <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
+        //         Promo
+        //       </span>
+        //     )}
+        //     { data.imageUrl &&
+        //       <BlurImage
+        //         alt={data.name ?? "Item card thumbnail"}
+        //         width={500}
+        //         height={400}
+        //         className="w-full h-48 object-cover rounded-t-lg md:rounded-md"
+        //         src={data.imageUrl ?? "/empty-state.png"}
+        //         placeholder="blur"
+        //         blurDataURL={data.imageBlurhash ?? placeholderBlurhash}
+        //       />
+        //     }
+        //     {!data.published && (
+        //       <span className="absolute bottom-2 right-2 rounded-md border border-stone-200 bg-white px-3 py-0.5 text-sm font-medium text-stone-600 shadow-md">
+        //         Draft
+        //       </span>
+        //     )}
+        //   {/* </div> */}
+        // </div>
       }
         <div className={`txt-div gap-2 flex flex-col justify-center border-stone-200 ${ isMobile ? 'w-full' : 'w-[70%]' } md:w-[70%] p-4 dark:border-stone-700`}>
           <div className={`flex ${isMobile ? 'flex-row' : 'flex-col'}`}>
@@ -116,7 +116,7 @@ export default function MenuItemCard({data, source}: {
 
         </div>
         {
-          !isMobile && <div className="image-div flex justify-center items-center relative w-[40%] md:w-[30%] h-auto md:h-44 overflow-hidden">
+          <div className="image-div flex justify-center items-center relative w-[40%] md:w-[30%] h-auto md:h-44 overflow-hidden">
             {/* <div className="flex justify-center items-center w-auto h-auto object-cover rounded-lg"> */}
               {data.promo && (
                 <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
