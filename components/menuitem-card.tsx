@@ -116,7 +116,7 @@ export default function MenuItemCard({data, source}: {
 
         </div>
         {
-          isNotMobile && <div className="image-div flex justify-center items-center relative w-[40%] md:w-[30%] h-auto md:h-44 overflow-hidden">
+          !isMobile && <div className="image-div flex justify-center items-center relative w-[40%] md:w-[30%] h-auto md:h-44 overflow-hidden">
             {/* <div className="flex justify-center items-center w-auto h-auto object-cover rounded-lg"> */}
               {data.promo && (
                 <span className="absolute z-10 top-2 right-2 rounded-md border border-stone-200 bg-red-600 px-3 py-0.5 text-sm font-medium text-white shadow-md">
