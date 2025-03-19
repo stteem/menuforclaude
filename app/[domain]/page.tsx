@@ -41,7 +41,7 @@ export default async function RestaurantHomePage(
   const domain = decodeURIComponent(params.domain);
   const restaurant = await getRestaurantData(domain);
 
-  console.log({restaurant})
+  // console.log({restaurant})
   if (!restaurant) {
     notFound();
   }

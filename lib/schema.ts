@@ -222,7 +222,7 @@ export const menuItems = pgTable(
   },
 );
 
-// export const siteUsers = pgTable("siteUsers", { 
+// export const siteCustomers = pgTable("siteCustomers", { 
 //   id: text("id")
 //       .primaryKey()
 //       .$defaultFn(() => createId()),

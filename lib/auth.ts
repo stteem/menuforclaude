@@ -1,5 +1,6 @@
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from 'next-auth/providers/google'
 import db from "./db";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { Adapter } from "next-auth/adapters";
@@ -10,19 +11,25 @@ import React from "react";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 export const authOptions: NextAuthOptions = {
-  providers: [ GitHubProvider({
-    clientId: process.env.AUTH_GITHUB_ID as string,
+  providers: [ 
+    GitHubProvider({
+      clientId: process.env.AUTH_GITHUB_ID as string,
       clientSecret: process.env.AUTH_GITHUB_SECRET as string,
-    profile(profile) {
-      return {
-        id: profile.id.toString(),
-        name: profile.name || profile.login,
-        gh_username: profile.login,
-        email: profile.email,
-        image: profile.avatar_url,
-      };
-    },
-  }) ],
+      profile(profile) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name || profile.login,
+          gh_username: profile.login,
+          email: profile.email,
+          image: profile.avatar_url,
+        };
+      },
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!
+    }), 
+  ],
   pages: {
     signIn: `/login`,
     verifyRequest: `/login`,

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import LoginButton from "./login-button";
+import GoogleLoginButton from "./google-login-button";
 import { Suspense } from "react";
 
 export default function LoginPage() {
@@ -33,6 +34,7 @@ export default function LoginPage() {
             <div className="my-2 h-10 w-full rounded-md border border-stone-200 bg-stone-100 dark:border-stone-700 dark:bg-stone-800" />
           }
         >
+          <GoogleLoginButton />
           <LoginButton />
         </Suspense>
       </div>

@@ -36,20 +36,11 @@ const MenuItems: React.FC<MenuItemsProps> = ({ items }) => {
         <div className="flex max-w-screen-xl flex-col gap-10 space-y-12 p-2">
             <div className="flex flex-col justify-center items-center space-y-6">
                 {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1"></div> */}
-                {/* { 
-                    isMobile && <div className="grid grid-cols-2 w-full px-4 gap-4">
-                        {items.map((item, index) => (
-                            <MenuItemCard key={index} data={item} source="domain"/>
-                        ))}
-                    </div>
-                } */}
-                { 
-                    <div className="grid grid-cols-1 w-full md:w-[80%] gap-4">
-                        {items.map((item, index) => (
-                            <MenuItemCard key={index} data={item} source="domain"/>
-                        ))}
-                    </div>
-                }
+                <div className="grid grid-cols-1 w-full md:w-[80%] gap-4">
+                    {items.map((item, index) => (
+                        <MenuItemCard key={index} data={item} source="domain"/>
+                    ))}
+                </div>
             </div>
         </div>
     )
