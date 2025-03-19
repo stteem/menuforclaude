@@ -15,22 +15,6 @@ interface MenuItemsProps {
 
 const MenuItems: React.FC<MenuItemsProps> = ({ items }) => {
 
-  const [isMobile, setIsMobile] = useState(false); // State to manage mobile view
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      setIsMobile(width < 550); // Mobile view for widths less than 768px
-    };
-
-    handleResize(); // Check on mount
-    window.addEventListener('resize', handleResize); // Add event listener
-
-    return () => {
-      window.removeEventListener('resize', handleResize); // Cleanup on unmount
-    };
-  }, []);
-
     if (!items.length) {
         return(
             <div className="flex w-full max-w-screen-xl flex-col space-y-12 p-6">
