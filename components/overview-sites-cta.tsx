@@ -18,7 +18,7 @@ export default async function OverviewSitesCTA() {
       .select({ count: count() })
       .from(restaurants)
       .where(eq(restaurants.userId, session.user.id));
-
+      console.log({sitesResult})
       if (!sitesResult) {
         throw new Error("Server problem, try again");
       }

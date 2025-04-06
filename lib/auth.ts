@@ -26,15 +26,14 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_ID!,
-      clientSecret: process.env.GOOGLE_SECRET!,
+      clientId: process.env.AUTH_GOOGLE_ID!,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
       profile(profile) {
         return {
-          id: profile.id.toString(),
-          name: profile.name || profile.login,
-          username: profile.login,
+          id: profile.id,
+          name: profile.name,
           email: profile.email,
-          image: profile.avatar_url,
+          image: profile.picture,
         };
       },
     }), 

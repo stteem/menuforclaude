@@ -85,7 +85,7 @@ export default function Nav({ children }: { children: ReactNode }) {
     if (segments[0] === "site" && id) {
       return [
         {
-          name: "Back to All Restaurants",
+          name: "Back to All Sites",
           href: "/sites",
           icon: <ArrowLeft width={18} />,
         },
@@ -153,7 +153,7 @@ export default function Nav({ children }: { children: ReactNode }) {
         icon: <LayoutDashboard width={18} />,
       },
       {
-        name: "Restaurants",
+        name: "Sites",
         href: "/sites",
         isActive: segments[0] === "sites",
         icon: <Globe width={18} />,
