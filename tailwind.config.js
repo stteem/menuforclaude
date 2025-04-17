@@ -453,7 +453,7 @@ module.exports = {
           "slideDownAndFade 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         slideLeftAndFade:
           "slideLeftAndFade 150ms cubic-bezier(0.16, 1, 0.3, 1)",
-        slideUpAndFade: "slideUpAndFade 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        slideUpAndFade: "slideUpAndFade 600ms cubic-bezier(0.16, 1, 0.3, 1)",
         slideRightAndFade:
           "slideRightAndFade 150ms cubic-bezier(0.16, 1, 0.3, 1)",
       },
