@@ -429,6 +429,10 @@ module.exports = {
             to: { opacity: "1", transform: "translateX(0)" },
           },
         },
+        marquee: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
         dialogOverlayShow: {
           from: { opacity: "0" },
           to: { opacity: "1" },
@@ -443,6 +447,7 @@ module.exports = {
       },
       animation: {
         wiggle: "wiggle 0.8s both",
+        marquee: "marquee 30s linear infinite",
           // Dialog
           dialogOverlayShow:
           "dialogOverlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)",
