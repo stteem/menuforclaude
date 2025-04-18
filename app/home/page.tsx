@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function HomePage() {
   // Determine login URL based on environment
@@ -8,9 +9,9 @@ export default function HomePage() {
     : 'http://app.localhost:3000/login';
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950 dark:text-white">
       {/* Header with Login Button */}
-      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b border-gray-100">
+      <header className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm z-50 border-b border-gray-100 dark:border-gray-800">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <Image
@@ -25,34 +26,37 @@ export default function HomePage() {
               Kpaly
             </span>
           </Link>
-          <Link 
-            href={loginUrl} 
-            className="rounded-md bg-gradient-to-r from-orange-600 to-amber-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:from-orange-700 hover:to-amber-600 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2"
-          >
-            Login
-          </Link>
+          <div className="flex items-center space-x-4">
+            <ThemeToggle />
+            <Link 
+              href={loginUrl} 
+              className="rounded-md bg-gradient-to-r from-orange-600 to-amber-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:from-orange-700 hover:to-amber-600 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2"
+            >
+              Login
+            </Link>
+          </div>
         </div>
       </header>
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:py-28">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-50 to-amber-50 opacity-70"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-50 to-amber-50 opacity-70 dark:from-orange-950/20 dark:to-amber-950/20 dark:opacity-40"></div>
         <div className="container relative mx-auto px-4">
           <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:space-x-10">
             <div className="mb-12 w-full lg:mb-0 lg:w-1/2">
               <div className="space-y-6">
-                <h1 className="text-center text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl lg:text-left lg:text-6xl xl:text-7xl">
+                <h1 className="text-center text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl lg:text-left lg:text-6xl xl:text-7xl">
                   <span className="block text-transparent bg-gradient-to-r from-orange-600 to-yellow-500 bg-clip-text">Kpaly</span>
                   <span className="block">Your online business, simplified</span>
                 </h1>
-                <p className="mx-auto mt-3 max-w-md text-center text-lg text-gray-600 sm:text-xl md:mt-5 md:max-w-3xl lg:text-left">
+                <p className="mx-auto mt-3 max-w-md text-center text-lg text-gray-600 dark:text-gray-300 sm:text-xl md:mt-5 md:max-w-3xl lg:text-left">
                   The all-in-one platform for food vendors and product sellers to create beautiful online stores, manage orders, and grow their business.
                 </p>
                 <div className="mt-6 flex justify-center gap-x-6 lg:justify-start">
-                  <Link href={loginUrl} className="rounded-full bg-gradient-to-r from-orange-600 to-amber-500 px-8 py-3 text-base font-medium text-white shadow-md transition-all hover:from-orange-700 hover:to-amber-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 md:py-4 md:px-10 md:text-lg">
+                  <Link href={loginUrl} className="rounded-full bg-gradient-to-r from-orange-600 to-amber-500 px-8 py-3 text-base font-medium text-white shadow-md transition-all hover:from-orange-700 hover:to-amber-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 dark:focus:ring-offset-gray-900 md:py-4 md:px-10 md:text-lg">
                     Get Started Free
                   </Link>
-                  <Link href="#features" className="flex items-center rounded-full border border-amber-300 bg-white px-8 py-3 text-base font-medium text-gray-700 shadow-sm transition-colors hover:bg-amber-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 md:py-4 md:px-10 md:text-lg">
+                  <Link href="#features" className="flex items-center rounded-full border border-amber-300 dark:border-amber-700 bg-white dark:bg-gray-800 px-8 py-3 text-base font-medium text-gray-700 dark:text-gray-200 shadow-sm transition-colors hover:bg-amber-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 md:py-4 md:px-10 md:text-lg">
                     Learn More
                     <svg xmlns="http://www.w3.org/2000/svg" className="ml-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 3a1 1 0 011 1v10.586l3.293-3.293a1 1 0 011.414 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 111.414-1.414L9 14.586V4a1 1 0 011-1z" clipRule="evenodd" />
@@ -62,53 +66,53 @@ export default function HomePage() {
               </div>
             </div>
             <div className="relative w-full lg:w-1/2">
-              <div className="rounded-xl border-2 border-amber-100 shadow-2xl overflow-hidden">
+              <div className="rounded-xl border-2 border-amber-100 dark:border-amber-800 shadow-2xl dark:shadow-amber-900/10 overflow-hidden">
                 <div className="grid grid-cols-2 grid-rows-2 h-[450px] md:h-[500px] lg:h-[550px]">
                   {/* Image 1: Restaurant/Food */}
-                  <div className="relative w-full h-full border-r border-b border-amber-100">
+                  <div className="relative w-full h-full border-r border-b border-amber-100 dark:border-amber-800">
                     <Image
                       src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=987&q=80"
                       alt="Restaurant food service"
                       fill
                       style={{ objectFit: 'cover', objectPosition: 'center' }}
-                      className="brightness-105 contrast-105"
+                      className="brightness-105 contrast-105 dark:brightness-90 dark:contrast-110"
                       priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-br from-orange-900/20 to-transparent"></div>
-                    <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5">
-                      <span className="text-xs font-medium text-gray-800">Food Services</span>
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-900/20 to-transparent dark:from-orange-900/40"></div>
+                    <div className="absolute bottom-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-lg px-3 py-1.5">
+                      <span className="text-xs font-medium text-gray-800 dark:text-gray-100">Food Services</span>
                     </div>
                   </div>
 
                   {/* Image 2: Retail/Products */}
-                  <div className="relative w-full h-full border-b border-amber-100">
+                  <div className="relative w-full h-full border-b border-amber-100 dark:border-amber-800">
                     <Image
                       src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=987&q=80"
                       alt="Retail store products"
                       fill
                       style={{ objectFit: 'cover', objectPosition: 'center' }}
-                      className="brightness-105 contrast-105"
+                      className="brightness-105 contrast-105 dark:brightness-90 dark:contrast-110"
                       priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-bl from-amber-900/20 to-transparent"></div>
-                    <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5">
-                      <span className="text-xs font-medium text-gray-800">Retail Products</span>
+                    <div className="absolute inset-0 bg-gradient-to-bl from-amber-900/20 to-transparent dark:from-amber-900/40"></div>
+                    <div className="absolute bottom-3 right-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-lg px-3 py-1.5">
+                      <span className="text-xs font-medium text-gray-800 dark:text-gray-100">Retail Products</span>
                     </div>
                   </div>
 
                   {/* Image 3: Services */}
-                  <div className="relative w-full h-full border-r border-amber-100">
+                  <div className="relative w-full h-full border-r border-amber-100 dark:border-amber-800">
                     <Image
                       src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=987&q=80"
                       alt="Service based business"
                       fill
                       style={{ objectFit: 'cover', objectPosition: 'center' }}
-                      className="brightness-105 contrast-105"
+                      className="brightness-105 contrast-105 dark:brightness-90 dark:contrast-110"
                       priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-yellow-900/20 to-transparent"></div>
-                    <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5">
-                      <span className="text-xs font-medium text-gray-800">Professional Services</span>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-yellow-900/20 to-transparent dark:from-yellow-900/40"></div>
+                    <div className="absolute bottom-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-lg px-3 py-1.5">
+                      <span className="text-xs font-medium text-gray-800 dark:text-gray-100">Professional Services</span>
                     </div>
                   </div>
 
@@ -119,40 +123,40 @@ export default function HomePage() {
                       alt="Digital products and software"
                       fill
                       style={{ objectFit: 'cover', objectPosition: 'center' }}
-                      className="brightness-105 contrast-105"
+                      className="brightness-105 contrast-105 dark:brightness-90 dark:contrast-110"
                       priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-tl from-orange-900/20 to-transparent"></div>
-                    <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5">
-                      <span className="text-xs font-medium text-gray-800">Digital Products</span>
+                    <div className="absolute inset-0 bg-gradient-to-tl from-orange-900/20 to-transparent dark:from-orange-900/40"></div>
+                    <div className="absolute bottom-3 right-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm rounded-lg px-3 py-1.5">
+                      <span className="text-xs font-medium text-gray-800 dark:text-gray-100">Digital Products</span>
                     </div>
                   </div>
                 </div>
 
                 {/* UI overlay elements */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm rounded-lg shadow-xl p-4 min-w-[240px] z-10">
-                  <p className="text-base font-semibold text-center text-gray-900 mb-2">One Platform, Many Possibilities</p>
-                  <p className="text-xs text-center text-gray-600 mb-3">Create your perfect online store regardless of what you sell</p>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-lg shadow-xl dark:shadow-amber-800/10 p-4 min-w-[240px] z-10">
+                  <p className="text-base font-semibold text-center text-gray-900 dark:text-white mb-2">One Platform, Many Possibilities</p>
+                  <p className="text-xs text-center text-gray-600 dark:text-gray-400 mb-3">Create your perfect online store regardless of what you sell</p>
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="flex items-center space-x-2 text-xs text-gray-600">
+                    <div className="flex items-center space-x-2 text-xs text-gray-600 dark:text-gray-300">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <span>Custom Domains</span>
                     </div>
-                    <div className="flex items-center space-x-2 text-xs text-gray-600">
+                    <div className="flex items-center space-x-2 text-xs text-gray-600 dark:text-gray-300">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <span>Mobile Ready</span>
                     </div>
-                    <div className="flex items-center space-x-2 text-xs text-gray-600">
+                    <div className="flex items-center space-x-2 text-xs text-gray-600 dark:text-gray-300">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <span>Easy Setup</span>
                     </div>
-                    <div className="flex items-center space-x-2 text-xs text-gray-600">
+                    <div className="flex items-center space-x-2 text-xs text-gray-600 dark:text-gray-300">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
@@ -162,7 +166,7 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="absolute -bottom-6 -right-6 z-10 hidden md:block">
-                <div className="rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 p-4 shadow-lg">
+                <div className="rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 p-4 shadow-lg dark:shadow-amber-900/20">
                   <div className="flex items-center space-x-2">
                     <div className="h-3 w-3 rounded-full bg-white"></div>
                     <span className="text-sm font-medium text-white">Business growth</span>
@@ -176,10 +180,10 @@ export default function HomePage() {
       </section>
 
       {/* Trusted By Section */}
-      <section className="py-12 sm:py-16 border-y border-amber-100 bg-gradient-to-r from-orange-50/50 to-amber-50/50 overflow-hidden">
+      <section className="py-12 sm:py-16 border-y border-amber-100 dark:border-amber-900/20 bg-gradient-to-r from-orange-50/50 to-amber-50/50 dark:from-orange-950/30 dark:to-amber-950/30 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center">
-            <h2 className="mb-8 text-center text-sm font-semibold uppercase tracking-wide text-amber-700">Trusted by businesses worldwide</h2>
+            <h2 className="mb-8 text-center text-sm font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-500">Trusted by businesses worldwide</h2>
             
             {/* Marquee container */}
             <div className="relative w-full">
@@ -204,7 +208,7 @@ export default function HomePage() {
                       <div className={`h-10 w-10 bg-gradient-to-br ${company.gradient} ${company.shape} flex items-center justify-center text-white font-bold mr-2 group-hover:scale-110 transform transition-transform`}>
                         {company.initials}
                       </div>
-                      <span className="text-gray-600 font-semibold">{company.name}</span>
+                      <span className="text-gray-600 dark:text-gray-300 font-semibold">{company.name}</span>
                     </div>
                   ))}
                 </div>
@@ -229,7 +233,7 @@ export default function HomePage() {
                       <div className={`h-10 w-10 bg-gradient-to-br ${company.gradient} ${company.shape} flex items-center justify-center text-white font-bold mr-2 group-hover:scale-110 transform transition-transform`}>
                         {company.initials}
                       </div>
-                      <span className="text-gray-600 font-semibold">{company.name}</span>
+                      <span className="text-gray-600 dark:text-gray-300 font-semibold">{company.name}</span>
                     </div>
                   ))}
                 </div>
@@ -239,15 +243,136 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Product Showcase Section */}
+      <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-orange-50/30 dark:from-gray-900 dark:to-orange-950/20">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 text-center">
+            <span className="inline-block rounded-full bg-orange-100 dark:bg-orange-900/60 px-4 py-1 text-sm font-medium text-orange-800 dark:text-orange-300">Endless Possibilities</span>
+            <h2 className="mt-3 text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+              Create websites for any business
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-600 dark:text-gray-300">
+              Whatever you sell or provide, Kpaly helps you showcase it beautifully online
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {[
+              {
+                title: "Restaurants & Cafés",
+                description: "Showcase mouth-watering menus, accept reservations, and display your restaurant's unique ambiance.",
+                icon: "🍽️",
+                color: "from-amber-600 to-amber-500",
+                bgColor: "bg-amber-50 dark:bg-amber-900/20"
+              },
+              {
+                title: "Bakeries & Patisseries",
+                description: "Display your delicious pastries, custom cakes, and artisanal bread with beautiful imagery.",
+                icon: "🥐",
+                color: "from-yellow-600 to-yellow-500",
+                bgColor: "bg-yellow-50 dark:bg-yellow-900/20"
+              },
+              {
+                title: "Food Trucks",
+                description: "Share your location schedule, signature dishes, and enable pre-ordering for quick pickup.",
+                icon: "🚚",
+                color: "from-red-600 to-red-500",
+                bgColor: "bg-red-50 dark:bg-red-900/20"
+              },
+              {
+                title: "Specialty Coffee Shops",
+                description: "Highlight your coffee origins, brewing methods, and signature blends with elegant descriptions.",
+                icon: "☕",
+                color: "from-brown-600 to-amber-700",
+                bgColor: "bg-amber-50/70 dark:bg-amber-900/20"
+              },
+              {
+                title: "Boutique Clothing",
+                description: "Present your fashion collections, showcase styles, and offer a seamless shopping experience.",
+                icon: "👗",
+                color: "from-pink-600 to-pink-500",
+                bgColor: "bg-pink-50 dark:bg-pink-900/20"
+              },
+              {
+                title: "Handmade Crafts",
+                description: "Share your creative process, display your unique items, and connect with craft enthusiasts.",
+                icon: "🧶",
+                color: "from-purple-600 to-purple-500",
+                bgColor: "bg-purple-50 dark:bg-purple-900/20"
+              },
+              {
+                title: "Jewelry Designers",
+                description: "Showcase your bespoke jewelry pieces with immersive photography and detailed descriptions.",
+                icon: "💍",
+                color: "from-indigo-600 to-indigo-500",
+                bgColor: "bg-indigo-50 dark:bg-indigo-900/20"
+              },
+              {
+                title: "Fitness Studios",
+                description: "Display class schedules, trainer profiles, and enable online booking for fitness sessions.",
+                icon: "💪",
+                color: "from-green-600 to-green-500",
+                bgColor: "bg-green-50 dark:bg-green-900/20"
+              },
+              {
+                title: "Art Galleries",
+                description: "Create virtual exhibitions, artist portfolios, and sell artwork directly to collectors.",
+                icon: "🎨",
+                color: "from-blue-600 to-blue-500",
+                bgColor: "bg-blue-50 dark:bg-blue-900/20"
+              },
+              {
+                title: "Photographers",
+                description: "Showcase your portfolio, photography packages, and enable booking for photo sessions.",
+                icon: "📸",
+                color: "from-gray-700 to-gray-600",
+                bgColor: "bg-gray-50 dark:bg-gray-800/50"
+              },
+              {
+                title: "Spas & Wellness",
+                description: "Display your treatment menu, therapist profiles, and enable online appointment booking.",
+                icon: "💆‍♀️",
+                color: "from-teal-600 to-teal-500",
+                bgColor: "bg-teal-50 dark:bg-teal-900/20"
+              },
+              {
+                title: "Flower Shops",
+                description: "Showcase your floral arrangements, bouquet options, and special occasion packages.",
+                icon: "💐",
+                color: "from-rose-600 to-rose-500",
+                bgColor: "bg-rose-50 dark:bg-rose-900/20"
+              }
+            ].map((item, index) => (
+              <div
+                key={index}
+                className={`rounded-xl border border-gray-200 dark:border-gray-700 ${item.bgColor} p-6 shadow-md dark:shadow-amber-900/5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}
+              >
+                <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br ${item.color} text-2xl text-white`}>
+                  {item.icon}
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">{item.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{item.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 flex justify-center">
+            <Link href={loginUrl} className="rounded-full bg-gradient-to-r from-orange-600 to-amber-500 px-8 py-3 text-base font-medium text-white shadow-md transition-all hover:from-orange-700 hover:to-amber-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2 dark:focus:ring-offset-gray-900 md:py-4 md:px-10 md:text-lg">
+              Start Creating Your Website
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
-      <section id="features" className="py-16 sm:py-24">
+      <section id="features" className="py-16 sm:py-24 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="mb-16 text-center">
-            <span className="inline-block rounded-full bg-amber-100 px-4 py-1 text-sm font-medium text-amber-800">Features</span>
-            <h2 className="mt-3 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            <span className="inline-block rounded-full bg-amber-100 dark:bg-amber-900/60 px-4 py-1 text-sm font-medium text-amber-800 dark:text-amber-300">Features</span>
+            <h2 className="mt-3 text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
               Everything you need to succeed online
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-600">
+            <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-600 dark:text-gray-300">
               From custom domains to mobile-friendly designs, Kpaly helps you build a professional online presence.
             </p>
           </div>
@@ -258,61 +383,61 @@ export default function HomePage() {
                 title: "Custom Domains",
                 description: "Use your own domain name or get a free Kpaly subdomain to create a professional web presence.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-amber-600 dark:text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                   </svg>
                 ),
-                color: "bg-amber-50 border-amber-100"
+                color: "bg-amber-50 border-amber-100 dark:bg-amber-900/20 dark:border-amber-800"
               },
               {
                 title: "Brand Customization",
                 description: "Customize colors, logos, and styles to match your brand identity and create a cohesive customer experience.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-orange-600 dark:text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                   </svg>
                 ),
-                color: "bg-orange-50 border-orange-100"
+                color: "bg-orange-50 border-orange-100 dark:bg-orange-900/20 dark:border-orange-800"
               },
               {
                 title: "Order Management",
                 description: "Easily track and manage customer orders with real-time notifications and a user-friendly dashboard.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-yellow-600 dark:text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                   </svg>
                 ),
-                color: "bg-yellow-50 border-yellow-100"
+                color: "bg-yellow-50 border-yellow-100 dark:bg-yellow-900/20 dark:border-yellow-800"
               },
               {
                 title: "Promotions & Discounts",
                 description: "Create and manage promotional campaigns, discount codes, and special offers to drive sales.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-rose-600 dark:text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 ),
-                color: "bg-rose-50 border-rose-100"
+                color: "bg-rose-50 border-rose-100 dark:bg-rose-900/20 dark:border-rose-800"
               },
               {
                 title: "Mobile Friendly",
                 description: "Your store automatically looks great on any device, providing a seamless experience for all your customers.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-orange-600 dark:text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                   </svg>
                 ),
-                color: "bg-orange-50 border-orange-100"
+                color: "bg-orange-50 border-orange-100 dark:bg-orange-900/20 dark:border-orange-800"
               },
               {
                 title: "Analytics & Insights",
                 description: "Track performance with detailed analytics on sales, popular items, customer behavior, and more.",
                 icon: (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-emerald-600 dark:text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
                 ),
-                color: "bg-emerald-50 border-emerald-100"
+                color: "bg-emerald-50 border-emerald-100 dark:bg-emerald-900/20 dark:border-emerald-800"
               },
             ].map((feature, index) => (
               <div
@@ -320,8 +445,8 @@ export default function HomePage() {
                 className={`rounded-lg ${feature.color} border p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
               >
                 <div className="mb-5">{feature.icon}</div>
-                <h3 className="mb-3 text-xl font-bold text-gray-900">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <h3 className="mb-3 text-xl font-bold text-gray-900 dark:text-white">{feature.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -329,11 +454,11 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="bg-gradient-to-b from-gray-50 to-white py-16 sm:py-24">
+      <section className="bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900 py-16 sm:py-24">
         <div className="container mx-auto px-4">
           <div className="mb-16 text-center">
-            <span className="inline-block rounded-full bg-orange-100 px-4 py-1 text-sm font-medium text-orange-800">Testimonials</span>
-            <h2 className="mt-3 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            <span className="inline-block rounded-full bg-orange-100 dark:bg-orange-900/60 px-4 py-1 text-sm font-medium text-orange-800 dark:text-orange-300">Testimonials</span>
+            <h2 className="mt-3 text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
               What our customers say
             </h2>
           </div>
@@ -344,32 +469,32 @@ export default function HomePage() {
                 quote: "Kpaly transformed my small bakery business. Setting up my online store was incredibly easy, and I've seen a 40% increase in orders since launching.",
                 author: "Sarah Johnson",
                 role: "Owner, Sweet Delights Bakery",
-                color: "border-l-orange-400 bg-orange-50"
+                color: "border-l-orange-400 bg-orange-50 dark:border-l-orange-600 dark:bg-orange-900/20"
               },
               {
                 quote: "The ability to customize everything to match my brand made all the difference. My customers love how professional my site looks, and I love how simple it is to manage.",
                 author: "Michael Chen",
                 role: "Founder, Urban Gadgets",
-                color: "border-l-amber-400 bg-amber-50"
+                color: "border-l-amber-400 bg-amber-50 dark:border-l-amber-600 dark:bg-amber-900/20"
               },
               {
                 quote: "As a food truck owner, I needed a way for customers to order ahead. Kpaly gave me exactly what I needed, plus tools to grow my business I didn't know I needed!",
                 author: "Priya Patel",
                 role: "Owner, Spice Wheels Food Truck",
-                color: "border-l-yellow-400 bg-yellow-50"
+                color: "border-l-yellow-400 bg-yellow-50 dark:border-l-yellow-600 dark:bg-yellow-900/20"
               }
             ].map((testimonial, index) => (
               <div
                 key={index}
-                className={`rounded-lg border-l-4 ${testimonial.color} p-8 shadow-lg`}
+                className={`rounded-lg border-l-4 ${testimonial.color} p-8 shadow-lg dark:shadow-amber-900/5`}
               >
-                <svg className="mb-6 h-10 w-10 text-orange-600" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
+                <svg className="mb-6 h-10 w-10 text-orange-600 dark:text-orange-500" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
                   <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                 </svg>
-                <p className="mb-4 text-lg leading-relaxed text-gray-600">{testimonial.quote}</p>
+                <p className="mb-4 text-lg leading-relaxed text-gray-600 dark:text-gray-300">{testimonial.quote}</p>
                 <div>
-                  <p className="font-semibold text-gray-900">{testimonial.author}</p>
-                  <p className="text-sm text-gray-600">{testimonial.role}</p>
+                  <p className="font-semibold text-gray-900 dark:text-white">{testimonial.author}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{testimonial.role}</p>
                 </div>
               </div>
             ))}
@@ -378,14 +503,14 @@ export default function HomePage() {
       </section>
 
       {/* Pricing */}
-      <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-orange-50">
+      <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-orange-50 dark:from-gray-900 dark:to-orange-950/30">
         <div className="container mx-auto px-4">
           <div className="mb-16 text-center">
-            <span className="inline-block rounded-full bg-amber-100 px-4 py-1 text-sm font-medium text-amber-800">Pricing</span>
-            <h2 className="mt-3 text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            <span className="inline-block rounded-full bg-amber-100 dark:bg-amber-900/60 px-4 py-1 text-sm font-medium text-amber-800 dark:text-amber-300">Pricing</span>
+            <h2 className="mt-3 text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
               Simple, transparent pricing
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-600">
+            <p className="mx-auto mt-4 max-w-2xl text-xl text-gray-600 dark:text-gray-300">
               Start for free, upgrade as you grow. No hidden fees.
             </p>
           </div>
@@ -406,8 +531,8 @@ export default function HomePage() {
                 ],
                 cta: "Get Started",
                 highlighted: false,
-                color: "bg-amber-50 border-amber-200",
-                btnColor: "bg-white text-amber-700 hover:bg-amber-50 ring-1 ring-amber-700"
+                color: "bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-800",
+                btnColor: "bg-white dark:bg-gray-800 text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-700 ring-1 ring-amber-700 dark:ring-amber-500"
               },
               {
                 name: "Growth",
@@ -425,7 +550,7 @@ export default function HomePage() {
                 ],
                 cta: "Start 14-day Trial",
                 highlighted: true,
-                color: "bg-orange-50 border-orange-200",
+                color: "bg-orange-50 border-orange-200 dark:bg-orange-900/20 dark:border-orange-700",
                 btnColor: "bg-gradient-to-r from-orange-600 to-amber-500 text-white hover:from-orange-700 hover:to-amber-600"
               },
               {
@@ -444,31 +569,31 @@ export default function HomePage() {
                 ],
                 cta: "Contact Sales",
                 highlighted: false,
-                color: "bg-yellow-50 border-yellow-200",
-                btnColor: "bg-white text-yellow-700 hover:bg-yellow-50 ring-1 ring-yellow-700"
+                color: "bg-yellow-50 border-yellow-200 dark:bg-yellow-900/20 dark:border-yellow-800",
+                btnColor: "bg-white dark:bg-gray-800 text-yellow-700 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-gray-700 ring-1 ring-yellow-700 dark:ring-yellow-500"
               }
             ].map((plan, index) => (
               <div
                 key={index}
-                className={`rounded-lg ${plan.highlighted ? 'border-2 border-orange-600 shadow-xl' : `border ${plan.color}`} flex flex-col overflow-hidden bg-white`}
+                className={`rounded-lg ${plan.highlighted ? 'border-2 border-orange-600 dark:border-orange-500 shadow-xl dark:shadow-orange-900/10' : `border ${plan.color}`} flex flex-col overflow-hidden bg-white dark:bg-gray-900`}
               >
-                <div className={`px-6 py-8 ${plan.highlighted ? 'bg-orange-50' : plan.color}`}>
-                  <h3 className="text-2xl font-bold text-gray-900">{plan.name}</h3>
+                <div className={`px-6 py-8 ${plan.highlighted ? 'bg-orange-50 dark:bg-orange-900/30' : plan.color}`}>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{plan.name}</h3>
                   <div className="mt-4 flex items-baseline">
-                    <span className="text-4xl font-extrabold text-gray-900">{plan.price}</span>
-                    {plan.period && <span className="ml-1 text-xl font-medium text-gray-500">{plan.period}</span>}
+                    <span className="text-4xl font-extrabold text-gray-900 dark:text-white">{plan.price}</span>
+                    {plan.period && <span className="ml-1 text-xl font-medium text-gray-500 dark:text-gray-400">{plan.period}</span>}
                   </div>
-                  <p className="mt-5 text-gray-600">{plan.description}</p>
+                  <p className="mt-5 text-gray-600 dark:text-gray-300">{plan.description}</p>
                 </div>
                 <div className="flex flex-1 flex-col justify-between px-6 pb-8 pt-6">
                   <div>
                     <ul className="space-y-4">
                       {plan.features.map((feature, i) => (
                         <li key={i} className="flex items-start">
-                          <svg className="h-5 w-5 flex-shrink-0 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="h-5 w-5 flex-shrink-0 text-green-500 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                           </svg>
-                          <span className="ml-3 text-gray-600">{feature}</span>
+                          <span className="ml-3 text-gray-600 dark:text-gray-300">{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -477,7 +602,7 @@ export default function HomePage() {
                     <button
                       className={`w-full rounded-md px-4 py-2 text-center text-base font-medium ${
                         plan.btnColor
-                      } transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2`}
+                      } transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-600 dark:focus:ring-orange-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900`}
                     >
                       {plan.cta}
                     </button>
@@ -490,7 +615,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-orange-700 to-amber-600 py-16 sm:py-24">
+      <section className="bg-gradient-to-r from-orange-700 to-amber-600 dark:from-orange-900 dark:to-amber-900 py-16 sm:py-24">
         <div className="container mx-auto px-4">
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="lg:w-1/2">
@@ -503,12 +628,12 @@ export default function HomePage() {
             </div>
             <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
               <div className="inline-flex rounded-md shadow">
-                <Link href={loginUrl} className="rounded-md bg-white px-5 py-3 text-base font-medium text-orange-600 hover:bg-orange-50 md:py-4 md:px-8 md:text-lg">
+                <Link href={loginUrl} className="rounded-md bg-white dark:bg-gray-800 px-5 py-3 text-base font-medium text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-gray-700 md:py-4 md:px-8 md:text-lg">
                   Get Started Free
                 </Link>
               </div>
               <div className="ml-3 inline-flex rounded-md shadow">
-                <Link href="#" className="rounded-md border border-orange-300 bg-transparent px-5 py-3 text-base font-medium text-white hover:bg-orange-800 md:py-4 md:px-8 md:text-lg">
+                <Link href="#" className="rounded-md border border-orange-300 dark:border-orange-500 bg-transparent px-5 py-3 text-base font-medium text-white hover:bg-orange-800 dark:hover:bg-orange-950 md:py-4 md:px-8 md:text-lg">
                   Watch Demo
                 </Link>
               </div>
@@ -518,7 +643,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 py-12">
+      <footer className="bg-gray-900 dark:bg-gray-950 py-12">
         <div className="container mx-auto px-4">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div>
