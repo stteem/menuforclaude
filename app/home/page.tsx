@@ -1,14 +1,114 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, RefObject } from "react";
 import Magic from "@/components/icons/magic";
+
+// Testimonial data
+const testimonials = [
+  {
+    name: "Sarah Johnson",
+    position: "Owner, Bistro Delight",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    testimonial: "Kpaly transformed our online presence. The custom domain and branding features helped establish trust with our customers."
+  },
+  {
+    name: "Marcus Lee",
+    position: "CEO, Urban Apparel",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    testimonial: "Since launching our store with Kpaly, we've seen a 40% increase in online sales. The analytics tools are invaluable for our business decisions."
+  },
+  {
+    name: "Priya Patel",
+    position: "Founder, Spice Market",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    testimonial: "The ordering system is seamless. Our customers love the experience, and it's saved us countless hours in order management."
+  },
+  {
+    name: "David Chen",
+    position: "Marketing Director, Tech Solutions",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    testimonial: "The customization options are unmatched. We were able to create a store that perfectly aligns with our brand identity."
+  },
+  {
+    name: "Emma Rodriguez",
+    position: "Owner, Craft Collective",
+    image: "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    testimonial: "As an artisan marketplace, we needed flexibility. Kpaly delivered with features that showcase our products beautifully."
+  },
+  {
+    name: "James Wilson",
+    position: "Operations Manager, Fresh Foods",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    testimonial: "The multi-tenant architecture gives each of our franchise locations their own space, while keeping our brand consistent."
+  },
+  {
+    name: "Aisha Mohammed",
+    position: "Founder, Boutique Beauty",
+    image: "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    testimonial: "Kpaly's analytics dashboard has given us insights we never had before. Now we know exactly what products are trending."
+  },
+  {
+    name: "Thomas Müller",
+    position: "CTO, Digital Innovators",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    testimonial: "The API integrations were exactly what we needed. We connected our inventory system seamlessly within a day."
+  }
+];
+
+// Create a duplicated array for infinite scrolling effect
+const duplicatedTestimonials = [...testimonials, ...testimonials];
+// Add a repeated set of the first few testimonials at the end to ensure seamless looping
+const testimonialsList = [...duplicatedTestimonials, ...testimonials.slice(0, 3)];
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
-
+  const [dragOffset, setDragOffset] = useState(0);
+  const testimonialRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const testimonialWidth = useRef(352); // 320px card width + 2 * 16px margin
+  const testimonialContainerWidth = useRef(0);
+  
   useEffect(() => {
     setMounted(true);
+    
+    // Calculate total width of all testimonials
+    if (testimonialRef.current) {
+      testimonialContainerWidth.current = testimonialRef.current.scrollWidth;
+    }
+
+    const autoScroll = setInterval(() => {
+      if (!isDragging.current && testimonialRef.current) {
+        // Loop the scroll by resetting to beginning when it reaches the end
+        setDragOffset(prev => {
+          // Total scrollable width calculation (8 testimonials * width - visible area)
+          const maxScroll = testimonialContainerWidth.current || (8 * testimonialWidth.current);
+          const newOffset = prev - 1;
+          
+          // When we've scrolled significantly, reset position to create continuous loop effect
+          // This is the key to the infinite scroll illusion
+          if (Math.abs(newOffset) >= (testimonialWidth.current * 8)) { // After 8 cards, reset
+            return 0; // Reset to beginning
+          }
+          
+          return newOffset;
+        });
+      }
+    }, 20);
+
+    // Update the testimonial width if window resizes
+    const handleResize = () => {
+      if (testimonialRef.current) {
+        testimonialContainerWidth.current = testimonialRef.current.scrollWidth;
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      clearInterval(autoScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const benefits = [
@@ -97,11 +197,11 @@ export default function HomePage() {
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">Kpaly</span>
             </div>
             <div className="flex items-center gap-4">
-              <Link href="/login" className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
+              <Link 
+                href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} 
+                className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+              >
                 Login
-              </Link>
-              <Link href="/login" className="bg-gradient-to-r from-orange-500 to-emerald-500 text-white px-4 py-2 rounded-full hover:opacity-90 transition duration-200">
-                Get Started
               </Link>
             </div>
           </div>
@@ -120,7 +220,7 @@ export default function HomePage() {
                 Kpaly helps food and product vendors create beautiful, fully-functional online stores with custom domains, real-time order management, and powerful analytics.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link href="/login" className="bg-gradient-to-r from-orange-500 to-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition duration-200">
+                <Link href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} className="bg-gradient-to-r from-orange-500 to-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition duration-200">
                   Start Building
                 </Link>
                 <a href="#features" className="border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 dark:hover:bg-stone-800 transition duration-200">
@@ -194,7 +294,7 @@ export default function HomePage() {
               <div className="flex-1">
                 <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{feature.title}</h3>
                 <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">{feature.description}</p>
-                <Link href="/login" className="inline-flex items-center text-orange-500 font-semibold hover:text-orange-600 dark:text-orange-400 dark:hover:text-orange-300 transition-colors duration-200 group">
+                <Link href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} className="inline-flex items-center text-orange-500 font-semibold hover:text-orange-600 dark:text-orange-400 dark:hover:text-orange-300 transition-colors duration-200 group">
                   Get Started <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-200">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                   </svg>
@@ -267,7 +367,7 @@ export default function HomePage() {
                   Community support
                 </li>
               </ul>
-              <Link href="/login" className="block w-full text-center bg-gray-100 hover:bg-gray-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-gray-900 dark:text-white px-6 py-3 rounded-lg font-semibold transition duration-200">
+              <Link href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} className="block w-full text-center bg-gray-100 hover:bg-gray-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-gray-900 dark:text-white px-6 py-3 rounded-lg font-semibold transition duration-200">
                 Get Started Free
               </Link>
             </div>
@@ -323,7 +423,7 @@ export default function HomePage() {
                   Custom branding
                 </li>
               </ul>
-              <Link href="/login" className="block w-full text-center bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-200">
+              <Link href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} className="block w-full text-center bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-200">
                 Get Started
               </Link>
             </div>
@@ -371,7 +471,7 @@ export default function HomePage() {
                   SLA guarantees
                 </li>
               </ul>
-              <Link href="/login" className="block w-full text-center bg-gray-100 hover:bg-gray-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-gray-900 dark:text-white px-6 py-3 rounded-lg font-semibold transition duration-200">
+              <Link href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} className="block w-full text-center bg-gray-100 hover:bg-gray-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-gray-900 dark:text-white px-6 py-3 rounded-lg font-semibold transition duration-200">
                 Contact Sales
               </Link>
             </div>
@@ -391,21 +491,110 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((_, index) => (
-              <div key={index} className="bg-white dark:bg-stone-900 p-6 rounded-xl shadow-sm">
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-gray-200 dark:bg-stone-800 rounded-full"></div>
-                  <div className="ml-4">
-                    <div className="font-semibold text-gray-900 dark:text-white">Customer Name</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Position, Company</div>
+          <div 
+            ref={testimonialRef}
+            className="relative overflow-hidden rounded-xl"
+            onMouseDown={(e) => {
+              isDragging.current = true;
+              startX.current = e.clientX;
+              // Add grabbing style to indicate dragging
+              if (e.currentTarget.firstChild) {
+                (e.currentTarget.firstChild as HTMLElement).style.cursor = 'grabbing';
+              }
+            }}
+            onMouseMove={(e) => {
+              if (isDragging.current) {
+                const deltaX = e.clientX - startX.current;
+                setDragOffset(prev => {
+                  // Handle limits to prevent dragging too far in either direction
+                  const newOffset = prev + deltaX;
+                  // Allow some elasticity but prevent dragging beyond certain limits
+                  const maxBackScroll = testimonialWidth.current;
+                  if (newOffset > maxBackScroll) {
+                    return maxBackScroll * 0.5; // Elastic resistance when pulling too far right
+                  }
+                  return newOffset;
+                });
+                startX.current = e.clientX;
+              }
+            }}
+            onMouseUp={(e) => {
+              isDragging.current = false;
+              // Restore cursor
+              if (e.currentTarget.firstChild) {
+                (e.currentTarget.firstChild as HTMLElement).style.cursor = 'grab';
+              }
+            }}
+            onMouseLeave={(e) => {
+              isDragging.current = false;
+              // Restore cursor
+              if (e.currentTarget.firstChild) {
+                (e.currentTarget.firstChild as HTMLElement).style.cursor = 'grab';
+              }
+            }}
+            onTouchStart={(e) => {
+              isDragging.current = true;
+              startX.current = e.touches[0].clientX;
+            }}
+            onTouchMove={(e) => {
+              if (isDragging.current) {
+                const deltaX = e.touches[0].clientX - startX.current;
+                setDragOffset(prev => {
+                  // Similar limit logic as mouse movement
+                  const newOffset = prev + deltaX;
+                  const maxBackScroll = testimonialWidth.current;
+                  if (newOffset > maxBackScroll) {
+                    return maxBackScroll * 0.5;
+                  }
+                  return newOffset;
+                });
+                startX.current = e.touches[0].clientX;
+              }
+            }}
+            onTouchEnd={() => {
+              isDragging.current = false;
+            }}
+          >
+            <div 
+              className="flex transition-transform duration-200 cursor-grab active:cursor-grabbing py-4"
+              style={{ transform: `translateX(${dragOffset}px)` }}
+            >
+              {testimonialsList.map((testimonial, index) => (
+                <div 
+                  key={index} 
+                  className="flex-none w-80 p-6 mx-4 bg-white dark:bg-stone-900 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300"
+                  style={{
+                    transform: isDragging.current ? 'scale(1.02)' : 'scale(1)'
+                  }}
+                >
+                  <div className="flex items-center mb-4">
+                    <Image 
+                      src={testimonial.image} 
+                      alt={testimonial.name} 
+                      width={48} 
+                      height={48} 
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                    <div className="ml-4">
+                      <div className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">{testimonial.position}</div>
+                    </div>
                   </div>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    "{testimonial.testimonial}"
+                  </p>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300">
-                  "Kpaly transformed our online presence. The custom domain and branding features are exactly what we needed to establish trust with our customers."
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
+            
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-orange-50 to-transparent dark:from-stone-950 dark:to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-orange-50 to-transparent dark:from-stone-950 dark:to-transparent z-10 pointer-events-none"></div>
+            
+            <div className="flex justify-center mt-8">
+              <p className="text-sm text-gray-500 dark:text-gray-400 italic">
+                Drag to explore more testimonials
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -421,7 +610,7 @@ export default function HomePage() {
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
               Join Kpaly today and start accepting orders online within minutes. No technical skills required.
             </p>
-            <Link href="/login" className="bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition duration-200 inline-flex items-center">
+            <Link href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} className="bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition duration-200 inline-flex items-center">
               Get Started Now <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 ml-2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>

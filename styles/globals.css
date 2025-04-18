@@ -8,6 +8,51 @@
   }
 }
 
+@keyframes slideUpAndFade {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInHorizontal {
+  0% {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideUpAndFade {
+  animation: slideUpAndFade 0.5s ease forwards;
+  opacity: 0;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.animate-slideInHorizontal {
+  animation: slideInHorizontal 0.5s ease forwards;
+  opacity: 0;
+}
+
 @layer utilities {
   .overflow-hidden {
     -webkit-mask-image: -webkit-radial-gradient(white, black);
