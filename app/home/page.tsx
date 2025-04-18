@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef, RefObject } from "react";
 import Magic from "@/components/icons/magic";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 // Testimonial data
 const testimonials = [
@@ -187,7 +188,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-emerald-50 dark:from-stone-950 dark:via-stone-900 dark:to-emerald-950">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-stone-950 dark:via-stone-900 dark:to-emerald-950">
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-white/70 dark:bg-stone-900/70 backdrop-blur-lg z-50 border-b border-gray-200 dark:border-stone-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -197,6 +198,7 @@ export default function HomePage() {
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">Kpaly</span>
             </div>
             <div className="flex items-center gap-4">
+              <ThemeToggle />
               <Link 
                 href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} 
                 className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
@@ -220,10 +222,10 @@ export default function HomePage() {
                 Kpaly helps food and product vendors create beautiful, fully-functional online stores with custom domains, real-time order management, and powerful analytics.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} className="bg-gradient-to-r from-orange-500 to-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition duration-200">
+                <Link href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} className="bg-gradient-to-r from-orange-500 to-emerald-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition duration-200 shadow-lg hover:shadow-xl">
                   Start Building
                 </Link>
-                <a href="#features" className="border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 dark:hover:bg-stone-800 transition duration-200">
+                <a href="#features" className="border-2 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-300 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 dark:hover:bg-stone-800 transition duration-200">
                   Learn More
                 </a>
               </div>
@@ -246,6 +248,151 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Product Showcase Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50 dark:from-stone-900 dark:to-stone-950">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Build Websites for <span className="bg-gradient-to-r from-orange-500 to-emerald-500 bg-clip-text text-transparent">Anything</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              From food to fashion, art to technology – create the perfect online presence for your business
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {[
+              {
+                name: "Fine Dining",
+                image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-orange-400 to-red-500",
+              },
+              {
+                name: "Food Trucks",
+                image: "https://images.unsplash.com/photo-1566843972142-a7fcb70de55a?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-pink-500 to-purple-600",
+              },
+              {
+                name: "Fashion Boutiques",
+                image: "https://images.unsplash.com/photo-1582719188393-bb71ca45dbb9?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-purple-400 to-indigo-500",
+              },
+              {
+                name: "Artisan Markets",
+                image: "https://images.unsplash.com/photo-1578237493287-8d4d2b03591a?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-emerald-400 to-teal-500",
+              },
+              {
+                name: "Tech Products",
+                image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-blue-500 to-cyan-600",
+              },
+              {
+                name: "Beauty & Wellness",
+                image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-rose-400 to-pink-500",
+              },
+              {
+                name: "Flower Shops",
+                image: "https://images.unsplash.com/photo-1508610048659-a06b669e3321?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-pink-400 to-red-400",
+              },
+              {
+                name: "Vintage Stores",
+                image: "https://images.unsplash.com/photo-1505740106531-4243f3831c78?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-amber-400 to-yellow-500",
+              },
+              {
+                name: "Jewelry Designers",
+                image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-yellow-400 to-amber-500",
+              },
+              {
+                name: "Coffee Shops",
+                image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-amber-600 to-brown-600",
+              },
+              {
+                name: "Pet Products",
+                image: "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-lime-400 to-green-500",
+              },
+              {
+                name: "Home Decor",
+                image: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-slate-400 to-gray-500",
+              },
+              {
+                name: "Music Equipment",
+                image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-red-500 to-pink-600",
+              },
+              {
+                name: "Sporting Goods",
+                image: "https://images.unsplash.com/photo-1518013431117-eb1465fa5752?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-green-400 to-emerald-500",
+              },
+              {
+                name: "Books & Stationery",
+                image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-indigo-400 to-purple-600",
+              },
+              {
+                name: "Handmade Crafts",
+                image: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=400&h=300&auto=format&fit=crop",
+                color: "from-sky-400 to-blue-500",
+              }
+            ].map((item, index) => (
+              <div 
+                key={index} 
+                className={`relative group overflow-hidden rounded-xl shadow-sm hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-stone-800/50 dark:hover:border-orange-500/30 ${mounted ? 'animate-slideUpAndFade' : ''}`}
+                style={{ 
+                  animationDelay: `${index * 80}ms`,
+                  animationFillMode: 'forwards'
+                }}
+              >
+                <div className="relative h-48">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    width={400}
+                    height={300}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-70 transition-opacity duration-300`}></div>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Link 
+                      href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} 
+                      className="bg-white/90 dark:bg-stone-800/90 text-gray-900 dark:text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-white dark:hover:bg-stone-700 transition duration-200"
+                    >
+                      Build for {item.name}
+                    </Link>
+                  </div>
+                </div>
+                <div className="p-4 bg-white dark:bg-stone-900">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{item.name}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-12 text-center">
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+              ...and limitless possibilities for your business!
+            </p>
+            <Link 
+              href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} 
+              className="inline-flex items-center text-white bg-gradient-to-r from-orange-500 to-emerald-500 px-8 py-3 rounded-full text-lg font-semibold hover:opacity-90 transition duration-200 group"
+            >
+              Start Building Your Website 
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-200">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Benefits Grid */}
       <section id="features" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -262,13 +409,13 @@ export default function HomePage() {
             {benefits.map((benefit, index) => (
               <div 
                 key={index} 
-                className={`p-6 bg-white dark:bg-stone-900 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group ${mounted ? 'animate-slideUpAndFade' : ''}`}
+                className={`p-6 bg-white dark:bg-stone-900 rounded-xl shadow-sm border border-gray-100 dark:border-stone-800/50 hover:shadow-lg dark:hover:shadow-2xl dark:hover:border-orange-500/30 hover:-translate-y-1 transition-all duration-300 group ${mounted ? 'animate-slideUpAndFade' : ''}`}
                 style={{ 
                   animationDelay: `${index * 100}ms`,
                   animationFillMode: 'forwards'
                 }}
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-emerald-500 rounded-lg flex items-center justify-center mb-4 text-white transform group-hover:scale-110 transition-transform duration-300">
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-emerald-500 rounded-lg flex items-center justify-center mb-4 text-white transform group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-orange-500/20 transition-all duration-300">
                   {benefit.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{benefit.title}</h3>
@@ -331,7 +478,7 @@ export default function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Starter Plan */}
-            <div className={`bg-white dark:bg-stone-900 rounded-xl shadow-sm border border-gray-200 dark:border-stone-800 p-8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ${mounted ? 'animate-slideUpAndFade' : ''}`}
+            <div className={`bg-white dark:bg-stone-900 rounded-xl shadow-sm border border-gray-200 dark:border-stone-800/70 p-8 hover:shadow-lg dark:hover:shadow-2xl dark:hover:border-emerald-500/30 hover:-translate-y-2 transition-all duration-300 ${mounted ? 'animate-slideUpAndFade' : ''}`}
               style={{ 
                 animationDelay: '300ms',
                 animationFillMode: 'forwards'
@@ -373,7 +520,7 @@ export default function HomePage() {
             </div>
             
             {/* Professional Plan */}
-            <div className={`bg-gradient-to-br from-orange-500 to-emerald-500 rounded-xl shadow-xl p-8 text-white relative overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 ${mounted ? 'animate-slideUpAndFade' : ''}`}
+            <div className={`bg-gradient-to-br from-orange-500 to-emerald-500 rounded-xl shadow-xl p-8 text-white relative overflow-hidden hover:shadow-2xl dark:hover:shadow-orange-500/30 hover:-translate-y-2 transition-all duration-300 ${mounted ? 'animate-slideUpAndFade' : ''}`}
               style={{ 
                 animationDelay: '400ms',
                 animationFillMode: 'forwards'
@@ -429,7 +576,7 @@ export default function HomePage() {
             </div>
             
             {/* Enterprise Plan */}
-            <div className={`bg-white dark:bg-stone-900 rounded-xl shadow-sm border border-gray-200 dark:border-stone-800 p-8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ${mounted ? 'animate-slideUpAndFade' : ''}`}
+            <div className={`bg-white dark:bg-stone-900 rounded-xl shadow-sm border border-gray-200 dark:border-stone-800/70 p-8 hover:shadow-lg dark:hover:shadow-2xl dark:hover:border-indigo-500/30 hover:-translate-y-2 transition-all duration-300 ${mounted ? 'animate-slideUpAndFade' : ''}`}
               style={{ 
                 animationDelay: '500ms',
                 animationFillMode: 'forwards'
@@ -587,8 +734,8 @@ export default function HomePage() {
               ))}
             </div>
             
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-orange-50 to-transparent dark:from-stone-950 dark:to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-orange-50 to-transparent dark:from-stone-950 dark:to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent dark:from-stone-950 dark:to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent dark:from-stone-950 dark:to-transparent z-10 pointer-events-none"></div>
             
             <div className="flex justify-center mt-8">
               <p className="text-sm text-gray-500 dark:text-gray-400 italic">
@@ -610,7 +757,7 @@ export default function HomePage() {
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
               Join Kpaly today and start accepting orders online within minutes. No technical skills required.
             </p>
-            <Link href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} className="bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition duration-200 inline-flex items-center">
+            <Link href={process.env.NODE_ENV === 'development' ? 'http://app.localhost:3000/login' : 'https://app.kpaly.com/login'} className="bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-50 transition duration-200 inline-flex items-center shadow-lg hover:shadow-xl">
               Get Started Now <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 ml-2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
@@ -620,7 +767,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white dark:bg-stone-900 border-t border-gray-200 dark:border-stone-800">
+      <footer className="bg-gray-50 dark:bg-stone-900 border-t border-gray-200 dark:border-stone-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
@@ -635,25 +782,25 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold text-gray-900 dark:text-white mb-4">Product</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Features</a></li>
-                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Pricing</a></li>
-                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Security</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200">Features</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200">Pricing</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200">Security</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold text-gray-900 dark:text-white mb-4">Company</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">About</a></li>
-                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Blog</a></li>
-                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Careers</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200">About</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200">Blog</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200">Careers</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold text-gray-900 dark:text-white mb-4">Legal</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Privacy</a></li>
-                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Terms</a></li>
-                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Refund Policy</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200">Privacy</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200">Terms</a></li>
+                <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200">Refund Policy</a></li>
               </ul>
             </div>
           </div>
