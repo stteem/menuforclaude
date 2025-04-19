@@ -19,6 +19,7 @@ module.exports = {
       { hostname: "www.google.com" },
       { hostname: "flag.vercel.app" },
       { hostname: "illustrations.popsy.co" },
+      { hostname: "images.unsplash.com" },
       {
         protocol: 'https',
         hostname: 'ymwnnh4qtelzkdw3.public.blob.vercel-storage.com',
