@@ -10,6 +10,7 @@ import { Metadata } from "next";
 import Profile from "@/components/profile";
 // import UserNav from "./[slug]/(domain)/components/user-nav";
 import Nav from "@/components/nav";
+import { ThemeToggle } from "@/components/theme-toggle";
 // import { getSession } from "@/lib/auth"
 
 export async function generateMetadata(
@@ -96,13 +97,13 @@ export default async function SiteLayout(
   }
 
   return (
-    <div className={fontMapper[data.font]}>
+    <div className={`${fontMapper[data.font]} bg-white dark:bg-zinc-900 transition-colors duration-200`}>
       {/* <Nav>
         <Suspense fallback={<div>Loading...</div>}>
           <Profile />
         </Suspense>
       </Nav> */}
-      <div className="ease left-0 right-0 top-0 z-30 flex h-40 bg-white transition-all duration-150 dark:bg-black dark:text-white">
+      <div className="ease left-0 right-0 top-0 z-30 flex h-40 bg-white transition-colors duration-200 dark:bg-zinc-900 dark:text-white">
         <div className="mx-auto flex flex-col h-full max-w-screen-xl items-center justify-center space-x-5 px-10 sm:px-20">
           <Link href="/" className="flex flex-col items-center justify-center gap-1">
             {/* <div className="inline-block h-auto w-auto overflow-hidden rounded-full align-middle"> */}
@@ -120,6 +121,11 @@ export default async function SiteLayout(
               {data.name}
             </span>
           </Link>
+          
+          <div className="absolute top-4 right-4 flex items-center gap-2">
+            <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Theme</span>
+            <ThemeToggle />
+          </div>
         </div>
       </div>
 

@@ -2,9 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (prefers-color-scheme: dark) {
+@layer base {
+  :root {
+    --background-light: 0, 0%, 100%;
+    --background-dark: 240, 5%, 10%; /* zinc-900 */
+    --background-dark-secondary: 240, 5%, 14%; /* zinc-800 */
+    --text-light: 240, 10%, 3.9%;
+    --text-dark: 0, 0%, 98%;
+    --primary-light: 240, 5.9%, 10%;
+    --primary-dark: 0, 0%, 98%;
+    --card-light: 0, 0%, 100%;
+    --card-dark: 240, 5%, 10%; /* zinc-900 */
+    --border-light: 240, 5.9%, 90%;
+    --border-dark: 240, 5%, 18%; /* zinc-700 */
+  }
+  
   body {
-    background-color: #000000;
+    @apply transition-colors duration-200;
+  }
+  
+  /* Dark mode */
+  .dark body {
+    background-color: hsl(var(--background-dark));
+    color: hsl(var(--text-dark));
+  }
+  
+  /* Light mode */
+  body {
+    background-color: hsl(var(--background-light));
+    color: hsl(var(--text-light));
+  }
+  
+  /* Ensure smooth transitions */
+  * {
+    @apply transition-colors duration-200;
   }
 }
 

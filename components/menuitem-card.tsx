@@ -32,7 +32,7 @@ export default function MenuItemCard({data, source}: {
   }, []);
 
   return (
-    <div className={`flex ${isMobile ? 'flex-row' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-none border-b border-stone-200 p-0 xl:mb-3 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white`}  
+    <div className={`flex ${isMobile ? 'flex-row' : 'flex-row'} justify-between overflow-hidden relative w-full rounded-none border-b border-stone-200 p-0 xl:mb-3 shadow-md transition-all hover:shadow-xl dark:border-zinc-700 dark:hover:border-zinc-600 bg-white dark:bg-zinc-800`}  
     >
       { !isMobile && source === "admin" && <Link
         href={`/menuitem/${data.id}`}
@@ -72,7 +72,7 @@ export default function MenuItemCard({data, source}: {
         //   {/* </div> */}
         // </div>
       }
-        <div className={`txt-div gap-2 flex flex-col justify-start border-stone-200 ${ isMobile ? 'w-full' : 'w-[70%]' } md:w-[70%] p-4 dark:border-stone-700`}>
+        <div className={`txt-div gap-2 flex flex-col justify-start border-stone-200 ${ isMobile ? 'w-full' : 'w-[70%]' } md:w-[70%] p-4 dark:border-zinc-700`}>
           <div className={`flex ${isMobile ? 'flex-row' : 'flex-col'}`}>
             <h3 className={`${isMobile && 'w-[60%]'} my-0 text-sm md:text-lg font-bold dark:text-white`}>
               {data.name ?? "Name"}
@@ -82,18 +82,18 @@ export default function MenuItemCard({data, source}: {
                 style={{
                   textDecoration: data.promo ? 'line-through' : 'none',
                 }} 
-                className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
+                className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-zinc-400">
                 {data.price ?? "0"}
               </p>
               {data.promo && 
-                <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
+                <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-zinc-400">
                   {data.promo ?? "0"}
                 </p>
               }
             </div>
           </div>
           <div className={`${source === "admin" ? 'mb-6' : 'mb-0'}`}>
-            <p className="text-sm font-normal line-clamp-2 md:line-clamp-3 text-stone-500 dark:text-stone-400">
+            <p className="text-sm font-normal line-clamp-2 md:line-clamp-3 text-stone-500 dark:text-zinc-400">
               {data.description ?? ""}
             </p>
             {/* {data.description &&  <Tooltip side="top" showArrow={false} content={data.description}>

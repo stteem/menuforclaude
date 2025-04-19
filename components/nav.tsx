@@ -16,6 +16,7 @@ import {
   XIcon,
   MoveLeft,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   useParams,
   usePathname,
@@ -193,24 +194,22 @@ export default function Nav({ children }: { children: ReactNode }) {
             <span className="fixed z-10 top-7 left-2 dark:text-white text-black"> <MoveLeft width={50} /> </span>
           </Link>
         }
-        <button
-          className={`fixed z-20 dark:text-white text-black dark:bg-zinc-700 rounded-full w-8 h-8 justify-center items-center flex right-5 top-7 sm:hidden`
-            // ${
-            //   // left align for Editor, right align for other pages
-            //   (segments[0] === "sites" || segments[0] === "site" || segments[0] === "menu" || segments[0] === "menuitem" && !showSidebar) && segments.length >= 2 && !showSidebar
-            //     ? "left-5 top-5"
-            //     : "right-5 top-7"
-            //   }
-          }
-          onClick={() => setShowSidebar(!showSidebar)}
-        >
-        { showSidebar ? <XIcon width={20} /> : <Menu width={20} />}
-        </button>
+        <div className="fixed z-20 flex items-center gap-2 right-5 top-7 sm:hidden">
+          <div className="dark:bg-zinc-800 bg-white rounded-full">
+            <ThemeToggle />
+          </div>
+          <button
+            className={`dark:text-white text-black dark:bg-zinc-800 bg-white rounded-full w-8 h-8 justify-center items-center flex`}
+            onClick={() => setShowSidebar(!showSidebar)}
+          >
+            { showSidebar ? <XIcon width={20} /> : <Menu width={20} />}
+          </button>
+        </div>
       </div>
       <div
         className={`transform ${
           showSidebar ? "w-[70%] translate-x-0" : "-translate-x-full"
-        } fixed z-10 flex h-full flex-col justify-between border-r border-stone-200 bg-stone-100 p-4 transition-all sm:w-60 sm:translate-x-0 dark:border-stone-700 dark:bg-stone-900`}
+        } fixed z-10 flex h-full flex-col justify-between border-r border-stone-200 bg-stone-100 p-4 transition-all sm:w-60 sm:translate-x-0 dark:border-zinc-700 dark:bg-zinc-800`}
       >
         <div className="grid gap-2">
           <div className="flex items-center space-x-2 rounded-lg px-2 py-1.5">
@@ -254,8 +253,8 @@ export default function Nav({ children }: { children: ReactNode }) {
                 key={index}
                 onClick={() => router.back()}
                 className={`flex items-center space-x-3 ${
-                  isActive ? "bg-stone-200 text-black dark:bg-stone-700" : ""
-                  } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-stone-700 dark:active:bg-stone-800`
+                  isActive ? "bg-stone-200 text-black dark:bg-zinc-700" : ""
+                  } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-zinc-700 dark:active:bg-zinc-800`
                 }
               >
                 {icon}
@@ -266,8 +265,8 @@ export default function Nav({ children }: { children: ReactNode }) {
                 key={index}
                 href={href}
                 className={`flex items-center space-x-3 ${
-                  isActive ? "bg-stone-200 text-black dark:bg-stone-700" : ""
-                } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-stone-700 dark:active:bg-stone-800`}
+                  isActive ? "bg-stone-200 text-black dark:bg-zinc-700" : ""
+                } rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-zinc-700 dark:active:bg-zinc-800`}
               >
                 {icon}
                 <span className="text-sm font-medium">{name}</span>
@@ -283,7 +282,7 @@ export default function Nav({ children }: { children: ReactNode }) {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-stone-700 dark:active:bg-stone-800"
+                className="flex items-center justify-between rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out hover:bg-stone-200 active:bg-stone-300 dark:text-white dark:hover:bg-zinc-700 dark:active:bg-zinc-800"
               >
                 <div className="flex items-center space-x-3">
                   {icon}
@@ -293,7 +292,17 @@ export default function Nav({ children }: { children: ReactNode }) {
               </a>
             ))}
           </div>
-          <div className="my-2 border-t border-stone-200 dark:border-stone-700" />
+          <div className="my-2 border-t border-stone-200 dark:border-zinc-700" />
+          
+          {/* Theme Toggle */}
+          <div className="flex items-center justify-between rounded-lg px-2 py-1.5 transition-all duration-150 ease-in-out dark:text-white">
+            <div className="flex items-center space-x-3">
+              <ThemeToggle />
+              <span className="text-sm font-medium">Toggle Theme</span>
+            </div>
+          </div>
+          
+          <div className="my-2 border-t border-stone-200 dark:border-zinc-700" />
           {children}
         </div>
       </div>

@@ -21,7 +21,7 @@ export default function MenuCard({
 
   return (
     <div 
-      className="relative w-full rounded-lg border border-stone-200 pb-2 shadow-md transition-all hover:shadow-xl dark:border-stone-700 dark:hover:border-white"
+      className="relative w-full rounded-lg border border-stone-200 pb-2 shadow-md transition-all hover:shadow-xl dark:border-zinc-700 dark:hover:border-zinc-600 bg-white dark:bg-zinc-800"
       onMouseEnter={() => source === "admin" ? setIsHovered(true) : null} // Set hover state to true
       onMouseLeave={() => source === "admin" ? setIsHovered(false) : null} 
     >
@@ -59,11 +59,11 @@ export default function MenuCard({
           )}
         </div>
       
-        <div className="relative border-t border-stone-200 p-4 dark:border-stone-700">
+        <div className="relative border-t border-stone-200 p-4 dark:border-zinc-700">
           <h3 className="my-0 truncate font-cal text-xl font-bold tracking-wide dark:text-white">
             {data.title}
           </h3>
-          <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-stone-400">
+          <p className="mt-2 line-clamp-1 text-sm font-normal leading-snug text-stone-500 dark:text-zinc-400">
             {data.description}
           </p>
           {isHovered && ( // Conditionally render the hover text
@@ -83,7 +83,7 @@ export default function MenuCard({
             }
             target="_blank"
             rel="noreferrer"
-            className="truncate rounded-md bg-stone-100 px-2 py-1 text-sm font-medium text-stone-600 transition-colors hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-400 dark:hover:bg-stone-700"
+            className="truncate rounded-md bg-stone-100 px-2 py-1 text-sm font-medium text-stone-600 transition-colors hover:bg-stone-200 dark:bg-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-600 dark:active:bg-zinc-800"
           >
             {url} ↗
           </a>

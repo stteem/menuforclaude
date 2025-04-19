@@ -1,15 +1,17 @@
 "use client";
 
-import { ArrowRight, Globe, Palette, ShoppingBag, Zap, Shield, Settings, ExternalLink, Star, Check } from "lucide-react";
+import { ArrowRight, Globe, Palette, ShoppingBag, Zap, Shield, Settings, ExternalLink, Star, Check, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -86,6 +88,10 @@ export default function HomePage() {
     }
   };
 
+  const loginUrl = process.env.NODE_ENV === 'development' 
+    ? 'http://app.localhost:3000/login'
+    : 'https://app.kpaly.com/login';
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-orange-50 dark:from-zinc-900 dark:to-zinc-800">
       {/* Navigation */}
@@ -102,18 +108,68 @@ export default function HomePage() {
             <span className="font-cal text-2xl font-bold bg-gradient-to-r from-orange-600 to-green-600 text-transparent bg-clip-text">Kpaly</span>
           </Link>
           
+          <div className="md:hidden flex items-center space-x-4">
+            <ThemeToggle />
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-zinc-700 dark:text-zinc-300"
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+          
           <div className="hidden md:flex items-center space-x-8">
             <Link href="#features" className="text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white transition-colors">Features</Link>
             <Link href="#how-it-works" className="text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white transition-colors">How It Works</Link>
             <Link href="#pricing" className="text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white transition-colors">Pricing</Link>
+            <ThemeToggle />
             <Link
-              href="/app/login"
+              href={loginUrl}
               className="px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-green-500 text-white font-medium hover:opacity-90 transition-opacity"
             >
-              Get Started
+              Login
             </Link>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white dark:bg-zinc-900 shadow-lg">
+            <div className="container mx-auto px-4 py-4">
+              <div className="flex flex-col space-y-4">
+                <Link 
+                  href="#features" 
+                  className="text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Features
+                </Link>
+                <Link 
+                  href="#how-it-works" 
+                  className="text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  How It Works
+                </Link>
+                <Link 
+                  href="#pricing" 
+                  className="text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white transition-colors py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Pricing
+                </Link>
+                <Link
+                  href={loginUrl}
+                  className="px-4 py-3 rounded-full bg-gradient-to-r from-orange-500 to-green-500 text-white font-medium hover:opacity-90 transition-opacity text-center"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -135,7 +191,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
                 <Link
-                  href="/app/login"
+                  href={loginUrl}
                   className="px-8 py-3 rounded-full bg-gradient-to-r from-orange-500 to-green-500 text-white font-medium hover:opacity-90 transition-opacity flex items-center justify-center space-x-2"
                 >
                   <span>Start Free Trial</span>
@@ -530,7 +586,7 @@ export default function HomePage() {
                   ))}
                 </ul>
                 <Link
-                  href="/app/login"
+                  href={loginUrl}
                   className={`block w-full text-center py-3 rounded-full font-medium transition-colors ${
                     plan.popular
                       ? "bg-gradient-to-r from-orange-500 to-green-500 text-white hover:opacity-90"
@@ -555,7 +611,7 @@ export default function HomePage() {
             Join thousands of successful businesses already using Kpaly to power their online presence.
           </p>
           <Link
-            href="/app/login"
+            href={loginUrl}
             className="inline-flex items-center space-x-2 px-8 py-3 rounded-full bg-white text-orange-600 font-medium hover:bg-zinc-100 transition-colors"
           >
             <span>Start Your Free Trial</span>
@@ -588,7 +644,7 @@ export default function HomePage() {
               <ul className="space-y-2">
                 <li><Link href="#features" className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Features</Link></li>
                 <li><Link href="#pricing" className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Pricing</Link></li>
-                <li><Link href="/app/login" className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Login</Link></li>
+                <li><Link href={loginUrl} className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">Login</Link></li>
               </ul>
             </div>
             <div>

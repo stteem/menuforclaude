@@ -11,7 +11,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           <Profile />
         </Suspense>
       </Nav>
-      <div className="mt-10 md:mt-0 min-h-screen sm:pl-60 dark:bg-black">{children}</div>
+      <div className="mt-10 md:mt-0 min-h-screen sm:pl-60 bg-white dark:bg-zinc-900 transition-colors duration-200">{children}</div>
     </div>
   );
 }
