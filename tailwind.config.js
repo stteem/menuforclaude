@@ -439,7 +439,11 @@ module.exports = {
             transform: "translate(-50%, -45%) scale(0.95)",
           },
           to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
-        }
+        },
+        "infinite-scroll": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         wiggle: "wiggle 0.8s both",
@@ -456,6 +460,7 @@ module.exports = {
         slideUpAndFade: "slideUpAndFade 150ms cubic-bezier(0.16, 1, 0.3, 1)",
         slideRightAndFade:
           "slideRightAndFade 150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "infinite-scroll": "infinite-scroll 15s linear infinite",
       },
     },
   },

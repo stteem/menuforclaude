@@ -24,6 +24,11 @@ module.exports = {
         hostname: 'ymwnnh4qtelzkdw3.public.blob.vercel-storage.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+      },
     ],
   },
 };
