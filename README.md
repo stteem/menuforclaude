@@ -130,6 +130,54 @@ This working demo site was built using the Platforms Starter Kit and:
 
 - Steven Tey ([@steventey](https://twitter.com/steventey))
 
+## Testing
+
+This project includes both snapshot tests and integration tests:
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode during development
+npm run test:watch 
+
+# Update snapshots
+npm run test:snapshot
+
+# Test only image URLs
+npm run test:images
+```
+
+### Test Structure
+
+- **Snapshot Tests**: Ensure UI components render correctly and capture any unintended changes
+- **Integration Tests**: Verify that external dependencies like image URLs are working correctly
+
+### Test Files
+
+- `__tests__/app/home/page.test.tsx`: Snapshot tests for the home page
+- `__tests__/app/home/image-urls.test.ts`: Integration tests for external image URLs
+- `__tests__/components/theme-toggle.test.tsx`: Unit tests for ThemeToggle component
+- `__tests__/app/theme-switching.test.tsx`: Tests for theme switching functionality
+- `__tests__/app/providers.test.tsx`: Tests for app providers, including ThemeProvider
+- `__tests__/utils/extract-image-urls.ts`: Utility to extract image URLs from component files
+
+### Theme Tests
+
+To run the dark/light mode theme tests:
+
+```bash
+npm run test:theme
+```
+
+These tests verify:
+- Light/dark mode toggle button renders correctly
+- Proper icons are shown based on the current theme
+- Theme switching works when the user clicks the toggle
+- ThemeProvider is properly configured with the right options
+
 ## License
 
 The MIT License.

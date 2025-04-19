@@ -14,7 +14,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-stone-800 animate-pulse" />
+      <div data-testid="theme-toggle-loader" className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-stone-800 animate-pulse" />
     );
   }
 
