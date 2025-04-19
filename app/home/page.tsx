@@ -213,20 +213,20 @@ export default function HomePage() {
               <div className="grid grid-cols-3 grid-rows-3 gap-3 absolute inset-0 rotate-3">
                 {[
                   {
-                    src: "https://images.unsplash.com/photo-1536148935331-408321065b18?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    alt: "Restaurant food"
+                    src: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    alt: "Gourmet food plating"
                   },
                   {
-                    src: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    alt: "Restaurant interior"
+                    src: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    alt: "Premium watch product"
                   },
                   {
                     src: "https://images.unsplash.com/photo-1556742393-d75f468bfcb0?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     alt: "Delivered meals"
                   },
                   {
-                    src: "https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    alt: "Tech gadgets"
+                    src: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    alt: "Headphones product"
                   },
                   {
                     src: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -241,12 +241,12 @@ export default function HomePage() {
                     alt: "Home essentials"
                   },
                   {
-                    src: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    alt: "Books and crafts"
+                    src: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    alt: "Nike shoes product"
                   },
                   {
-                    src: "https://images.unsplash.com/photo-1518331368925-fd8d678778e0?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    alt: "Artisan products"
+                    src: "https://images.unsplash.com/photo-1523381294911-8d3cead13475?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    alt: "T-shirt apparel"
                   }
                 ].map((image, index) => (
                   <div key={index} className="relative rounded-lg overflow-hidden shadow-lg transform transition-transform hover:scale-105">
@@ -259,9 +259,6 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              {/* Decorative gradients */}
-              <div className="absolute -top-8 -right-8 w-64 h-64 bg-gradient-to-br from-orange-200 to-green-200 dark:from-orange-900/30 dark:to-green-900/30 rounded-full blur-3xl" />
-              <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-gradient-to-tr from-green-200 to-orange-200 dark:from-green-900/30 dark:to-orange-900/30 rounded-full blur-3xl" />
             </div>
           </div>
 
@@ -270,20 +267,20 @@ export default function HomePage() {
             <div className="flex gap-4 min-w-max px-4">
               {[
                 {
-                  src: "https://images.unsplash.com/photo-1536148935331-408321065b18?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                  alt: "Restaurant food"
+                  src: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "Gourmet food plating"
                 },
                 {
-                  src: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                  alt: "Restaurant interior"
+                  src: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "Premium watch product"
                 },
                 {
-                  src: "https://images.unsplash.com/photo-1556742393-d75f468bfcb0?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                  alt: "Delivered meals"
+                  src: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "Headphones product"
                 },
                 {
-                  src: "https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                  alt: "Tech gadgets"
+                  src: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  alt: "Nike shoes product"
                 },
                 {
                   src: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -352,6 +349,98 @@ export default function HomePage() {
                 <p className="text-zinc-600 dark:text-zinc-400">{feature.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Product Categories Showcase */}
+      <section className="py-20 px-4 bg-orange-50 dark:bg-zinc-900">
+        <div className="container mx-auto">
+          <h2 className="text-3xl md:text-4xl font-cal font-bold text-center mb-4 text-zinc-900 dark:text-white">
+            Build Websites for Anything
+          </h2>
+          <p className="text-xl text-zinc-700 dark:text-zinc-300 text-center mb-16 max-w-3xl mx-auto">
+            From restaurants to artisan workshops, tech stores to jewelry boutiques - transform any business into a thriving online presence
+          </p>
+          
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                title: "Restaurants & Cafes",
+                image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2000&auto=format&fit=crop",
+                description: "Digital menus, online ordering, and table reservations for dining establishments"
+              },
+              {
+                title: "Retail Stores",
+                image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2000&auto=format&fit=crop",
+                description: "Showcase clothing, electronics, and consumer goods with professional e-commerce"
+              },
+              {
+                title: "Beauty & Wellness",
+                image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=2000&auto=format&fit=crop",
+                description: "Spa services, cosmetics, and wellness products with booking functionality"
+              },
+              {
+                title: "Artisan & Handmade",
+                image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=2000&auto=format&fit=crop",
+                description: "Crafts, jewelry, and unique creations with story-driven product pages"
+              },
+              {
+                title: "Educational Services",
+                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2000&auto=format&fit=crop",
+                description: "Courses, tutoring, and training programs with enrollment management"
+              },
+              {
+                title: "Home & Garden",
+                image: "https://images.unsplash.com/photo-1558211583-d26f610c1eb1?q=80&w=2000&auto=format&fit=crop",
+                description: "Furniture, decor, and landscaping services with visual galleries"
+              },
+              {
+                title: "Automotive",
+                image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2000&auto=format&fit=crop",
+                description: "Car dealerships, parts, and service centers with inventory management"
+              },
+              {
+                title: "Creative Services",
+                image: "https://images.unsplash.com/photo-1511376777868-611b54f68947?q=80&w=2000&auto=format&fit=crop",
+                description: "Photography, design studios, and agencies with portfolio showcases"
+              }
+            ].map((category, index) => (
+              <div 
+                key={index} 
+                className="group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+              >
+                <div className="aspect-[4/3] relative">
+                  <Image
+                    src={category.image}
+                    alt={category.title}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <h3 className="text-xl font-bold mb-2">{category.title}</h3>
+                  <p className="text-sm text-white/90 line-clamp-2">{category.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-16 text-center">
+            <h3 className="text-2xl font-cal font-bold mb-4 text-zinc-900 dark:text-white">
+              ... And So Much More!
+            </h3>
+            <p className="text-zinc-700 dark:text-zinc-300 mb-8 max-w-2xl mx-auto">
+              Pet stores, bookshops, event venues, fitness centers, bakeries, tech startups, professional services, subscription boxes, art galleries, and beyond - if you can imagine it, you can build it with Kpaly.
+            </p>
+            <Link
+              href={loginUrl}
+              className="inline-flex items-center space-x-2 px-8 py-3 rounded-full bg-gradient-to-r from-orange-500 to-green-500 text-white font-medium hover:opacity-90 transition-opacity"
+            >
+              <span>Start Building Your Vision</span>
+              <ArrowRight className="w-5 h-5" />
+            </Link>
           </div>
         </div>
       </section>
