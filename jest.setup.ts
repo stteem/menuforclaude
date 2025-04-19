@@ -4,7 +4,9 @@ import 'whatwg-fetch';
 import 'isomorphic-fetch';
 
 // Polyfill for TextEncoder/TextDecoder in Node.js environment
+// @ts-ignore - These types don't match exactly but the functionality works for tests
 global.TextEncoder = TextEncoder;
+// @ts-ignore - These types don't match exactly but the functionality works for tests
 global.TextDecoder = TextDecoder;
 
 // Mock Next.js router

@@ -634,7 +634,7 @@ export default function HomePage() {
               Trusted by Businesses Like Yours
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300">
-              Join thousands of vendors who've grown their business with Kpaly
+              Join thousands of vendors who&apos;ve grown their business with Kpaly
             </p>
           </div>
           
@@ -728,7 +728,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <p className="text-gray-600 dark:text-gray-300">
-                    "{testimonial.testimonial}"
+                    &quot;{testimonial.testimonial}&quot;
                   </p>
                 </div>
               ))}

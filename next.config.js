@@ -2,6 +2,8 @@
  * @type {import('next').NextConfig}
  */
 module.exports = {
+  // Properly configure for production/SWC
+  
   experimental: {
     serverActions: {
       allowedOrigins: ["app.localhost:3000"],

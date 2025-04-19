@@ -4,10 +4,11 @@ const config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
   transform: {
-    '^.+\\.(ts|tsx)$': 'babel-jest',
+    '^.+\\.(ts|tsx)$': ['babel-jest'],
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
+    '^next/font/(.*)$': '<rootDir>/__mocks__/next/font/$1.js',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
