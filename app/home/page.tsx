@@ -621,7 +621,7 @@ export default function HomePage() {
               },
               {
                 name: "Pro",
-                price: "$29",
+                price: "$10",
                 description: "For growing businesses",
                 features: [
                   "Unlimited products",

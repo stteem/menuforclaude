@@ -73,7 +73,7 @@ export default function DeleteSiteForm({ siteName }: { siteName: string }) {
         //     })
         //     .catch((err: Error) => toast.error(err.message))
         // }
-        className="rounded-lg border border-red-600 bg-white dark:bg-black"
+        className="rounded-lg border border-red-600 bg-white dark:bg-zinc-900"
       >
         <div className="relative flex flex-col space-y-4 p-5 sm:p-10">
           <h2 className="font-cal text-xl dark:text-white">Delete Site</h2>
@@ -88,12 +88,12 @@ export default function DeleteSiteForm({ siteName }: { siteName: string }) {
             // required
             // pattern={siteName}
             placeholder={siteName}
-            className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-stone-600 dark:bg-black dark:text-white dark:placeholder-stone-700"
+            className="w-full max-w-md rounded-md border border-stone-300 text-sm text-stone-900 placeholder-stone-300 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:placeholder-zinc-600"
           />
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10 dark:border-stone-700 dark:bg-stone-800">
-          <p className="text-center text-sm text-stone-500 dark:text-stone-400">
+        <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10 dark:border-zinc-700 dark:bg-zinc-800">
+          <p className="text-center text-sm text-stone-500 dark:text-zinc-400">
             This action is irreversible. Please proceed with caution.
           </p>
           <div className="w-32">
@@ -121,8 +121,8 @@ function FormButton({ pending }: FormButtonProps) {
       className={cn(
         "flex h-8 w-32 items-center justify-center space-x-2 rounded-md border text-sm transition-all focus:outline-none sm:h-10",
         pending
-          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          : "border-red-600 bg-red-600 text-white hover:bg-white hover:text-red-600 dark:hover:bg-transparent",
+          ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400"
+          : "border-red-600 bg-red-600 text-white hover:bg-white hover:text-red-600 dark:hover:bg-zinc-900",
       )}
       disabled={pending}
     >
@@ -141,10 +141,10 @@ interface DeleteDialogProps {
 export const SiteDeleteDialog = ({isOpen, onClose, onConfirm}: DeleteDialogProps) => (
   <div className="flex justify-center">
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-lg dark:bg-zinc-900 dark:border-zinc-700">
         <DialogHeader>
-          <DialogTitle>Delete Site</DialogTitle>
-          <DialogDescription className="mt-1 text-sm leading-6">
+          <DialogTitle className="dark:text-white">Delete Site</DialogTitle>
+          <DialogDescription className="mt-1 text-sm leading-6 dark:text-zinc-400">
             Are you sure you want to delete your site and menus? This action is irreversible.
           </DialogDescription>
         </DialogHeader>
@@ -152,7 +152,7 @@ export const SiteDeleteDialog = ({isOpen, onClose, onConfirm}: DeleteDialogProps
           <DialogClose asChild>
             <button
                className="flex h-8 w-full px-5 items-center justify-center sm:w-fit space-x-2 rounded-lg border text-sm transition-all focus:outline-none sm:h-9 
-               border-black bg-black text-white hover:bg-white hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-stone-800" 
+               border-black bg-black text-white hover:bg-white hover:text-black active:bg-stone-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:active:bg-zinc-700" 
               // onClick={onClose}
             >
               Go back
@@ -161,7 +161,7 @@ export const SiteDeleteDialog = ({isOpen, onClose, onConfirm}: DeleteDialogProps
           <DialogClose asChild>
             <button 
               className="flex h-8 w-full px-5 items-center justify-center sm:w-fit space-x-2 rounded-lg border text-sm transition-all focus:outline-none sm:h-9 
-               border-black bg-black text-white hover:bg-white hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-stone-800" 
+               border-black bg-black text-white hover:bg-white hover:text-black active:bg-stone-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:hover:border-zinc-600 dark:hover:bg-zinc-800 dark:active:bg-zinc-700" 
               onClick={() => {
                 onConfirm()
               }}

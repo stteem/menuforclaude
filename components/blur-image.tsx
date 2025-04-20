@@ -13,6 +13,7 @@ export default function BlurImage(props: ComponentProps<typeof Image>) {
     <Image
       {...props}
       alt={props.alt}
+      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
       className={cn(
         props.className,
         "duration-700 ease-in-out",

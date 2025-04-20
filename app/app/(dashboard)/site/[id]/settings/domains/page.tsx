@@ -42,7 +42,7 @@ export default async function SiteSettingsDomains(
         }}
         handleSubmit={updateRestaurantMetadata}
       />
-      <div className="flex flex-col border gap-5 space-y-4 p-5 sm:p-10 rounded-lg bg-white dark:bg-black border-stone-200 dark:border-stone-700">
+      <div className="flex flex-col border mb-96 gap-5 space-y-4 p-5 sm:p-10 rounded-lg bg-white border-zinc-200 dark:bg-zinc-900 dark:border-zinc-700">
         
         <div className="flex flex-col gap-4">
           <h2 className="text-xl font-bold dark:text-white text-black">2. A Record</h2>
