@@ -97,40 +97,34 @@ export default async function SiteLayout(
   }
 
   return (
-    <div className={`${fontMapper[data.font]} bg-white dark:bg-zinc-900 transition-colors duration-200`}>
-      {/* <Nav>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Profile />
-        </Suspense>
-      </Nav> */}
-      <div className="ease left-0 right-0 top-0 z-30 flex h-40 bg-white transition-colors duration-200 dark:bg-zinc-900 dark:text-white">
-        <div className="mx-auto flex flex-col h-full max-w-screen-xl items-center justify-center space-x-5 px-10 sm:px-20">
-          <Link href="/" className="flex flex-col items-center justify-center gap-1">
-            {/* <div className="inline-block h-auto w-auto overflow-hidden rounded-full align-middle"> */}
-            { data.logo && 
-              <Image
-                alt={data.name || "restaurant logo"}
-                height={80}
-                src={data?.logo}
-                width={80}
-                className="h-full w-full object-contain rounded-lg"
-              />
+    <div className={`${fontMapper[data.font]} min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-950 transition-colors duration-300`}>
+      <header className="h-16 py-2 sticky top-0 left-0 right-0 z-30 bg-white/80 backdrop-blur-md dark:bg-zinc-900/80 shadow-sm transition-all duration-300 dark:text-white border-b border-gray-100 dark:border-zinc-800">
+        <div className="mx-auto flex max-h-12 max-w-screen-xl items-center justify-between px-6 sm:px-10">
+          <Link href="/" className="flex items-center gap-3 group transition-all duration-300">
+            {data.logo && 
+              <div className="overflow-hidden rounded-lg shadow-sm group-hover:shadow transition-all duration-300">
+                <Image
+                  alt={data.name || "restaurant logo"}
+                  height={40}
+                  src={data?.logo}
+                  width={40}
+                  className="h-[60px] w-[60px] object-contain transform group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
             }
-            {/* </div> */}
-            <span className="ml-3 inline-block font-title font-medium">
+            {/* <span className="text-lg font-title font-semibold tracking-tight group-hover:text-primary transition-colors duration-300">
               {data.name}
-            </span>
+            </span> */}
           </Link>
           
-          <div className="absolute top-4 right-4 flex items-center gap-2">
-            <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Theme</span>
+          <div className="flex items-center gap-3">
+            {/* <span className="text-sm font-medium text-zinc-600 dark:text-zinc-400">Theme</span> */}
             <ThemeToggle />
           </div>
         </div>
-      </div>
+      </header>
 
-      
-      <div className="mt-5">{children}</div>
+      <main className="mx-auto max-w-screen-xl px-6 sm:px-10 py-8">{children}</main>
 
       {/* {domain == `demo.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}` ||
       domain == `platformize.co` ? (

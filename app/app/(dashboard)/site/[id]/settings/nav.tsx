@@ -24,11 +24,11 @@ export default function SiteSettingsNav() {
       href: `/site/${id}/settings/appearance`,
       segment: "appearance",
     },
-    {
-      name: "Site Features",
-      href: `/site/${id}/settings/features`,
-      segment: "features",
-    },
+    // {
+    //   name: "Site Features",
+    //   href: `/site/${id}/settings/features`,
+    //   segment: "features",
+    // },
   ];
 
   return (

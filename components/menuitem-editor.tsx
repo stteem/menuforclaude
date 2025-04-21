@@ -93,7 +93,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
   }
 
   return (
-    <div className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg dark:border-stone-700">
+    <div className="relative min-h-[500px] w-full max-w-screen-lg border-stone-200 p-12 px-8 sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:px-12 sm:shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
       <div className="absolute right-5 top-5 mb-5 flex items-center space-x-3">
         {/* {data.published && (
           <a
@@ -105,7 +105,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
             <ExternalLink className="h-4 w-4" />
           </a>
         )} */}
-        <div className="rounded-lg bg-stone-100 px-2 py-1 text-sm text-stone-400 dark:bg-stone-800 dark:text-stone-500">
+        <div className="rounded-lg bg-stone-100 px-2 py-1 text-sm text-stone-400 dark:bg-zinc-800 dark:text-zinc-400">
           {isPendingSaving ? "Saving..." : "Saved"}
         </div>
         <button
@@ -113,8 +113,10 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
           className={cn(
             "flex h-7 w-24 items-center justify-center space-x-2 rounded-lg border text-sm transition-all focus:outline-none",
             isPendingPublishing
-              ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-              : "border border-black bg-black text-white hover:bg-white hover:text-black active:bg-stone-100 dark:border-stone-700 dark:hover:border-stone-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-stone-800",
+              ? "cursor-not-allowed border-stone-200 bg-stone-100 text-stone-400 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+              : data.published 
+                ? "border border-stone-200 bg-stone-100 text-stone-600 hover:bg-white hover:text-stone-800 active:bg-stone-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:border-zinc-600 dark:hover:bg-zinc-900 dark:hover:text-zinc-200 dark:active:bg-zinc-800"
+                : "border border-black bg-black text-white hover:bg-white hover:text-black active:bg-stone-100 dark:border-zinc-700 dark:hover:border-zinc-200 dark:hover:bg-black dark:hover:text-white dark:active:bg-zinc-800",
           )}
           disabled={isPendingPublishing}
         >
@@ -131,7 +133,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
             e.preventDefault()
             handleSave()
           }}
-          className="flex flex-col gap-5"
+          className="flex flex-col gap-5 dark:text-white"
         >
           <input
             type="text"
@@ -140,7 +142,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
             autoFocus
             required
             onChange={(e) => setData({ ...data, name: e.target.value })}
-            className="dark:placeholder-text-600 border-none px-0 text-3xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+            className="w-full max-w-md border-none px-0 text-3xl placeholder:text-stone-400 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-600 dark:focus:ring-zinc-500"
           />
           <input
             type="text"
@@ -149,13 +151,12 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
             autoFocus
             required
             onChange={(e) => setData({ ...data, price: e.target.value })}
-            className="dark:placeholder-text-600 border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+            className="w-full max-w-md border-none px-0 placeholder:text-stone-400 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-600 dark:focus:ring-zinc-500"
           />
-          <div className="flex items-center text-white gap-3">
-            <Label htmlFor="promo" className="text-base">{checkSwitch ? "Added promo" : "Add promo"}</Label>
+          <div className="flex items-center gap-3">
+            <Label htmlFor="promo" className="text-base text-stone-600 dark:text-stone-300">{checkSwitch ? "Added promo" : "Add promo"}</Label>
             <Switch 
                 id="promo" 
-                style={{ backgroundColor: checkSwitch ? 'gray' : 'transparent' }}
                 checked={checkSwitch} 
                 onCheckedChange={setCheckSwitch} 
             />
@@ -167,7 +168,7 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
                 autoFocus
                 required
                 onChange={(e) => setData({ ...data, promo: e.target.value })}
-                className="dark:placeholder-text-600 border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+                className="w-full max-w-md border-none px-0 placeholder:text-stone-400 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-600 dark:focus:ring-zinc-500"
               />
             }
         </div>
@@ -176,10 +177,10 @@ export default function MenuItemEditor({ menuitem }: { menuitem: SelectMenuItem 
             placeholder="Description (optional)"
             defaultValue={menuitem.description || ""}
             onChange={(e) => setData({ ...data, description: e.target.value })}
-            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+            className="w-full resize-none border-none px-0 placeholder:text-stone-400 focus:border-stone-500 focus:outline-none focus:ring-stone-500 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-600 dark:focus:ring-zinc-500"
           />
-          <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10 dark:border-stone-700 dark:bg-stone-800">
-            <p className="text-sm text-stone-500 dark:text-stone-400">Add menu name and description!</p>
+          <div className="flex flex-col items-center justify-center space-y-2 rounded-b-lg border-t border-stone-200 bg-stone-50 p-3 sm:flex-row sm:justify-between sm:space-y-0 sm:px-10 dark:border-zinc-700 dark:bg-zinc-800">
+            <p className="text-sm text-stone-500 dark:text-zinc-400">Add menu name and description!</p>
             <FormButton />
           </div>
         </form>

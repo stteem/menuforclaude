@@ -179,7 +179,7 @@ export default function UserNav({ children }: { children: ReactNode }) {
     //     icon: <Settings width={18} />,
     //   },
     ];
-  }, [segments, id, userId]);
+  }, [segments, id]);
 
   const [showSidebar, setShowSidebar] = useState(false);
 

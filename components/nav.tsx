@@ -179,7 +179,50 @@ export default function Nav({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <div className="flex flex-row justify-between">
+      {/* Mobile Navigation Bar */}
+      <div className="fixed top-0 left-0 right-0 z-20 sm:hidden">
+        <div className="flex items-center justify-between px-4 py-3 bg-white dark:bg-zinc-800 border-b border-stone-200 dark:border-zinc-700">
+          {segments[0] === "menuitem" && id ? (
+            <button
+              onClick={() => router.back()}
+              className="dark:text-white text-black"
+            >
+              <MoveLeft width={24} />
+            </button>
+          ) : segments.length >= 1 ? (
+            <Link href={tabs[0].href} key={tabs[0].name}>
+              <span className="dark:text-white text-black">
+                <MoveLeft width={24} />
+              </span>
+            </Link>
+          ) : (
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/logo.png"
+                width={24}
+                height={24}
+                alt="Logo"
+                className="dark:scale-110 dark:rounded-full dark:border dark:border-stone-400"
+              />
+            </Link>
+          )}
+          
+          <div className="flex items-center gap-2">
+            <div className="dark:bg-zinc-700 bg-stone-100 rounded-full">
+              <ThemeToggle />
+            </div>
+            <button
+              className="dark:text-white text-black dark:bg-zinc-700 bg-stone-100 rounded-full w-8 h-8 justify-center items-center flex"
+              onClick={() => setShowSidebar(!showSidebar)}
+            >
+              {showSidebar ? <XIcon width={20} /> : <Menu width={20} />}
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      {/* Keep old navigation buttons for non-mobile */}
+      <div className="hidden sm:flex sm:flex-row sm:justify-between">
         {
           segments[0] === "menuitem" && id ? 
           <button
@@ -194,17 +237,6 @@ export default function Nav({ children }: { children: ReactNode }) {
             <span className="fixed z-10 top-7 left-2 dark:text-white text-black"> <MoveLeft width={50} /> </span>
           </Link>
         }
-        <div className="fixed z-20 flex items-center gap-2 right-5 top-7 sm:hidden">
-          <div className="dark:bg-zinc-800 bg-white rounded-full">
-            <ThemeToggle />
-          </div>
-          <button
-            className={`dark:text-white text-black dark:bg-zinc-800 bg-white rounded-full w-8 h-8 justify-center items-center flex`}
-            onClick={() => setShowSidebar(!showSidebar)}
-          >
-            { showSidebar ? <XIcon width={20} /> : <Menu width={20} />}
-          </button>
-        </div>
       </div>
       <div
         className={`transform ${

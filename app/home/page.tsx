@@ -3,7 +3,7 @@
 import { ArrowRight, Globe, Palette, ShoppingBag, Zap, Shield, Settings, ExternalLink, Star, Check, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function HomePage() {
@@ -47,11 +47,11 @@ export default function HomePage() {
     }
   };
 
-  const handleStartAnimation = () => {
+  const handleStartAnimation = useCallback(() => {
     if (scrollRef.current && !isDragging) {
       scrollRef.current.style.animationPlayState = 'running';
     }
-  };
+  }, [isDragging, scrollRef]);
 
   const handlePauseAnimation = () => {
     if (scrollRef.current) {
@@ -67,7 +67,7 @@ export default function HomePage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isDragging]);
+  }, [handleStartAnimation]); // isDragging is included in handleStartAnimation dependency
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;

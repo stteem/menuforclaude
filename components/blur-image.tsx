@@ -9,6 +9,10 @@ import type { ComponentProps } from "react";
 export default function BlurImage(props: ComponentProps<typeof Image>) {
   const [isLoading, setLoading] = useState(true);
 
+  const handleLoad = () => {
+    setLoading(false);
+  };
+
   return (
     <Image
       {...props}
@@ -19,7 +23,7 @@ export default function BlurImage(props: ComponentProps<typeof Image>) {
         "duration-700 ease-in-out",
         isLoading ? "scale-105 blur-lg" : "scale-100 blur-0",
       )}
-      onLoad={() => setLoading(false)}
+      onLoadingComplete={handleLoad}
     />
   );
 }

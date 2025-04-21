@@ -52,34 +52,8 @@ export async function generateMetadata(
 }
 
 export async function generateStaticParams() {
-  const allMenus = await db
-    .select({
-      slug: menus.slug,
-      restaurant: {
-        subdomain: restaurants.subdomain,
-        customDomain: restaurants.customDomain,
-      },
-    })
-    .from(menus)
-    .leftJoin(restaurants, eq(menus.restaurantId, restaurants.id))
-    // .where(eq(restaurants.subdomain, "ueats")); // feel free to remove this filter if you want to generate paths for all menus
-
-  const allPaths = allMenus
-    .flatMap(({ restaurant, slug }) => [
-      restaurant?.subdomain && {
-        domain: `${restaurant.subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`,
-        slug,
-      },
-      restaurant?.customDomain && {
-        domain: restaurant.customDomain,
-        slug,
-      },
-    ])
-    .filter(Boolean);
-
-    // console.log({allPaths})
-
-  return allPaths;
+  // Skip DB connection during build to prevent timeout errors
+  return [];
 }
 
 export default async function SiteMenuPage(
@@ -137,7 +111,7 @@ export default async function SiteMenuPage(
             <div className="w-full border-t border-stone-300 dark:border-stone-700" />
           </div>
           <div className="relative flex justify-center">
-            <span className="bg-white px-2 text-sm text-stone-500 dark:bg-black dark:text-stone-400">
+            <span className="bg-white px-2 text-sm text-stone-500 dark:bg-zinc-700 dark:text-stone-400">
               {data.adjacentMenus.length > 1 ? 'More Menus': 'More Menu'}
             </span>
           </div>
