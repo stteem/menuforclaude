@@ -90,7 +90,7 @@ export default function HomePage() {
 
   const loginUrl = process.env.NODE_ENV === 'development' 
     ? 'http://app.localhost:3000/login'
-    : 'https://app.menuforclaude.vercel.app/login';
+    : 'https://app.kpaly.com/login';
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-orange-50 dark:from-zinc-900 dark:to-zinc-800">
